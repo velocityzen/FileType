@@ -54,6 +54,23 @@ final class FileTypeTests: XCTestCase {
     testFileType("fixture-little-endian.mie", type: .mie)
   }
   
+  func testNEF() {
+    testFileType("fixture2.nef", type: .nef)
+    testFileType("fixture3.nef", type: .nef)
+    testFileType("fixture4.nef", type: .nef)
+  }
+  
+  func testDNG() {
+    testFileType("fixture2.dng", type: .dng)
+  }
+  
+  func testARW() {
+    testFileType("fixture2.arw", type: .arw)
+    testFileType("fixture3.arw", type: .arw)
+    testFileType("fixture4.arw", type: .arw)
+    testFileType("fixture5.arw", type: .arw)
+  }
+  
   func testBytesCountForType() {
     XCTAssertEqual(getBytesCountForType(.ac3), 2)
     XCTAssertEqual(getBytesCountForType(.zip), 4)
@@ -71,6 +88,9 @@ final class FileTypeTests: XCTestCase {
     ("testTIFF", testTIFF),
     ("testAPE", testAPE),
     ("testMIE", testMIE),
+    ("testNEF", testNEF),
+    ("testDNG", testDNG),
+    ("testARW", testARW),
     
     ("testBytesCountForType", testBytesCountForType),
     ("testBytesCountForTypes", testBytesCountForTypes),

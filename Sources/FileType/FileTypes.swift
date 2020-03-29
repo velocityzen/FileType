@@ -26,6 +26,10 @@ public enum FileTypeExtension {
   case bpg
   case wv
   case wasm
+  case cr2
+  case nef
+  case dng
+  case arw
   case tif
   case ape
   case sql
@@ -69,11 +73,11 @@ public struct FileType {
   let ext: String
   let mime: String
 
+  internal var bytesCount: Int? = nil
   internal var matchString: [String]? = nil
   internal var matchBytes: [[UInt8]]? = nil
   internal var match: ((Data) -> Bool)? = nil
-  internal var bytesCount: Int? = nil
-
+  
   public static let all: [FileType] = [
     FileType(
       type: .bmp,
@@ -295,13 +299,82 @@ public struct FileType {
       matchBytes: [[0x00, 0x61, 0x73, 0x6D]]
     ),
 
-    // TIFF, little-endian types
+    // tiff, little-endian type based file formats
+    FileType(
+      type: .cr2,
+      ext: "cr2",
+      mime: "image/x-canon-cr2",
+      bytesCount: 10,
+      matchBytes: [[0x49, 0x49, 0x2A, 0x0]],
+      match: {
+        matchPatterns($0, match: [[.byte(0x43), .byte(0x52)]], offset: 8)
+      }
+    ),
+    
+    FileType(
+      type: .nef,
+      ext: "nef",
+      mime: "image/x-nikon-nef",
+      bytesCount: 12,
+      matchBytes: [[0x49, 0x49, 0x2A, 0x0]],
+      match: {
+        matchPatterns($0, match: [
+          [.byte(0x1C), .byte(0x0), .byte(0xFE), .byte(0x0)],
+          [.byte(0x1F), .byte(0x0), .byte(0x0B), .byte(0x0)]
+        ], offset: 8)
+      }
+    ),
+    
+    FileType(
+      type: .dng,
+      ext: "dng",
+      mime: "image/x-adobe-dng",
+      bytesCount: 12,
+      matchBytes: [[0x49, 0x49, 0x2A, 0x0]],
+      match: {
+        matchPatterns($0, match: [
+          [.byte(0x08), .byte(0x0), .byte(0x0), .byte(0x0), .byte(0x2D), .byte(0x0), .byte(0xFE), .byte(0x0)],
+          [.byte(0x08), .byte(0x0), .byte(0x0), .byte(0x0), .byte(0x27), .byte(0x0), .byte(0xFE), .byte(0x0)]
+        ], offset: 4)
+      }
+    ),
+    
+    FileType(
+      type: .arw,
+      ext: "arw",
+      mime: "image/x-sony-arw",
+      bytesCount: 12,
+      matchBytes: [[0x49, 0x49, 0x2A, 0x0]],
+      match: {
+        matchPatterns($0, match: [
+          [
+            .byte(0x10), .byte(0xFB), .byte(0x86), .byte(0x01),
+            .any,
+            .byte(0x0), .byte(0xFE), .byte(0x00), .byte(0x04),
+            .byte(0x0), .byte(0x01), .byte(0x00), .byte(0x00),
+            .byte(0x0), .byte(0x01), .byte(0x00), .byte(0x00),
+            .byte(0x0), .byte(0x03), .byte(0x01)
+          ],
+          [
+            .byte(0x08), .byte(0x00), .byte(0x00), .byte(0x00),
+            .any,
+            .byte(0x0), .byte(0xFE), .byte(0x00), .byte(0x04),
+            .byte(0x0), .byte(0x01), .byte(0x00), .byte(0x00),
+            .byte(0x0), .byte(0x01), .byte(0x00), .byte(0x00),
+            .byte(0x0), .byte(0x03), .byte(0x01)
+          ],
+        ], offset: 4)
+      }
+    ),
 
     FileType(
       type: .tif,
       ext: "tif",
       mime: "image/tiff",
-      matchBytes: [[0x4D, 0x4D, 0x0, 0x2A]]
+      matchBytes: [
+        [0x49, 0x49, 0x2A, 0x0],
+        [0x4D, 0x4D, 0x0, 0x2A]
+      ]
     ),
 
     FileType(
