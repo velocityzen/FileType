@@ -77,6 +77,9 @@ public enum FileTypeExtension {
   case ogx
   case woff
   case woff2
+  case avi
+  case wav
+  case qcp
 }
 
 public struct FileType {
@@ -526,6 +529,44 @@ public struct FileType {
     //matroska
     
     // RIFF file format which might be AVI, WAV, QCP, etc
+    FileType(
+      type: .avi,
+      ext: "avi",
+      mime: "video/vnd.avi",
+      bytesCount: 11,
+      matchBytes: [[0x52, 0x49, 0x46, 0x46]],
+      match: {
+        matchPatterns($0, match: [
+          [.byte(0x41), .byte(0x56), .byte(0x49)]
+        ], offset: 8)
+      }
+    ),
+
+    FileType(
+      type: .wav,
+      ext: "wav",
+      mime: "audio/vnd.wave",
+      bytesCount: 12,
+      matchBytes: [[0x52, 0x49, 0x46, 0x46]],
+      match: {
+        matchPatterns($0, match: [
+          [.byte(0x57), .byte(0x41), .byte(0x56), .byte(0x45)]
+        ], offset: 8)
+      }
+    ),
+    
+    FileType(
+      type: .qcp,
+      ext: "qcp",
+      mime: "audio/qcelp",
+      bytesCount: 12,
+      matchBytes: [[0x52, 0x49, 0x46, 0x46]],
+      match: {
+        matchPatterns($0, match: [
+          [.byte(0x51), .byte(0x4C), .byte(0x43), .byte(0x4D)]
+        ], offset: 8)
+      }
+    ),
     
     FileType(
       type: .sql,
