@@ -1,85 +1,85 @@
 import Foundation
 
 public enum FileTypeExtension {
-  case bmp
   case ac3
-  case mp3
+  case ai
+  case aif
+  case ali
+  case amr
+  case ape
+  case arr
+  case arw
+  case avi
+  case ble
+  case bmp
+  case bpg
+  case bz2
+  case cab
+  case cr2
+  case crx
+  case cur
   case dmg
+  case dng
+  case dsf
   case exe
-  case ps
-  case Z
+  case fla
+  case flif
+  case flv
+  case gif
+  case glb
+  case gz
+  case ico
+  case ics
+  case it
   case jpg
   case jxr
-  case gz
-  case bz2
-  case mpc
-  case gif
-  case flif
-  case psd
-  case aif
-  case swf
-  case zip
-  case mid
-  case dsf
-  case lz
-  case fla
-  case bpg
-  case wv
-  case wasm
-  case cr2
-  case nef
-  case dng
-  case arw
-  case tif
-  case ape
-  case sql
-  case nes
-  case crx
-  case cab
-  case rpm
-  case otf
-  case amr
-  case rtf
-  case flv
-  case it
-  case xz
-  case xml
-  case ics
-  case sevenz
-  case rar
-  case ble
-  case arr
-  case glb
-  case orf
-  case rw2
   case ktx
+  case lnk
+  case lz
+  case mid
   case mie
+  case mp3
+  case mpc
   case mpg
-  case ttf
-  case ico
-  case cur
-  case raf
-  case xm
-  case voc
   case msi
   case mxf
-  case lnk
-  case ali
-  case png
-  case ai
-  case pdf
-  case opus
-  case ogv
+  case nef
+  case nes
   case oga
-  case ogm
-  case spx
   case ogg
+  case ogm
+  case ogv
   case ogx
+  case opus
+  case orf
+  case otf
+  case pdf
+  case png
+  case ps
+  case psd
+  case qcp
+  case raf
+  case rar
+  case rpm
+  case rtf
+  case rw2
+  case sevenz
+  case spx
+  case sql
+  case swf
+  case tif
+  case ttf
+  case voc
+  case wasm
+  case wav
   case woff
   case woff2
-  case avi
-  case wav
-  case qcp
+  case wv
+  case xm
+  case xml
+  case xz
+  case Z
+  case zip
 }
 
 public struct FileType {
@@ -91,7 +91,7 @@ public struct FileType {
   internal var matchString: [String]? = nil
   internal var matchBytes: [[UInt8]]? = nil
   internal var match: ((Data) -> Bool)? = nil
-  
+
   public static let all: [FileType] = [
     FileType(
       type: .bmp,
@@ -162,7 +162,7 @@ public struct FileType {
       mime: "application/x-bzip2",
       matchBytes: [[0x42, 0x5A, 0x68]]
     ),
-    
+
     //ID3
 //    FileType(
 //      type: .mp3,
@@ -254,9 +254,8 @@ public struct FileType {
         [0x50, 0x4B, 0x7, 0x8],
       ]
     ),
-    
-    //Ogg container
-    
+
+    // ogg container
     // Needs to be before `ogg` check
     FileType(
       type: .opus,
@@ -271,7 +270,7 @@ public struct FileType {
         ]
       ], offset: 28) }
     ),
-    
+
     FileType(
       type: .ogv,
       ext: "ogv",
@@ -285,7 +284,7 @@ public struct FileType {
         ]
       ], offset: 28) }
     ),
-    
+
     FileType(
       type: .ogm,
       ext: "ogm",
@@ -299,7 +298,7 @@ public struct FileType {
         ]
       ], offset: 28) }
     ),
-    
+
     FileType(
       type: .oga,
       ext: "oga",
@@ -313,7 +312,7 @@ public struct FileType {
         ]
       ], offset: 28) }
     ),
-    
+
     FileType(
       type: .spx,
       ext: "spx",
@@ -327,7 +326,7 @@ public struct FileType {
         ]
       ], offset: 28) }
     ),
-    
+
     FileType(
       type: .ogg,
       ext: "ogg",
@@ -341,7 +340,7 @@ public struct FileType {
         ]
       ], offset: 28) }
     ),
-    
+
     FileType(
       type: .ogx,
       ext: "ogx",
@@ -370,7 +369,7 @@ public struct FileType {
         ], offset: 4)
       }
     ),
-    
+
     FileType(
       type: .woff2,
       ext: "woff2",
@@ -426,7 +425,7 @@ public struct FileType {
       matchString: ["%PDF"],
       match: { findString($0, "Adobe Illustrator", ignore: 1350) }
     ),
-    
+
     FileType(
       type: .pdf,
       ext: "pdf",
@@ -452,7 +451,7 @@ public struct FileType {
         matchPatterns($0, match: [[.byte(0x43), .byte(0x52)]], offset: 8)
       }
     ),
-    
+
     FileType(
       type: .nef,
       ext: "nef",
@@ -466,7 +465,7 @@ public struct FileType {
         ], offset: 8)
       }
     ),
-    
+
     FileType(
       type: .dng,
       ext: "dng",
@@ -480,7 +479,7 @@ public struct FileType {
         ], offset: 4)
       }
     ),
-    
+
     FileType(
       type: .arw,
       ext: "arw",
@@ -527,7 +526,7 @@ public struct FileType {
     ),
 
     //matroska
-    
+
     // RIFF file format which might be AVI, WAV, QCP, etc
     FileType(
       type: .avi,
@@ -554,7 +553,7 @@ public struct FileType {
         ], offset: 8)
       }
     ),
-    
+
     FileType(
       type: .qcp,
       ext: "qcp",
@@ -567,109 +566,109 @@ public struct FileType {
         ], offset: 8)
       }
     ),
-    
+
     FileType(
       type: .sql,
       ext: "sqlite",
       mime: "application/x-sqlite3",
       matchString: ["SQLi"]
     ),
-    
+
     FileType(
       type: .nes,
       ext: "nes",
       mime: "application/x-nintendo-nes-rom",
       matchBytes: [[0x4E, 0x45, 0x53, 0x1A]]
     ),
-    
+
     FileType(
       type: .crx,
       ext: "crx",
       mime: "application/x-google-chrome-extension",
       matchString: ["Cr24"]
     ),
-    
+
     FileType(
       type: .cab,
       ext: "cab",
       mime: "application/vnd.ms-cab-compressed",
       matchString: ["MSCF", "ISc("]
     ),
-    
+
     FileType(
       type: .rpm,
       ext: "rpm",
       mime: "application/x-rpm",
       matchBytes: [[0xED, 0xAB, 0xEE, 0xDB]]
     ),
-    
+
     // -- 5-byte signatures --
-    
+
     FileType(
       type: .otf,
       ext: "otf",
       mime: "font/otf",
       matchBytes: [[0x4F, 0x54, 0x54, 0x4F, 0x00]]
     ),
-    
+
     FileType(
       type: .amr,
       ext: "amr",
       mime: "audio/amr",
       matchString: ["#!AMR"]
     ),
-    
+
     FileType(
       type: .rtf,
       ext: "rtf",
       mime: "application/rtf",
       matchString: ["{\\rtf"]
     ),
-    
+
     FileType(
       type: .flv,
       ext: "flv",
       mime: "video/x-flv",
       matchBytes: [[0x46, 0x4C, 0x56, 0x01]]
     ),
-    
+
     FileType(
       type: .it,
       ext: "it",
       mime: "audio/x-it",
       matchString: ["IMPM"]
     ),
-    
+
     // MPEG program stream (PS or MPEG-PS)
-    
+
     FileType(
       type: .xz,
       ext: "xz",
       mime: "application/x-xz",
       matchBytes: [[0xFD, 0x37, 0x7A, 0x58, 0x5A, 0x00]]
     ),
-    
+
     FileType(
       type: .xml,
       ext: "xml",
       mime: "application/xml",
       matchString: ["<?xml "]
     ),
-    
+
     FileType(
       type: .ics,
       ext: "ics",
       mime: "text/calendar",
       matchString: ["BEGIN:"]
     ),
-    
+
     FileType(
       type: .sevenz,
       ext: "7z",
       mime: "application/x-7z-compressed",
       matchBytes: [[0x37, 0x7A, 0xBC, 0xAF, 0x27, 0x1C]]
     ),
-    
+
     FileType(
       type: .rar,
       ext: "rar",
@@ -679,61 +678,61 @@ public struct FileType {
         [0x52, 0x61, 0x72, 0x21, 0x1A, 0x7, 0x1]
       ]
     ),
-    
+
     // -- 7-byte signatures --
-    
+
     FileType(
       type: .ble,
       ext: "blend",
       mime: "application/x-blender",
       matchString: ["BLENDER"]
     ),
-    
+
     // deb & ar
-    
+
     // png & apng
-    
+
     FileType(
       type: .arr,
       ext: "arrow",
       mime: "application/x-apache-arrow",
       matchBytes: [[0x41, 0x52, 0x52, 0x4F, 0x57, 0x31, 0x00, 0x00]]
     ),
-    
+
     FileType(
       type: .glb,
       ext: "glb",
       mime: "model/gltf-binary",
       matchBytes: [[0x67, 0x6C, 0x54, 0x46, 0x02, 0x00, 0x00, 0x00]]
     ),
-    
+
     // mov
-    
+
     FileType(
       type: .orf,
       ext: "orf",
       mime: "image/x-olympus-orf",
       matchBytes: [[0x49, 0x49, 0x52, 0x4F, 0x08, 0x00, 0x00, 0x00, 0x18]]
     ),
-    
+
     // -- 12-byte signatures --
-    
+
     FileType(
       type: .rw2,
       ext: "rw2",
       mime: "image/x-panasonic-rw2",
       matchBytes: [[0x49, 0x49, 0x55, 0x00, 0x18, 0x00, 0x00, 0x00, 0x88, 0xE7, 0x74, 0xD8]]
     ),
-    
+
     // ASF_Header_Object first 80 bytes
-    
+
     FileType(
       type: .ktx,
       ext: "ktx",
       mime: "image/ktx",
       matchBytes: [[0xAB, 0x4B, 0x54, 0x58, 0x20, 0x31, 0x31, 0xBB, 0x0D, 0x0A, 0x1A, 0x0A]]
     ),
-    
+
     FileType(
       type: .mie,
       ext: "mie",
@@ -745,11 +744,11 @@ public struct FileType {
         ])
       }
     ),
-    
+
     // shp
-    
+
     // JPEG-2000 family
-    
+
     // -- Unsafe signatures --
     FileType(
       type: .mpg,
@@ -757,30 +756,30 @@ public struct FileType {
       mime: "video/mpeg",
       matchBytes: [[0x0, 0x0, 0x1, 0xBA], [0x0, 0x0, 0x1, 0xB3]]
     ),
-    
+
     FileType(
       type: .ttf,
       ext: "ttf",
       mime: "font/ttf",
       matchBytes: [[0x00, 0x01, 0x00, 0x00, 0x00]]
     ),
-    
+
     FileType(
       type: .ico,
       ext: "ico",
       mime: "image/x-icon",
       matchBytes: [[0x00, 0x00, 0x01, 0x00]]
     ),
-    
+
     FileType(
       type: .cur,
       ext: "cur",
       mime: "image/x-icon",
       matchBytes: [[0x00, 0x00, 0x02, 0x00]]
     ),
-    
+
     // Increase sample size from 12 to 256.
-    
+
     // `raf` is here just to keep all the raw image detectors together.
     FileType(
       type: .raf,
@@ -788,65 +787,65 @@ public struct FileType {
       mime: "image/x-fujifilm-raf",
       matchString: ["FUJIFILMCCD-RAW"]
     ),
-    
+
     FileType(
       type: .xm,
       ext: "xm",
       mime: "audio/x-xm",
       matchString: ["Extended Module:"]
     ),
-    
+
     FileType(
       type: .voc,
       ext: "voc",
       mime: "audio/x-voc",
       matchString: ["Creative Voice File"]
     ),
-    
+
     //tar
-    
+
     FileType(
       type: .msi,
       ext: "msi",
       mime: "application/x-msi",
       matchBytes: [[0xD0, 0xCF, 0x11, 0xE0, 0xA1, 0xB1, 0x1A, 0xE1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3E]]
     ),
-    
+
     FileType(
       type: .mxf,
       ext: "mxf",
       mime: "application/mxf",
       matchBytes: [[0x06, 0x0E, 0x2B, 0x34, 0x02, 0x05, 0x01, 0x01, 0x0D, 0x01, 0x02, 0x01, 0x01, 0x02]]
     ),
-    
+
     //s3m
-    
+
     // mts
-    
+
     // mobi
-    
+
     // dcm
-    
+
     FileType(
       type: .lnk,
       ext: "lnk",
       mime: "application/x.ms.shortcut", // Invented by us
       matchBytes: [[0x4C, 0x00, 0x00, 0x00, 0x01, 0x14, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46]]
     ),
-    
+
     FileType(
       type: .ali,
       ext: "alias",
       mime: "application/x.apple.alias", // Invented by us
       matchBytes: [[0x62, 0x6F, 0x6F, 0x6B, 0x00, 0x00, 0x00, 0x00, 0x6D, 0x61, 0x72, 0x6B, 0x00, 0x00, 0x00, 0x00]]
     ),
-    
+
     //eot
-    
+
     // Increase sample size from 256 to 512
-    
+
     // tar
-    
+
     // Check for MPEG header at different starting offsets
 
   ]
