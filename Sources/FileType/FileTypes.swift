@@ -66,6 +66,8 @@ public enum FileTypeExtension {
   case lnk
   case ali
   case png
+  case ai
+  case pdf
 }
 
 public struct FileType {
@@ -290,7 +292,20 @@ public struct FileType {
       matchString: ["wvpk"]
     ),
 
-    //pdf + ai
+    FileType(
+      type: .ai,
+      ext: "ai",
+      mime: "application/postscript",
+      matchString: ["%PDF"],
+      match: { findString($0, "Adobe Illustrator", ignore: 1350) }
+    ),
+    
+    FileType(
+      type: .pdf,
+      ext: "pdf",
+      mime: "application/pdf",
+      matchString: ["%PDF"]
+    ),
 
     FileType(
       type: .wasm,
