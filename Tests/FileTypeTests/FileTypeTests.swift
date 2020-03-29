@@ -15,7 +15,7 @@ final class FileTypeTests: XCTestCase {
     let url = URL(fileURLWithPath: absolutePath, isDirectory: false)
     
     guard let data = try? Data(contentsOf: url) else {
-      print("Fixture not found: \(absolutePath). Look for a specific test function.")
+      print("Fixture not found: \(fixtureName). Look for a specific test function.")
       return
     }
         
@@ -70,6 +70,15 @@ final class FileTypeTests: XCTestCase {
     testFileType("fixture4.arw", type: .arw)
     testFileType("fixture5.arw", type: .arw)
   }
+    
+  func testOGX() {
+    testFileType("fixture-unknown-ogg.ogx", type: .ogx)
+  }
+  
+  func testWOFFOTTO() {
+    testFileType("fixture-otto.woff", type: .woff)
+    testFileType("fixture-otto.woff2", type: .woff2)
+  }
   
   func testBytesCountForType() {
     XCTAssertEqual(getBytesCountForType(.ac3), 2)
@@ -91,6 +100,8 @@ final class FileTypeTests: XCTestCase {
     ("testNEF", testNEF),
     ("testDNG", testDNG),
     ("testARW", testARW),
+    ("testOGX", testOGX),
+    ("testWOFFOTTO", testWOFFOTTO),
     
     ("testBytesCountForType", testBytesCountForType),
     ("testBytesCountForTypes", testBytesCountForTypes),

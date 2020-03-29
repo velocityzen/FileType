@@ -75,6 +75,8 @@ public enum FileTypeExtension {
   case spx
   case ogg
   case ogx
+  case woff
+  case woff2
 }
 
 public struct FileType {
@@ -353,8 +355,31 @@ public struct FileType {
       matchString: ["MThd"]
     ),
 
-    // woff
-    // woff2
+    FileType(
+      type: .woff,
+      ext: "woff",
+      mime: "font/woff",
+      matchString: ["wOFF"],
+      match: {
+        matchPatterns($0, match: [
+          [.byte(0x0), .byte(0x01), .byte(0x0), .byte(0x0)],
+          [.byte(0x4F), .byte(0x54), .byte(0x54), .byte(0x4F)]
+        ], offset: 4)
+      }
+    ),
+    
+    FileType(
+      type: .woff2,
+      ext: "woff2",
+      mime: "font/woff2",
+      matchString: ["wOF2"],
+      match: {
+        matchPatterns($0, match: [
+          [.byte(0x0), .byte(0x01), .byte(0x0), .byte(0x0)],
+          [.byte(0x4F), .byte(0x54), .byte(0x54), .byte(0x4F)]
+        ], offset: 4)
+      }
+    ),
 
     FileType(
       type: .dsf,
