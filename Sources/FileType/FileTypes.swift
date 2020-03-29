@@ -1,8 +1,9 @@
 import Foundation
 
-enum FileTypeExtension {
+public enum FileTypeExtension {
   case bmp
   case ac3
+  case mp3
   case dmg
   case exe
   case ps
@@ -143,6 +144,21 @@ public struct FileType {
       mime: "application/x-bzip2",
       matchBytes: [[0x42, 0x5A, 0x68]]
     ),
+    
+    //ID3
+//    FileType(
+//      type: .mp3,
+//      ext: "mp3",
+//      mime: "audio/mpeg",
+//      matchString: ["ID3"],
+//      match: { data in
+//        guard let fileData = skipID3Header(data) else {
+//          return false
+//        }
+//
+//        return matchPatterns(fileData, match: [[.byte(0x02)]], offset: 1, mask: [0x06])
+//      }
+//    ),
 
     FileType(
       type: .mpc,
@@ -405,7 +421,10 @@ public struct FileType {
       type: .rar,
       ext: "rar",
       mime: "application/x-rar-compressed",
-      matchBytes: [ [0x52, 0x61, 0x72, 0x21, 0x1A, 0x7, 0x0], [0x52, 0x61, 0x72, 0x21, 0x1A, 0x7, 0x1]]
+      matchBytes: [
+        [0x52, 0x61, 0x72, 0x21, 0x1A, 0x7, 0x0],
+        [0x52, 0x61, 0x72, 0x21, 0x1A, 0x7, 0x1]
+      ]
     ),
     
     // -- 7-byte signatures --
@@ -466,11 +485,12 @@ public struct FileType {
       type: .mie,
       ext: "mie",
       mime: "application/x-mie",
-      matchBytes: [
-        [0x7E, 0x10, 0x04, 0x0, 0x30, 0x4D, 0x49, 0x45],
-        [0x7E, 0x18, 0x04, 0x0, 0x30, 0x4D, 0x49, 0x45]
-        // make 0x0 to match anything in here
-      ]
+      match: {
+        matchPatterns($0, match: [
+          [.byte(0x7E), .byte(0x10), .byte(0x04), .any, .byte(0x30), .byte(0x4D), .byte(0x49), .byte(0x45)],
+          [.byte(0x7E), .byte(0x18), .byte(0x04), .any, .byte(0x30), .byte(0x4D), .byte(0x49), .byte(0x45)]
+        ])
+      }
     ),
     
     // shp

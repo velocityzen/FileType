@@ -53,6 +53,16 @@ final class FileTypeTests: XCTestCase {
     testFileType("fixture-big-endian.mie", type: .mie)
     testFileType("fixture-little-endian.mie", type: .mie)
   }
+  
+  func testBytesCountForType() {
+    XCTAssertEqual(getBytesCountForType(.ac3), 2)
+    XCTAssertEqual(getBytesCountForType(.zip), 4)
+    XCTAssertEqual(getBytesCountForType(.cab), 4)
+  }
+  
+  func testBytesCountForTypes() {
+    XCTAssertEqual(getBytesCountForTypes([.ac3, .zip, .cab]), 4)
+  }
     
   static var allTests = [
     ("testAll", testAll),
@@ -61,5 +71,8 @@ final class FileTypeTests: XCTestCase {
     ("testTIFF", testTIFF),
     ("testAPE", testAPE),
     ("testMIE", testMIE),
+    
+    ("testBytesCountForType", testBytesCountForType),
+    ("testBytesCountForTypes", testBytesCountForTypes),
   ]
 }
