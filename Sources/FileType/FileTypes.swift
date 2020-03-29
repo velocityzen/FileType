@@ -68,6 +68,13 @@ public enum FileTypeExtension {
   case png
   case ai
   case pdf
+  case opus
+  case ogv
+  case oga
+  case ogm
+  case spx
+  case ogg
+  case ogx
 }
 
 public struct FileType {
@@ -224,8 +231,6 @@ public struct FileType {
 
     //zip
 
-    //ogg
-
     FileType(
       type: .zip,
       ext: "zip",
@@ -243,6 +248,100 @@ public struct FileType {
         [0x50, 0x4B, 0x7, 0x6],
         [0x50, 0x4B, 0x7, 0x8],
       ]
+    ),
+    
+    //Ogg container
+    
+    // Needs to be before `ogg` check
+    FileType(
+      type: .opus,
+      ext: "opus",
+      mime: "audio/opus",
+      bytesCount: 36,
+      matchString: ["OggS"],
+      match: { matchPatterns($0, match: [
+        [
+          .byte(0x4F), .byte(0x70), .byte(0x75), .byte(0x73),
+          .byte(0x48), .byte(0x65), .byte(0x61), .byte(0x64)
+        ]
+      ], offset: 28) }
+    ),
+    
+    FileType(
+      type: .ogv,
+      ext: "ogv",
+      mime: "video/ogg",
+      bytesCount: 35,
+      matchString: ["OggS"],
+      match: { matchPatterns($0, match: [
+        [
+          .byte(0x80), .byte(0x74), .byte(0x68), .byte(0x65),
+          .byte(0x6F), .byte(0x72), .byte(0x61)
+        ]
+      ], offset: 28) }
+    ),
+    
+    FileType(
+      type: .ogm,
+      ext: "ogm",
+      mime: "video/ogg",
+      bytesCount: 35,
+      matchString: ["OggS"],
+      match: { matchPatterns($0, match: [
+        [
+          .byte(0x01), .byte(0x76), .byte(0x69), .byte(0x64),
+          .byte(0x65), .byte(0x6F), .byte(0x00)
+        ]
+      ], offset: 28) }
+    ),
+    
+    FileType(
+      type: .oga,
+      ext: "oga",
+      mime: "audio/ogg",
+      bytesCount: 33,
+      matchString: ["OggS"],
+      match: { matchPatterns($0, match: [
+        [
+          .byte(0x7F), .byte(0x46), .byte(0x4C), .byte(0x41),
+          .byte(0x43)
+        ]
+      ], offset: 28) }
+    ),
+    
+    FileType(
+      type: .spx,
+      ext: "spx",
+      mime: "audio/ogg",
+      bytesCount: 35,
+      matchString: ["OggS"],
+      match: { matchPatterns($0, match: [
+        [
+          .byte(0x53), .byte(0x70), .byte(0x65), .byte(0x65),
+          .byte(0x78), .byte(0x20), .byte(0x20)
+        ]
+      ], offset: 28) }
+    ),
+    
+    FileType(
+      type: .ogg,
+      ext: "ogg",
+      mime: "audio/ogg",
+      bytesCount: 35,
+      matchString: ["OggS"],
+      match: { matchPatterns($0, match: [
+        [
+          .byte(0x01), .byte(0x76), .byte(0x6F), .byte(0x72),
+          .byte(0x62), .byte(0x69), .byte(0x73)
+        ]
+      ], offset: 28) }
+    ),
+    
+    FileType(
+      type: .ogx,
+      ext: "ogx",
+      mime: "application/ogg",
+      matchString: ["OggS"]
     ),
 
     //ftyp

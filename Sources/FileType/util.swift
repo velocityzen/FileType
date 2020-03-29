@@ -47,8 +47,5 @@ internal func matchPatterns(_ data: Data, match: [[MatchPattern]], offset: Int =
 internal func findString(_ data: Data, _ string: String, ignore: Int? = nil) -> Bool {
   let minRange = min(data.count, ignore ?? data.count)
   let pattern = string.data(using: .utf8)!
-  if let range = data.range(of: pattern, in: minRange..<data.count) {
-    return true
-  }
-  return false
+  return data.range(of: pattern, in: minRange..<data.count) != nil
 }
