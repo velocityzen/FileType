@@ -80,6 +80,34 @@ public enum FileTypeExtension {
   case xz
   case Z
   case zip
+  
+  case jp2
+  case jpx
+  case jpm
+  case mj2
+  case shp
+  case mov
+  
+  case heic
+  case m4v
+  case m4p
+  case m4b
+  case m4a
+  case f4v
+  case f4p
+  case f4a
+  case f4b
+  case cr3
+  case threeg2
+  case threegp
+  case mp4
+  
+  case deb
+  case ar
+  case s3m
+  case dcm
+  case mobi
+  case mts
 }
 
 public struct FileType {
@@ -348,8 +376,227 @@ public struct FileType {
       matchString: ["OggS"]
     ),
 
-    //ftyp
+    //File Type Box Formats
+    FileType(
+      type: .heic,
+      ext: "heic",
+      mime: "image/heif",
+      bytesCount: 12,
+      match: { matchPatterns($0, match: [
+        [
+          .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+          .byte(0x6D), .byte(0x69), .byte(0x66), .byte(0x31)  // mif1
+        ]
+      ], offset: 4) }
+    ),
+    
+    FileType(
+      type: .heic,
+      ext: "heic",
+      mime: "image/heif-sequence",
+      bytesCount: 12,
+      match: { matchPatterns($0, match: [
+        [
+          .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+          .byte(0x6D), .byte(0x73), .byte(0x66), .byte(0x31)  // msf1
+        ]
+      ], offset: 4) }
+    ),
+    
+    FileType(
+      type: .heic,
+      ext: "heic",
+      mime: "image/heic",
+      bytesCount: 12,
+      match: { matchPatterns($0, match: [
+        [
+          .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+          .byte(0x68), .byte(0x65), .byte(0x69), .byte(0x63)  // heic
+        ],
+        
+        [
+          .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+          .byte(0x68), .byte(0x65), .byte(0x69), .byte(0x78)  // heix
+        ]
+      ], offset: 4) }
+    ),
+    
+    FileType(
+      type: .heic,
+      ext: "heic",
+      mime: "image/heic-sequence",
+      bytesCount: 12,
+      match: { matchPatterns($0, match: [
+        [
+          .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+          .byte(0x68), .byte(0x65), .byte(0x76), .byte(0x63)  // hevc
+        ],
+        
+        [
+          .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+          .byte(0x68), .byte(0x65), .byte(0x76), .byte(0x78)  // hevx
+        ]
+      ], offset: 4) }
+    ),
+    
+    FileType(
+      type: .mov,
+      ext: "mov",
+      mime: "video/quicktime",
+      bytesCount: 10,
+      match: { matchPatterns($0, match: [
+        [
+          .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+          .byte(0x71), .byte(0x74)                            // qt
+        ]
+      ], offset: 4) }
+    ),
+    
+    FileType(
+      type: .m4v,
+      ext: "m4v",
+      mime: "video/x-m4v",
+      bytesCount: 12,
+      match: { matchPatterns($0, match: [
+        [
+          .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+          .byte(0x4d), .byte(0x34), .byte(0x56)               // M4V
+        ],
+        
+        [
+          .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+          .byte(0x4d), .byte(0x34), .byte(0x56), .byte(0x48)  // M4VH
+        ],
+         
+        [
+          .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+          .byte(0x4d), .byte(0x34), .byte(0x56), .byte(0x50)  // M4VP
+        ],
+        
+      ], offset: 4) }
+    ),
+    
+    FileType(
+      type: .m4p,
+      ext: "m4p",
+      mime: "video/mp4",
+      bytesCount: 11,
+      match: { matchPatterns($0, match: [[
+        .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+        .byte(0x4d), .byte(0x34), .byte(0x50)               // M4P
+      ]], offset: 4) }
+    ),
+    
+    FileType(
+      type: .m4b,
+      ext: "m4b",
+      mime: "audio/mp4",
+      bytesCount: 11,
+      match: { matchPatterns($0, match: [[
+        .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+        .byte(0x4d), .byte(0x34), .byte(0x42)               // M4B
+      ]], offset: 4) }
+    ),
+    
+    FileType(
+      type: .m4a,
+      ext: "m4a",
+      mime: "audio/x-m4a",
+      bytesCount: 11,
+      match: { matchPatterns($0, match: [[
+        .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+        .byte(0x4d), .byte(0x34), .byte(0x41)               // M4A
+      ]], offset: 4) }
+    ),
 
+    FileType(
+      type: .f4v,
+      ext: "f4v",
+      mime: "video/mp4",
+      bytesCount: 11,
+      match: { matchPatterns($0, match: [[
+        .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+        .byte(0x46), .byte(0x34), .byte(0x56)               // F4V
+      ]], offset: 4) }
+    ),
+    
+    FileType(
+      type: .f4p,
+      ext: "f4p",
+      mime: "video/mp4",
+      bytesCount: 11,
+      match: { matchPatterns($0, match: [[
+        .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+        .byte(0x46), .byte(0x34), .byte(0x50)               // F4P
+      ]], offset: 4) }
+    ),
+    
+    FileType(
+      type: .f4a,
+      ext: "f4a",
+      mime: "audio/mp4",
+      bytesCount: 11,
+      match: { matchPatterns($0, match: [[
+        .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+        .byte(0x46), .byte(0x34), .byte(0x41)               // F4A
+      ]], offset: 4) }
+    ),
+    
+    FileType(
+      type: .f4b,
+      ext: "f4b",
+      mime: "audio/mp4",
+      bytesCount: 11,
+      match: { matchPatterns($0, match: [[
+        .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+        .byte(0x46), .byte(0x34), .byte(0x42)               // F4B
+      ]], offset: 4) }
+    ),
+    
+    FileType(
+      type: .cr3,
+      ext: "cr3",
+      mime: "image/x-canon-cr3",
+      bytesCount: 11,
+      match: { matchPatterns($0, match: [[
+        .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+        .byte(0x63), .byte(0x72), .byte(0x78)               // crx
+      ]], offset: 4) }
+    ),
+    
+    FileType(
+      type: .threeg2,
+      ext: "3g2",
+      mime: "video/3gpp2",
+      bytesCount: 11,
+      match: { matchPatterns($0, match: [[
+        .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+        .byte(0x33), .byte(0x67), .byte(0x32)               // 3g2
+      ]], offset: 4) }
+    ),
+    
+    FileType(
+      type: .threegp,
+      ext: "3gp",
+      mime: "video/3gpp",
+      bytesCount: 10,
+      match: { matchPatterns($0, match: [[
+        .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+        .byte(0x33), .byte(0x67)                            // 3g
+      ]], offset: 4) }
+    ),
+    
+    FileType(
+      type: .mp4,
+      ext: "mp4",
+      mime: "video/mp4",
+      bytesCount: 8,
+      match: { matchPatterns($0, match: [[
+        .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+      ]], offset: 4) }
+    ),
+
+    
     FileType(
       type: .mid,
       ext: "mid",
@@ -484,7 +731,7 @@ public struct FileType {
       type: .arw,
       ext: "arw",
       mime: "image/x-sony-arw",
-      bytesCount: 12,
+      bytesCount: 24,
       matchBytes: [[0x49, 0x49, 0x2A, 0x0]],
       match: {
         matchPatterns($0, match: [
@@ -527,7 +774,6 @@ public struct FileType {
 
     //matroska
 
-    // RIFF file format which might be AVI, WAV, QCP, etc
     FileType(
       type: .avi,
       ext: "avi",
@@ -639,8 +885,30 @@ public struct FileType {
       matchString: ["IMPM"]
     ),
 
-    // MPEG program stream (PS or MPEG-PS)
-
+    //  MPEG-PS, MPEG-1 Part 1
+    FileType(
+      type: .mpg,
+      ext: "mpg", // May also be .ps, .mpeg
+      mime: "video/MP1S",
+      bytesCount: 21,
+      matchBytes: [[0x00, 0x00, 0x01, 0xBA]],
+      match: {
+        matchPatterns($0, match: [[.byte(0x21)]], offset: 4, mask: [0xF1])
+      }
+    ),
+    
+    // MPEG-PS, MPEG-2 Part 1
+    FileType(
+      type: .mpg,
+      ext: "mpg", // May also be .mpg, .m2p, .vob or .sub
+      mime: "video/MP2P",
+      bytesCount: 21,
+      matchBytes: [[0x00, 0x00, 0x01, 0xBA]],
+      match: {
+        matchPatterns($0, match: [[.byte(0x44)]], offset: 4, mask: [0xC4])
+      }
+    ),
+    
     FileType(
       type: .xz,
       ext: "xz",
@@ -688,7 +956,29 @@ public struct FileType {
       matchString: ["BLENDER"]
     ),
 
-    // deb & ar
+    FileType(
+      type: .deb,
+      ext: "deb",
+      mime: "application/x-deb",
+      bytesCount: 21,
+      matchString: ["!<arch>"],
+      match: { matchPatterns($0, match: [
+        [
+          .byte(0x64), .byte(0x65), .byte(0x62), //debian-binary
+          .byte(0x69), .byte(0x61), .byte(0x6e),
+          .byte(0x2d), .byte(0x62), .byte(0x69),
+          .byte(0x6e), .byte(0x61), .byte(0x72),
+          .byte(0x79)
+        ]
+      ], offset: 8)}
+    ),
+    
+    FileType(
+      type: .ar,
+      ext: "ar",
+      mime: "application/x-unix-archive",
+      matchString: ["!<arch>"]
+    ),
 
     // png & apng
 
@@ -706,7 +996,19 @@ public struct FileType {
       matchBytes: [[0x67, 0x6C, 0x54, 0x46, 0x02, 0x00, 0x00, 0x00]]
     ),
 
-    // mov
+    FileType(
+      type: .mov,
+      ext: "mov",
+      mime: "video/quicktime",
+      match: {
+        matchPatterns($0, match: [
+          [.byte(0x66), .byte(0x72), .byte(0x65), .byte(0x65)], // `free`
+          [.byte(0x6D), .byte(0x64), .byte(0x61), .byte(0x74)], // `mdat` MJPEG
+          [.byte(0x6D), .byte(0x6F), .byte(0x6F), .byte(0x76)], // `moov`
+          [.byte(0x77), .byte(0x69), .byte(0x64), .byte(0x65)]  // `wide`
+        ], offset: 4)
+      }
+    ),
 
     FileType(
       type: .orf,
@@ -739,15 +1041,106 @@ public struct FileType {
       mime: "application/x-mie",
       match: {
         matchPatterns($0, match: [
-          [.byte(0x7E), .byte(0x10), .byte(0x04), .any, .byte(0x30), .byte(0x4D), .byte(0x49), .byte(0x45)],
-          [.byte(0x7E), .byte(0x18), .byte(0x04), .any, .byte(0x30), .byte(0x4D), .byte(0x49), .byte(0x45)]
+          [.byte(0x7E), .byte(0x10), .byte(0x04), .any, .byte(0x30),
+           .byte(0x4D), .byte(0x49), .byte(0x45)],
+          [.byte(0x7E), .byte(0x18), .byte(0x04), .any, .byte(0x30),
+           .byte(0x4D), .byte(0x49), .byte(0x45)]
         ])
       }
     ),
 
-    // shp
+    FileType(
+      type: .shp,
+      ext: "shp",
+      mime: "application/x-esri-shape",
+      bytesCount: 14,
+      match: {
+        matchPatterns($0, match: [
+          [
+            .byte(0x27), .byte(0x0A), .byte(0x00), .byte(0x00),
+            .byte(0x00), .byte(0x00), .byte(0x00), .byte(0x00),
+            .byte(0x00), .byte(0x00), .byte(0x00), .byte(0x00)
+          ],
+        ], offset: 2)
+    }
+    ),
 
     // JPEG-2000 family
+    FileType(
+      type: .jp2,
+      ext: "jp2",
+      mime: "image/jp2",
+      bytesCount: 24,
+      match: {
+        matchPatterns($0, match: [
+          [
+            .byte(0x00), .byte(0x00), .byte(0x00), .byte(0x0C),
+            .byte(0x6A), .byte(0x50), .byte(0x20), .byte(0x20),
+            .byte(0x0D), .byte(0x0A), .byte(0x87), .byte(0x0A),
+            .any,        .any,        .any,        .any,
+            .any,        .any,        .any,        .any,
+            .byte(0x6A), .byte(0x70), .byte(0x32), .byte(0x20)
+          ],
+        ])
+      }
+    ),
+    
+    FileType(
+      type: .jpx,
+      ext: "jpx",
+      mime: "image/jpx",
+      bytesCount: 24,
+      match: {
+        matchPatterns($0, match: [
+          [
+            .byte(0x00), .byte(0x00), .byte(0x00), .byte(0x0C),
+            .byte(0x6A), .byte(0x50), .byte(0x20), .byte(0x20),
+            .byte(0x0D), .byte(0x0A), .byte(0x87), .byte(0x0A),
+            .any,        .any,        .any,        .any,
+            .any,        .any,        .any,        .any,
+            .byte(0x6A), .byte(0x70), .byte(0x78), .byte(0x20)
+          ],
+        ])
+      }
+    ),
+    
+    FileType(
+      type: .jpm,
+      ext: "jpm",
+      mime: "image/jpm",
+      bytesCount: 24,
+      match: {
+        matchPatterns($0, match: [
+          [
+            .byte(0x00), .byte(0x00), .byte(0x00), .byte(0x0C),
+            .byte(0x6A), .byte(0x50), .byte(0x20), .byte(0x20),
+            .byte(0x0D), .byte(0x0A), .byte(0x87), .byte(0x0A),
+            .any,        .any,        .any,        .any,
+            .any,        .any,        .any,        .any,
+            .byte(0x6A), .byte(0x70), .byte(0x6D), .byte(0x20)
+          ],
+        ])
+      }
+    ),
+    
+    FileType(
+      type: .mj2,
+      ext: "mj2",
+      mime: "image/mj2",
+      bytesCount: 24,
+      match: {
+        matchPatterns($0, match: [
+          [
+            .byte(0x00), .byte(0x00), .byte(0x00), .byte(0x0C),
+            .byte(0x6A), .byte(0x50), .byte(0x20), .byte(0x20),
+            .byte(0x0D), .byte(0x0A), .byte(0x87), .byte(0x0A),
+            .any,        .any,        .any,        .any,
+            .any,        .any,        .any,        .any,
+            .byte(0x6D), .byte(0x6A), .byte(0x70), .byte(0x32)
+          ],
+        ])
+      }
+    ),
 
     // -- Unsafe signatures --
     FileType(
@@ -818,13 +1211,52 @@ public struct FileType {
       matchBytes: [[0x06, 0x0E, 0x2B, 0x34, 0x02, 0x05, 0x01, 0x01, 0x0D, 0x01, 0x02, 0x01, 0x01, 0x02]]
     ),
 
-    //s3m
+    FileType(
+      type: .s3m,
+      ext: "s3m",
+      mime: "audio/x-s3m",
+      bytesCount: 48,
+      match: { matchPatterns($0, match: [
+        [.byte(0x53), .byte(0x43), .byte(0x52), .byte(0x4D)]
+      ], offset: 44)}
+    ),
 
-    // mts
+    FileType(
+      type: .mts,
+      ext: "mts",
+      mime: "video/mp2t",
+      bytesCount: 196,
+      match: {
+        matchPatterns($0, match: [[.byte(0x47)]], offset: 4) &&
+        (
+          matchPatterns($0, match: [[.byte(0x47)]], offset: 192) ||
+          matchPatterns($0, match: [[.byte(0x47)]], offset: 196)
+        )
+      }
+    ),
 
-    // mobi
+    FileType(
+      type: .mobi,
+      ext: "mobi",
+      mime: "application/x-mobipocket-ebook",
+      bytesCount: 60 + 8,
+      match: { matchPatterns($0, match: [
+        [
+          .byte(0x42), .byte(0x4F), .byte(0x4F), .byte(0x4B),
+          .byte(0x4D), .byte(0x4F), .byte(0x42), .byte(0x49)
+        ]
+      ], offset: 60)}
+    ),
 
-    // dcm
+    FileType(
+      type: .dcm,
+      ext: "dcm",
+      mime: "application/dicom",
+      bytesCount: 128 + 4,
+      match: { matchPatterns($0, match: [
+        [.byte(0x44), .byte(0x49), .byte(0x43), .byte(0x4D)]
+      ], offset: 128)}
+    ),
 
     FileType(
       type: .lnk,

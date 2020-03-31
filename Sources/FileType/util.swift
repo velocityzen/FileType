@@ -26,7 +26,7 @@ internal func matchPatterns(_ data: Data, match: [[MatchPattern]], offset: Int =
     loop: for (index, pattern) in m.enumerated() {
       switch pattern {
         case .byte(let byte):
-          if data[offset + index] != byte {
+          if (mask != nil && (data[offset + index] & mask![index]) != byte) || data[offset + index] != byte {
             matched = false
             break loop
           }

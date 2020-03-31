@@ -80,6 +80,29 @@ final class FileTypeTests: XCTestCase {
     testFileType("fixture-otto.woff2", type: .woff2)
   }
   
+  func testMOV() {
+    testFileType("fixture-mjpeg.mov", type: .mov)
+    testFileType("fixture-moov.mov", type: .mov)
+  }
+  
+  func testFTYP() {
+    testFileType("fixture-mif1.heic", type: .heic)
+    testFileType("fixture-msf1.heic", type: .heic)
+    testFileType("fixture-heic.heic", type: .heic)
+    testFileType("fixture2.3gp", type: .threegp)
+    testFileType("fixture-imovie.mp4", type: .mp4)
+    testFileType("fixture-isom.mp4", type: .mp4)
+    testFileType("fixture-isomv2.mp4", type: .mp4)
+    testFileType("fixture-mp4v2.mp4", type: .mp4)
+    testFileType("fixture-dash.mp4", type: .mp4)
+  }
+  
+  func testMPEG() {
+    testFileType("fixture2.mpg", type: .mpg)
+    testFileType("fixture.ps.mpg", type: .mpg)
+    testFileType("fixture.sub.mpg", type: .mpg)
+  }
+  
   func testBytesCountForType() {
     XCTAssertEqual(getBytesCountForType(.ac3), 2)
     XCTAssertEqual(getBytesCountForType(.zip), 4)
@@ -102,6 +125,8 @@ final class FileTypeTests: XCTestCase {
     ("testARW", testARW),
     ("testOGX", testOGX),
     ("testWOFFOTTO", testWOFFOTTO),
+    ("testMOV", testMOV),
+    ("testFTYP", testFTYP),
     
     ("testBytesCountForType", testBytesCountForType),
     ("testBytesCountForTypes", testBytesCountForTypes),
