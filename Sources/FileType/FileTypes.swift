@@ -109,6 +109,7 @@ public enum FileTypeExtension {
   case dcm
   case mobi
   case mts
+  case eot
 }
 
 public struct FileType {
@@ -1279,7 +1280,20 @@ public struct FileType {
       matchBytes: [[0x62, 0x6F, 0x6F, 0x6B, 0x00, 0x00, 0x00, 0x00, 0x6D, 0x61, 0x72, 0x6B, 0x00, 0x00, 0x00, 0x00]]
     ),
 
-    //eot
+    FileType(
+      type: .eot,
+      ext: "eot",
+      mime: "application/vnd.ms-fontobject",
+      bytesCount: 36,
+      match: {
+        matchPatterns($0, match: [[.byte(0x4C), .byte(0x50)]], offset: 34) &&
+        (
+          matchPatterns($0, match: [[.byte(0x00), .byte(0x00), .byte(0x01)]], offset: 8) ||
+          matchPatterns($0, match: [[.byte(0x01), .byte(0x00), .byte(0x02)]], offset: 8) ||
+          matchPatterns($0, match: [[.byte(0x02), .byte(0x00), .byte(0x02)]], offset: 8)
+        )
+      }
+    ),
 
     // Increase sample size from 256 to 512
 
