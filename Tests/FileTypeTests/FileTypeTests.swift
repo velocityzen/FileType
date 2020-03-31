@@ -30,6 +30,7 @@ final class FileTypeTests: XCTestCase {
   }
   
   func testTAR() {
+    testFileType("fixture-v7.tar", type: .tar)
     testFileType("fixture.tar.Z", type: .Z)
     testFileType("fixture.tar.gz", type: .gz)
     testFileType("fixture.tar.lz", type: .lz)
@@ -110,7 +111,7 @@ final class FileTypeTests: XCTestCase {
   func testEOT() {
     testFileType("fixture-0x20001.eot", type: .eot)
   }
-  
+    
   func testBytesCountForType() {
     XCTAssertEqual(getBytesCountForType(.ac3), 2)
     XCTAssertEqual(getBytesCountForType(.zip), 4)

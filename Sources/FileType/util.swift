@@ -13,6 +13,14 @@ internal func readInt32BE(_ data: Data) -> Int {
   )
 }
 
+internal func readIntByteString(_ data: Data) -> Int? {
+  guard let octal = String(data: data, encoding: .utf8) else {
+    return nil
+  }
+  
+  return Int(octal, radix: 0o10)
+}
+
 internal func skipID3Header(_ data: Data) -> Data? {
   let id3HeaderOffset = 6
   let id3HeaderSize = uint32Safe(data, offset: id3HeaderOffset) + id3HeaderOffset
@@ -35,7 +43,12 @@ internal func matchPatterns(_ data: Data, match: [[MatchPattern]], offset: Int =
     loop: for (index, pattern) in m.enumerated() {
       switch pattern {
         case .byte(let byte):
-          if (mask != nil && (data[offset + index] & mask![index]) != byte) || data[offset + index] != byte {
+          if (mask != nil) {
+            if (data[offset + index] & mask![index]) != byte {
+              matched = false
+              break loop
+            }
+          } else if data[offset + index] != byte {
             matched = false
             break loop
           }

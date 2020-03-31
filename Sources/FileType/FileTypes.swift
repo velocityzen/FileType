@@ -107,6 +107,7 @@ public enum FileTypeExtension {
   case xz
   case Z
   case zip
+  case tar
 }
 
 public struct FileType {
@@ -1200,8 +1201,6 @@ public struct FileType {
       matchString: ["Creative Voice File"]
     ),
 
-    //tar
-
     FileType(
       type: .msi,
       ext: "msi",
@@ -1292,9 +1291,24 @@ public struct FileType {
       }
     ),
 
-    // Increase sample size from 256 to 512
+    // Sample size 512
 
-    // tar
+    FileType(
+      type: .tar,
+      ext: "tar",
+      mime: "application/x-tar",
+      bytesCount: 512,
+      match: { matchPatterns(
+        $0,
+        match: [[
+          .byte(0x30), .byte(0x30), .byte(0x30), .byte(0x30),
+          .byte(0x30), .byte(0x30)
+          ]],
+        offset: 148,
+        mask: [0xF8, 0xF8, 0xF8, 0xF8, 0xF8, 0xF8]
+      ) //&& tarHeaderChecksumMatches($0)
+      }
+    ),
 
     // Check for MPEG header at different starting offsets
 
