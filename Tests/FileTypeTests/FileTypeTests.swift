@@ -103,6 +103,10 @@ final class FileTypeTests: XCTestCase {
     testFileType("fixture.sub.mpg", type: .mpg)
   }
   
+  func testPNG() {
+    testFileType("fixture-itxt.png", type: .png)
+  }
+  
   func testBytesCountForType() {
     XCTAssertEqual(getBytesCountForType(.ac3), 2)
     XCTAssertEqual(getBytesCountForType(.zip), 4)
@@ -127,6 +131,8 @@ final class FileTypeTests: XCTestCase {
     ("testWOFFOTTO", testWOFFOTTO),
     ("testMOV", testMOV),
     ("testFTYP", testFTYP),
+    ("testMPEG", testMPEG),
+    ("testPNG", testPNG),
     
     ("testBytesCountForType", testBytesCountForType),
     ("testBytesCountForTypes", testBytesCountForTypes),

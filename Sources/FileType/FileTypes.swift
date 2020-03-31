@@ -55,6 +55,7 @@ public enum FileTypeExtension {
   case otf
   case pdf
   case png
+  case apng
   case ps
   case psd
   case qcp
@@ -253,13 +254,6 @@ public struct FileType {
       ext: "swf",
       mime: "application/x-shockwave-flash",
       matchBytes: [[0x43, 0x57, 0x53], [0x46, 0x57, 0x53]]
-    ),
-
-    FileType(
-      type: .png,
-      ext: "png",
-      mime: "image/png",
-      matchBytes: [[0x89, 0x50, 0x4E, 0x47]]
     ),
 
     //zip
@@ -980,7 +974,20 @@ public struct FileType {
       matchString: ["!<arch>"]
     ),
 
-    // png & apng
+    FileType(
+      type: .apng,
+      ext: "apng",
+      mime: "image/apng",
+      matchBytes: [[0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]],
+      match: findAPNG
+    ),
+    
+    FileType(
+      type: .png,
+      ext: "png",
+      mime: "image/png",
+      matchBytes: [[0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]]
+    ),
 
     FileType(
       type: .arr,
