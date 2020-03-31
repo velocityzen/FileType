@@ -7,6 +7,8 @@ public enum FileTypeExtension {
   case ali
   case amr
   case ape
+  case apng
+  case ar
   case arr
   case arw
   case avi
@@ -16,32 +18,53 @@ public enum FileTypeExtension {
   case bz2
   case cab
   case cr2
+  case cr3
   case crx
   case cur
+  case dcm
+  case deb
   case dmg
   case dng
   case dsf
+  case eot
   case exe
+  case f4a
+  case f4b
+  case f4p
+  case f4v
   case fla
   case flif
   case flv
   case gif
   case glb
   case gz
+  case heic
   case ico
   case ics
   case it
+  case jp2
   case jpg
+  case jpm
+  case jpx
   case jxr
   case ktx
   case lnk
   case lz
+  case m4a
+  case m4b
+  case m4p
+  case m4v
   case mid
   case mie
+  case mj2
+  case mobi
+  case mov
   case mp3
+  case mp4
   case mpc
   case mpg
   case msi
+  case mts
   case mxf
   case nef
   case nes
@@ -55,7 +78,6 @@ public enum FileTypeExtension {
   case otf
   case pdf
   case png
-  case apng
   case ps
   case psd
   case qcp
@@ -64,10 +86,14 @@ public enum FileTypeExtension {
   case rpm
   case rtf
   case rw2
+  case s3m
   case sevenz
+  case shp
   case spx
   case sql
   case swf
+  case threeg2
+  case threegp
   case tif
   case ttf
   case voc
@@ -81,35 +107,6 @@ public enum FileTypeExtension {
   case xz
   case Z
   case zip
-  
-  case jp2
-  case jpx
-  case jpm
-  case mj2
-  case shp
-  case mov
-  
-  case heic
-  case m4v
-  case m4p
-  case m4b
-  case m4a
-  case f4v
-  case f4p
-  case f4a
-  case f4b
-  case cr3
-  case threeg2
-  case threegp
-  case mp4
-  
-  case deb
-  case ar
-  case s3m
-  case dcm
-  case mobi
-  case mts
-  case eot
 }
 
 public struct FileType {
@@ -384,7 +381,7 @@ public struct FileType {
         ]
       ], offset: 4) }
     ),
-    
+
     FileType(
       type: .heic,
       ext: "heic",
@@ -397,7 +394,7 @@ public struct FileType {
         ]
       ], offset: 4) }
     ),
-    
+
     FileType(
       type: .heic,
       ext: "heic",
@@ -408,14 +405,14 @@ public struct FileType {
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
           .byte(0x68), .byte(0x65), .byte(0x69), .byte(0x63)  // heic
         ],
-        
+
         [
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
           .byte(0x68), .byte(0x65), .byte(0x69), .byte(0x78)  // heix
         ]
       ], offset: 4) }
     ),
-    
+
     FileType(
       type: .heic,
       ext: "heic",
@@ -426,14 +423,14 @@ public struct FileType {
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
           .byte(0x68), .byte(0x65), .byte(0x76), .byte(0x63)  // hevc
         ],
-        
+
         [
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
           .byte(0x68), .byte(0x65), .byte(0x76), .byte(0x78)  // hevx
         ]
       ], offset: 4) }
     ),
-    
+
     FileType(
       type: .mov,
       ext: "mov",
@@ -446,7 +443,7 @@ public struct FileType {
         ]
       ], offset: 4) }
     ),
-    
+
     FileType(
       type: .m4v,
       ext: "m4v",
@@ -457,20 +454,20 @@ public struct FileType {
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
           .byte(0x4d), .byte(0x34), .byte(0x56)               // M4V
         ],
-        
+
         [
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
           .byte(0x4d), .byte(0x34), .byte(0x56), .byte(0x48)  // M4VH
         ],
-         
+
         [
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
           .byte(0x4d), .byte(0x34), .byte(0x56), .byte(0x50)  // M4VP
         ],
-        
+
       ], offset: 4) }
     ),
-    
+
     FileType(
       type: .m4p,
       ext: "m4p",
@@ -481,7 +478,7 @@ public struct FileType {
         .byte(0x4d), .byte(0x34), .byte(0x50)               // M4P
       ]], offset: 4) }
     ),
-    
+
     FileType(
       type: .m4b,
       ext: "m4b",
@@ -492,7 +489,7 @@ public struct FileType {
         .byte(0x4d), .byte(0x34), .byte(0x42)               // M4B
       ]], offset: 4) }
     ),
-    
+
     FileType(
       type: .m4a,
       ext: "m4a",
@@ -514,7 +511,7 @@ public struct FileType {
         .byte(0x46), .byte(0x34), .byte(0x56)               // F4V
       ]], offset: 4) }
     ),
-    
+
     FileType(
       type: .f4p,
       ext: "f4p",
@@ -525,7 +522,7 @@ public struct FileType {
         .byte(0x46), .byte(0x34), .byte(0x50)               // F4P
       ]], offset: 4) }
     ),
-    
+
     FileType(
       type: .f4a,
       ext: "f4a",
@@ -536,7 +533,7 @@ public struct FileType {
         .byte(0x46), .byte(0x34), .byte(0x41)               // F4A
       ]], offset: 4) }
     ),
-    
+
     FileType(
       type: .f4b,
       ext: "f4b",
@@ -547,7 +544,7 @@ public struct FileType {
         .byte(0x46), .byte(0x34), .byte(0x42)               // F4B
       ]], offset: 4) }
     ),
-    
+
     FileType(
       type: .cr3,
       ext: "cr3",
@@ -558,7 +555,7 @@ public struct FileType {
         .byte(0x63), .byte(0x72), .byte(0x78)               // crx
       ]], offset: 4) }
     ),
-    
+
     FileType(
       type: .threeg2,
       ext: "3g2",
@@ -569,7 +566,7 @@ public struct FileType {
         .byte(0x33), .byte(0x67), .byte(0x32)               // 3g2
       ]], offset: 4) }
     ),
-    
+
     FileType(
       type: .threegp,
       ext: "3gp",
@@ -580,7 +577,7 @@ public struct FileType {
         .byte(0x33), .byte(0x67)                            // 3g
       ]], offset: 4) }
     ),
-    
+
     FileType(
       type: .mp4,
       ext: "mp4",
@@ -591,7 +588,7 @@ public struct FileType {
       ]], offset: 4) }
     ),
 
-    
+
     FileType(
       type: .mid,
       ext: "mid",
@@ -891,7 +888,7 @@ public struct FileType {
         matchPatterns($0, match: [[.byte(0x21)]], offset: 4, mask: [0xF1])
       }
     ),
-    
+
     // MPEG-PS, MPEG-2 Part 1
     FileType(
       type: .mpg,
@@ -903,7 +900,7 @@ public struct FileType {
         matchPatterns($0, match: [[.byte(0x44)]], offset: 4, mask: [0xC4])
       }
     ),
-    
+
     FileType(
       type: .xz,
       ext: "xz",
@@ -967,7 +964,7 @@ public struct FileType {
         ]
       ], offset: 8)}
     ),
-    
+
     FileType(
       type: .ar,
       ext: "ar",
@@ -982,7 +979,7 @@ public struct FileType {
       matchBytes: [[0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]],
       match: findAPNG
     ),
-    
+
     FileType(
       type: .png,
       ext: "png",
@@ -1092,7 +1089,7 @@ public struct FileType {
         ])
       }
     ),
-    
+
     FileType(
       type: .jpx,
       ext: "jpx",
@@ -1111,7 +1108,7 @@ public struct FileType {
         ])
       }
     ),
-    
+
     FileType(
       type: .jpm,
       ext: "jpm",
@@ -1130,7 +1127,7 @@ public struct FileType {
         ])
       }
     ),
-    
+
     FileType(
       type: .mj2,
       ext: "mj2",
