@@ -111,6 +111,18 @@ final class FileTypeTests: XCTestCase {
   func testEOT() {
     testFileType("fixture-0x20001.eot", type: .eot)
   }
+  
+  func testMPEGAudio() {
+    testFileType("fixture-adts-mpeg2.aac", type: .aac)
+    testFileType("fixture-adts-mpeg4.aac", type: .aac)
+    testFileType("fixture-adts-mpeg4-2.aac", type: .aac)
+//    testFileType("fixture-id3v2.aac", type: .aac)
+    
+    testFileType("fixture-mp2l3.mp3", type: .mp3)
+    testFileType("fixture-ffe3.mp3", type: .mp3)
+    
+    testFileType("fixture-mpa.mp2", type: .mp2)
+  }
     
   func testBytesCountForType() {
     XCTAssertEqual(getBytesCountForType(.ac3), 2)
@@ -139,6 +151,7 @@ final class FileTypeTests: XCTestCase {
     ("testMPEG", testMPEG),
     ("testPNG", testPNG),
     ("testEOT", testEOT),
+    ("testMPEGAudio", testMPEGAudio),
     
     ("testBytesCountForType", testBytesCountForType),
     ("testBytesCountForTypes", testBytesCountForTypes),

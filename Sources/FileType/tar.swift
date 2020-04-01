@@ -22,10 +22,10 @@ internal func tarHeaderChecksumMatches(_ data: Data) -> Bool {
     signedBitSum += byte & MASK_8TH_BIT; // Add signed bit to signed bit sum
   }
   
-  guard let readSum = readIntByteString(data[148...154]) else {
+  guard let readSum = readIntByteString(data[148..<154]) else {
     return false
   }
-  
+    
   // Some implementations compute checksum incorrectly using signed bytes
   return (
     readSum == sum || // Checksum in header equals the sum we calculated

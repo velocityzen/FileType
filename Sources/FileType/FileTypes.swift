@@ -59,7 +59,6 @@ public enum FileTypeExtension {
   case mj2
   case mobi
   case mov
-  case mp3
   case mp4
   case mpc
   case mpg
@@ -108,6 +107,11 @@ public enum FileTypeExtension {
   case Z
   case zip
   case tar
+  
+  case aac
+  case mp3
+  case mp2
+  case mp1
 }
 
 public struct FileType {
@@ -1306,11 +1310,42 @@ public struct FileType {
           ]],
         offset: 148,
         mask: [0xF8, 0xF8, 0xF8, 0xF8, 0xF8, 0xF8]
-      ) //&& tarHeaderChecksumMatches($0)
+      ) && tarHeaderChecksumMatches($0)
       }
     ),
 
     // Check for MPEG header at different starting offsets
+    FileType(
+      type: .aac,
+      ext: "aac",
+      mime: "audio/aac",
+      bytesCount: 18,
+      match: { matchMPEGHeader($0, match: 0x10, mask: 0x16) }
+    ),
+    
+    FileType(
+      type: .mp3,
+      ext: "mp3",
+      mime: "audio/mpeg",
+      bytesCount: 18,
+      match: { matchMPEGHeader($0, match: 0x02, mask: 0x06) }
+    ),
+    
+    FileType(
+      type: .mp2,
+      ext: "mp2",
+      mime: "audio/mpeg",
+      bytesCount: 18,
+      match: { matchMPEGHeader($0, match: 0x04, mask: 0x06) }
+    ),
+    
+    FileType(
+      type: .mp1,
+      ext: "mp1",
+      mime: "audio/mpeg",
+      bytesCount: 18,
+      match: { matchMPEGHeader($0, match: 0x06, mask: 0x06) }
+    ),
 
   ]
 }
