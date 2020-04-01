@@ -605,6 +605,7 @@ public struct FileType {
       ext: "woff",
       mime: "font/woff",
       matchString: ["wOFF"],
+      bytesCount: 12,
       match: {
         matchPatterns($0, match: [
           [.byte(0x0), .byte(0x01), .byte(0x0), .byte(0x0)],
@@ -618,9 +619,10 @@ public struct FileType {
       ext: "woff2",
       mime: "font/woff2",
       matchString: ["wOF2"],
+      bytesCount: 12,
       match: {
         matchPatterns($0, match: [
-          [.byte(0x0), .byte(0x01), .byte(0x0), .byte(0x0)],
+          [.byte(0x00), .byte(0x01), .byte(0x0), .byte(0x00)],
           [.byte(0x4F), .byte(0x54), .byte(0x54), .byte(0x4F)]
         ], offset: 4)
       }
@@ -717,8 +719,14 @@ public struct FileType {
       matchBytes: [[0x49, 0x49, 0x2A, 0x0]],
       match: {
         matchPatterns($0, match: [
-          [.byte(0x08), .byte(0x0), .byte(0x0), .byte(0x0), .byte(0x2D), .byte(0x0), .byte(0xFE), .byte(0x0)],
-          [.byte(0x08), .byte(0x0), .byte(0x0), .byte(0x0), .byte(0x27), .byte(0x0), .byte(0xFE), .byte(0x0)]
+          [
+            .byte(0x08), .byte(0x0), .byte(0x0), .byte(0x0),
+            .byte(0x2D), .byte(0x0), .byte(0xFE), .byte(0x0)
+          ],
+          [
+            .byte(0x08), .byte(0x0), .byte(0x0), .byte(0x0),
+            .byte(0x27), .byte(0x0), .byte(0xFE), .byte(0x0)
+          ]
         ], offset: 4)
       }
     ),
@@ -886,7 +894,7 @@ public struct FileType {
       type: .mpg,
       ext: "mpg", // May also be .ps, .mpeg
       mime: "video/MP1S",
-      bytesCount: 21,
+      bytesCount: 5,
       matchBytes: [[0x00, 0x00, 0x01, 0xBA]],
       match: {
         matchPatterns($0, match: [[.byte(0x21)]], offset: 4, mask: [0xF1])
@@ -898,7 +906,7 @@ public struct FileType {
       type: .mpg,
       ext: "mpg", // May also be .mpg, .m2p, .vob or .sub
       mime: "video/MP2P",
-      bytesCount: 21,
+      bytesCount: 5,
       matchBytes: [[0x00, 0x00, 0x01, 0xBA]],
       match: {
         matchPatterns($0, match: [[.byte(0x44)]], offset: 4, mask: [0xC4])
@@ -960,10 +968,9 @@ public struct FileType {
       matchString: ["!<arch>"],
       match: { matchPatterns($0, match: [
         [
-          .byte(0x64), .byte(0x65), .byte(0x62), //debian-binary
-          .byte(0x69), .byte(0x61), .byte(0x6e),
-          .byte(0x2d), .byte(0x62), .byte(0x69),
-          .byte(0x6e), .byte(0x61), .byte(0x72),
+          .byte(0x64), .byte(0x65), .byte(0x62), .byte(0x69),
+          .byte(0x61), .byte(0x6e), .byte(0x2d), .byte(0x62),
+          .byte(0x69), .byte(0x6e), .byte(0x61), .byte(0x72),
           .byte(0x79)
         ]
       ], offset: 8)}
@@ -980,6 +987,7 @@ public struct FileType {
       type: .apng,
       ext: "apng",
       mime: "image/apng",
+      bytesCount: 32,
       matchBytes: [[0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]],
       match: findAPNG
     ),
@@ -1009,6 +1017,7 @@ public struct FileType {
       type: .mov,
       ext: "mov",
       mime: "video/quicktime",
+      bytesCount: 8,
       match: {
         matchPatterns($0, match: [
           [.byte(0x66), .byte(0x72), .byte(0x65), .byte(0x65)], // `free`
@@ -1048,12 +1057,13 @@ public struct FileType {
       type: .mie,
       ext: "mie",
       mime: "application/x-mie",
+      bytesCount: 8,
       match: {
         matchPatterns($0, match: [
-          [.byte(0x7E), .byte(0x10), .byte(0x04), .any, .byte(0x30),
-           .byte(0x4D), .byte(0x49), .byte(0x45)],
-          [.byte(0x7E), .byte(0x18), .byte(0x04), .any, .byte(0x30),
-           .byte(0x4D), .byte(0x49), .byte(0x45)]
+          [.byte(0x7E), .byte(0x10), .byte(0x04), .any,
+           .byte(0x30), .byte(0x4D), .byte(0x49), .byte(0x45)],
+          [.byte(0x7E), .byte(0x18), .byte(0x04), .any,
+           .byte(0x30), .byte(0x4D), .byte(0x49), .byte(0x45)]
         ])
       }
     ),
@@ -1222,7 +1232,7 @@ public struct FileType {
       type: .s3m,
       ext: "s3m",
       mime: "audio/x-s3m",
-      bytesCount: 48,
+      bytesCount: 44 + 4,
       match: { matchPatterns($0, match: [
         [.byte(0x53), .byte(0x43), .byte(0x52), .byte(0x4D)]
       ], offset: 44)}
@@ -1232,7 +1242,7 @@ public struct FileType {
       type: .mts,
       ext: "mts",
       mime: "video/mp2t",
-      bytesCount: 196,
+      bytesCount: 197,
       match: {
         matchPatterns($0, match: [[.byte(0x47)]], offset: 4) &&
         (
@@ -1313,7 +1323,6 @@ public struct FileType {
       }
     ),
 
-    // Check for MPEG header at different starting offsets
     FileType(
       type: .aac,
       ext: "aac",
