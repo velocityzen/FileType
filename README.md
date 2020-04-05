@@ -1,6 +1,6 @@
 # FileType
 
-The file type is detected by checking the magic number of the buffer.
+The file type is detected by checking the magic number of the data.
 
 This is swift port of [file-type](https://github.com/sindresorhus/file-type)
 
