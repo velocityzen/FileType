@@ -35,6 +35,28 @@ internal extension Data {
     )
   }
   
+  func getInt64BE(offset: Int = 0) -> Int {
+    return Int(
+      (UInt64(self[offset]) << 32) |
+      (UInt64(self[offset + 1]) << 24) |
+      (UInt64(self[offset + 2]) << 16) |
+      (UInt64(self[offset + 3]) << 8) |
+      UInt64(self[offset + 4])
+    )
+  }
+  
+  func getInt64LE(offset: Int = 0) -> Int {
+    return Int(
+      (
+        UInt32(self[offset]) |
+        (UInt32(self[offset + 1]) << 8) |
+        (UInt32(self[offset + 2]) << 16) |
+        (UInt32(self[offset + 3]) << 24) |
+        (UInt32(self[offset + 4]) << 32)
+      )
+    )
+  }
+  
   func getUTF8String(from range: Range<Int>) -> String? {
     guard range.endIndex <= self.count else {
       return nil
