@@ -2,38 +2,35 @@ import Foundation
 
 internal struct ZipHeader {
   let filename: String
-  let compressedSize: Int
-  let uncompressedSize: Int
   var mimeType: String? = nil
 }
 
 internal func matchZipHeader(_ data: Data, _ match: (ZipHeader) -> Bool) -> Bool {
   var position: Int = 0
   while (position + 30 < data.count) {
+    let compressedSize = data.getInt32LE(offset: position + 18)
+    let uncompressedSize = data.getInt32LE(offset: position + 22)
     let filenameLength = data.getInt16LE(offset: position + 26)
     guard let filename = data.getUTF8String(from: position + 30..<position + 30 + filenameLength) else {
       return false
     }
     
     var zipHeader = ZipHeader(
-      filename: filename,
-      compressedSize: data.getInt32LE(offset: position + 18),
-      uncompressedSize: data.getInt32LE(offset: position + 22)
+      filename: filename
     )
     
     let extraFieldLength = data.getInt16LE(offset: position + 28)
     position += 30 + filenameLength + extraFieldLength
     
-    if zipHeader.filename == "mimetype" &&
-      zipHeader.compressedSize == zipHeader.uncompressedSize {
-      zipHeader.mimeType = data.getUTF8String(from: position..<position + zipHeader.compressedSize)
+    if zipHeader.filename == "mimetype" && compressedSize == uncompressedSize {
+      zipHeader.mimeType = data.getUTF8String(from: position..<position + compressedSize)
     }
   
     if (match(zipHeader)) {
       return true
     }
     
-    position += zipHeader.compressedSize
+    position += compressedSize
   }
   
   return false
