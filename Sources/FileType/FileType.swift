@@ -129,10 +129,10 @@ public struct FileType {
   let ext: String
   let mime: String
 
-  fileprivate var bytesCount: Int? = nil
-  fileprivate var matchString: [String]? = nil
-  fileprivate var matchBytes: [[UInt8]]? = nil
-  fileprivate var match: ((Data) -> Bool)? = nil
+  private var bytesCount: Int? = nil
+  private var matchString: [String]? = nil
+  private var matchBytes: [[UInt8]]? = nil
+  private var match: ((Data) -> Bool)? = nil
   
   static let all: [FileType] = [
     FileType(
@@ -1470,7 +1470,6 @@ public struct FileType {
 
   ]
 }
-
 
 public extension FileType {
   static func getBytesCountFor(type: FileTypeExtension) -> Int {
