@@ -11,7 +11,7 @@ let package = Package(
   targets: [
     .target(
       name: "FileType",
-      path: "./Sources"
+      dependencies: []
     ),
     .testTarget(
       name: "FileTypeTests",
