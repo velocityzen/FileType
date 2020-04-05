@@ -791,15 +791,15 @@ public extension FileType {
       )}
   }
   
-  static func get(for fileTypeExtension: FileTypeExtension) -> [FileType] {
+  static func getFor(type: FileTypeExtension) -> [FileType] {
     return FileType.all
       .filter{ (key, value) in
-        value.type == fileTypeExtension
+        value.type == type
       }
       .map { (key, value) in value }
   }
   
-  static func get(for data: Data) -> FileType? {
+  static func getFor(data: Data) -> FileType? {
     for fileTypeMatch in FileTypeMatch.all {
       if fileTypeMatch.bytesCount != nil && fileTypeMatch.bytesCount! > data.count {
         continue

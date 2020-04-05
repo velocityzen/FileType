@@ -19,13 +19,13 @@ final class FileTypeTests: XCTestCase {
       return
     }
         
-    let fileType = FileType.get(for: data)
+    let fileType = FileType.getFor(data: data)
     XCTAssertEqual(fileType?.type, type)
   }
   
   func testAll() {
     for fileTypeExtension in FileTypeExtension.allCases {
-      for fileType in FileType.get(for: fileTypeExtension) {
+      for fileType in FileType.getFor(type: fileTypeExtension) {
         testFileType("fixture.\(fileType.ext)", type: fileType.type)
       }
     }

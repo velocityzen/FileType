@@ -27,12 +27,29 @@ import FileType
 let path = "/path/to/some-file.jpg"
 let url = URL(fileURLWithPath: path, isDirectory: false)
 let data = try! Data(contentsOf: url)
-let fileType = getFileType(from: data)
+let fileType = FileType.get(for: data)
 
 fileType?.type == .jpg // true
 fileType! // FileType(type: .jpg, ext: "jpg", mime: "image/jpeg")
 
 ```
+
+### .getFor(type: FileTypeExtension) -> [FileType]
+
+returns all file types and mime information 
+
+### .getFor(data: Data) -> FileType?
+
+returns file type detected by checking the magic number
+
+
+### .getBytesCountFor(type: FileTypeExtension) -> Int
+
+returns bytes count needed to detect file type
+
+### .getBytesCountFor(types: [FileTypeExtension]) -> Int
+
+returns max bytes count needed to detect file types
 
 
 ## Supported file types
