@@ -116,7 +116,7 @@ final class FileTypeTests: XCTestCase {
     testFileType("fixture-adts-mpeg2.aac", type: .aac)
     testFileType("fixture-adts-mpeg4.aac", type: .aac)
     testFileType("fixture-adts-mpeg4-2.aac", type: .aac)
-//    testFileType("fixture-id3v2.aac", type: .aac)
+    //testFileType("fixture-id3v2.aac", type: .aac)
     
     testFileType("fixture-mp2l3.mp3", type: .mp3)
     testFileType("fixture-ffe3.mp3", type: .mp3)
@@ -126,8 +126,8 @@ final class FileTypeTests: XCTestCase {
   
   func testOffice() {
     testFileType("fixture-office365.docx", type: .docx)
-//    testFileType("fixture-office365.pptx", type: .pptx)
-//    testFileType("fixture-office365.xlsx", type: .xlsx)
+    testFileType("fixture-office365.pptx", type: .pptx)
+    testFileType("fixture-office365.xlsx", type: .xlsx)
   }
     
   func testBytesCountForType() {

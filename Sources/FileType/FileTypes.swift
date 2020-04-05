@@ -205,21 +205,6 @@ public struct FileType {
       matchBytes: [[0x42, 0x5A, 0x68]]
     ),
 
-    //ID3
-//    FileType(
-//      type: .mp3,
-//      ext: "mp3",
-//      mime: "audio/mpeg",
-//      matchString: ["ID3"],
-//      match: { data in
-//        guard let fileData = skipID3Header(data) else {
-//          return false
-//        }
-//
-//        return matchPatterns(fileData, match: [[.byte(0x02)]], offset: 1, mask: [0x06])
-//      }
-//    ),
-
     FileType(
       type: .mpc,
       ext: "mpc",
@@ -1474,6 +1459,13 @@ public struct FileType {
       mime: "audio/mpeg",
       bytesCount: 18,
       match: { matchMPEGHeader($0, match: 0x06, mask: 0x06) }
+    ),
+
+    FileType(
+      type: .mp3,
+      ext: "mp3",
+      mime: "audio/mpeg",
+      matchString: ["ID3"]
     ),
 
   ]

@@ -23,6 +23,17 @@ public func getBytesCountForTypes(_ types: [FileTypeExtension]) -> Int {
 }
 
 public func getFileType(from data: Data) -> FileType? {
+  // check for ID3 tag and skip it if present
+//  if data.starts(with: "ID3".utf8) {
+//    let offset = 6
+//    let id3Size = data.getUInt32SyncSafeToken(offset: offset)
+//    guard offset + id3Size <= data.count else {
+//      return nil
+//    }
+//
+//    data = data.advanced(by: offset + id3Size)
+//  }
+  
   for fileType in FileType.all {
     if fileType.bytesCount != nil && fileType.bytesCount! > data.count {
       continue
