@@ -27,7 +27,7 @@ import FileType
 let path = "/path/to/some-file.jpg"
 let url = URL(fileURLWithPath: path, isDirectory: false)
 let data = try! Data(contentsOf: url)
-let fileType = FileType.get(for: data)
+let fileType = FileType.getFor(data: data)
 
 fileType?.type == .jpg // true
 fileType! // FileType(type: .jpg, ext: "jpg", mime: "image/jpeg")
