@@ -12,6 +12,7 @@ public enum FileTypeExtension {
   case ar
   case arr
   case arw
+  case asf
   case avi
   case ble
   case bmp
@@ -26,8 +27,10 @@ public enum FileTypeExtension {
   case deb
   case dmg
   case dng
+  case docx
   case dsf
   case eot
+  case epub
   case exe
   case f4a
   case f4b
@@ -71,6 +74,9 @@ public enum FileTypeExtension {
   case mxf
   case nef
   case nes
+  case odp
+  case ods
+  case odt
   case oga
   case ogg
   case ogm
@@ -81,6 +87,7 @@ public enum FileTypeExtension {
   case otf
   case pdf
   case png
+  case pptx
   case ps
   case psd
   case qcp
@@ -103,27 +110,18 @@ public enum FileTypeExtension {
   case voc
   case wasm
   case wav
+  case wma
+  case wmv
   case woff
   case woff2
   case wv
+  case xlsx
   case xm
   case xml
+  case xpi
   case xz
   case Z
   case zip
-  
-  case xpi
-  case docx
-  case pptx
-  case xlsx
-  case epub
-  case odt
-  case ods
-  case odp
-  
-  case asf
-  case wma
-  case wmv
 }
 
 public struct FileType {
@@ -279,7 +277,7 @@ public struct FileType {
       matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
       match: { matchZipHeader($0) { $0.filename == "META-INF/mozilla.rsa" }}
     ),
-    
+
     FileType(
       type: .docx,
       ext: "docx",
@@ -289,7 +287,7 @@ public struct FileType {
         matchMSOffice($0, type: "word")
       }}
     ),
-    
+
     FileType(
       type: .pptx,
       ext: "pptx",
@@ -297,7 +295,7 @@ public struct FileType {
       matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
       match: { matchZipHeader($0) { matchMSOffice($0, type: "ppt") }}
     ),
-    
+
     FileType(
       type: .xlsx,
       ext: "xlsx",
@@ -305,7 +303,7 @@ public struct FileType {
       matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
       match: { matchZipHeader($0) { matchMSOffice($0, type: "xl", startsWith: "xl/") }}
     ),
-    
+
     FileType(
       type: .epub,
       ext: "epub",
@@ -313,7 +311,7 @@ public struct FileType {
       matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
       match: { matchZipHeader($0) { $0.mimeType == "application/epub+zip" }}
     ),
-    
+
     FileType(
       type: .odt,
       ext: "odt",
@@ -321,7 +319,7 @@ public struct FileType {
       matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
       match: { matchZipHeader($0) { $0.mimeType == "application/vnd.oasis.opendocument.text" }}
     ),
-    
+
     FileType(
       type: .ods,
       ext: "ods",
@@ -329,7 +327,7 @@ public struct FileType {
       matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
       match: { matchZipHeader($0) { $0.mimeType == "application/vnd.oasis.opendocument.spreadsheet" }}
     ),
-    
+
     FileType(
       type: .odp,
       ext: "odp",
@@ -1139,7 +1137,7 @@ public struct FileType {
         0x5F, 0x5C, 0x44, 0x2B
       ]) }
     ),
-  
+
     FileType(
       type: .wmv,
       ext: "wmv",
@@ -1157,7 +1155,7 @@ public struct FileType {
         0x5F, 0x5C, 0x44, 0x2B
       ]) }
     ),
-    
+
     FileType(
       type: .asf,
       ext: "asf",
