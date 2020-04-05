@@ -7,8 +7,8 @@ internal func findAPNG(_ data: Data) -> Bool {
   var position = 8 // ignore PNG signature
   
   repeat {
-    let length = readInt32BE(data.subdata(in: position..<(position + 4)))
-    let type = String(data: data[(position + 4)..<(position + 8)], encoding: .utf8)
+    let length = data.getInt32BE(offset: position)
+    let type = data.getUTF8String(from: (position + 4)..<(position + 8))!
     
     switch (type) {
       case "acTL":

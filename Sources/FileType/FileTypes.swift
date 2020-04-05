@@ -111,6 +111,15 @@ public enum FileTypeExtension {
   case xz
   case Z
   case zip
+  
+  case xpi
+  case docx
+  case pptx
+  case xlsx
+  case epub
+  case odt
+  case ods
+  case odp
 }
 
 public struct FileType {
@@ -258,7 +267,72 @@ public struct FileType {
       matchBytes: [[0x43, 0x57, 0x53], [0x46, 0x57, 0x53]]
     ),
 
-    //zip
+    // Zip-based file formats
+    FileType(
+      type: .xpi,
+      ext: "xpi",
+      mime: "application/x-xpinstall",
+      matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+      match: { matchZipHeader($0) { $0.filename == "META-INF/mozilla.rsa" }}
+    ),
+    
+    FileType(
+      type: .docx,
+      ext: "docx",
+      mime: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+      match: { matchZipHeader($0) {
+        matchMSOffice($0, type: "word")
+      }}
+    ),
+    
+    FileType(
+      type: .pptx,
+      ext: "pptx",
+      mime: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+      match: { matchZipHeader($0) { matchMSOffice($0, type: "ppt") }}
+    ),
+    
+    FileType(
+      type: .xlsx,
+      ext: "xlsx",
+      mime: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+      match: { matchZipHeader($0) { matchMSOffice($0, type: "xl", startsWith: "xl/") }}
+    ),
+    
+    FileType(
+      type: .epub,
+      ext: "epub",
+      mime: "application/epub+zip",
+      matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+      match: { matchZipHeader($0) { $0.mimeType == "application/epub+zip" }}
+    ),
+    
+    FileType(
+      type: .odt,
+      ext: "odt",
+      mime: "application/vnd.oasis.opendocument.text",
+      matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+      match: { matchZipHeader($0) { $0.mimeType == "application/vnd.oasis.opendocument.text" }}
+    ),
+    
+    FileType(
+      type: .ods,
+      ext: "ods",
+      mime: "application/vnd.oasis.opendocument.spreadsheet",
+      matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+      match: { matchZipHeader($0) { $0.mimeType == "application/vnd.oasis.opendocument.spreadsheet" }}
+    ),
+    
+    FileType(
+      type: .odp,
+      ext: "odp",
+      mime: "application/vnd.oasis.opendocument.presentation",
+      matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+      match: { matchZipHeader($0) { $0.mimeType == "application/vnd.oasis.opendocument.presentation" }}
+    ),
 
     FileType(
       type: .zip,
@@ -604,8 +678,8 @@ public struct FileType {
       type: .woff,
       ext: "woff",
       mime: "font/woff",
-      matchString: ["wOFF"],
       bytesCount: 12,
+      matchString: ["wOFF"],
       match: {
         matchPatterns($0, match: [
           [.byte(0x0), .byte(0x01), .byte(0x0), .byte(0x0)],
@@ -618,8 +692,8 @@ public struct FileType {
       type: .woff2,
       ext: "woff2",
       mime: "font/woff2",
-      matchString: ["wOF2"],
       bytesCount: 12,
+      matchString: ["wOF2"],
       match: {
         matchPatterns($0, match: [
           [.byte(0x00), .byte(0x01), .byte(0x0), .byte(0x00)],

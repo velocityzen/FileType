@@ -1,29 +1,12 @@
 import Foundation
 
-internal func uint32Safe(_ data: Data, offset: Int) -> Int {
+internal func readUInt32Safe(_ data: Data, offset: Int) -> Int {
   return Int(data[offset + 3] & 0x7F | data[offset + 2] << 7 | data[offset + 1] << 14 | data[offset] << 21)
-}
-
-internal func readInt32BE(_ data: Data) -> Int {
-  return Int(
-    (Int32(data[0]) << 24) |
-    (Int32(data[1]) << 16) |
-    (Int32(data[2]) << 8) |
-    Int32(data[3])
-  )
-}
-
-internal func readIntByteString(_ data: Data) -> Int? {
-  guard let octal = String(data: data, encoding: .utf8) else {
-    return nil
-  }
-  
-  return Int(octal, radix: 0o10)
 }
 
 internal func skipID3Header(_ data: Data) -> Data? {
   let id3HeaderOffset = 6
-  let id3HeaderSize = uint32Safe(data, offset: id3HeaderOffset) + id3HeaderOffset
+  let id3HeaderSize = readUInt32Safe(data, offset: id3HeaderOffset) + id3HeaderOffset
   if (id3HeaderSize > data.count) {
     return nil
   }

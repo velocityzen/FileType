@@ -123,6 +123,12 @@ final class FileTypeTests: XCTestCase {
     
     testFileType("fixture-mpa.mp2", type: .mp2)
   }
+  
+  func testOffice() {
+    testFileType("fixture-office365.docx", type: .docx)
+//    testFileType("fixture-office365.pptx", type: .pptx)
+//    testFileType("fixture-office365.xlsx", type: .xlsx)
+  }
     
   func testBytesCountForType() {
     XCTAssertEqual(getBytesCountForType(.ac3), 2)
