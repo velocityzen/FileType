@@ -19,7 +19,9 @@ final class FileTypeTests: XCTestCase {
       return
     }
         
-    let fileType = getFileType(from: data)
+    let fileType = FileType.get(for: data)
+    print(fileType)
+    print("")
     XCTAssertEqual(fileType?.type, type)
   }
   
@@ -131,13 +133,13 @@ final class FileTypeTests: XCTestCase {
   }
     
   func testBytesCountForType() {
-    XCTAssertEqual(getBytesCountForType(.ac3), 2)
-    XCTAssertEqual(getBytesCountForType(.zip), 4)
-    XCTAssertEqual(getBytesCountForType(.cab), 4)
+    XCTAssertEqual(FileType.getBytesCountFor(type: .ac3), 2)
+    XCTAssertEqual(FileType.getBytesCountFor(type: .zip), 4)
+    XCTAssertEqual(FileType.getBytesCountFor(type: .cab), 4)
   }
   
   func testBytesCountForTypes() {
-    XCTAssertEqual(getBytesCountForTypes([.ac3, .zip, .cab]), 4)
+    XCTAssertEqual(FileType.getBytesCountFor(types: [.ac3, .zip, .cab]), 4)
   }
     
   static var allTests = [

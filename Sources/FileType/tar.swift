@@ -1,13 +1,6 @@
-//
-//  File.swift
-//  
-//
-//  Created by velocityzen on 3/31/20.
-//
-
 import Foundation
 
-internal func tarHeaderChecksumMatches(_ data: Data) -> Bool {
+func tarHeaderChecksumMatches(_ data: Data) -> Bool {
   if data.count < 512 { // `tar` header size, cannot compute checksum without it
     return false
   }

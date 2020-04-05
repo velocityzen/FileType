@@ -1,11 +1,11 @@
 import Foundation
 
-internal struct ZipHeader {
+struct ZipHeader {
   let filename: String
   var mimeType: String? = nil
 }
 
-internal func matchZipHeader(_ data: Data, _ match: (ZipHeader) -> Bool) -> Bool {
+func matchZipHeader(_ data: Data, _ match: (ZipHeader) -> Bool) -> Bool {
   var position: Int = 0
   while (position + 30 < data.count) {
     let compressedSize = data.getInt32LE(offset: position + 18)
@@ -36,7 +36,7 @@ internal func matchZipHeader(_ data: Data, _ match: (ZipHeader) -> Bool) -> Bool
   return false
 }
 
-internal func matchMSOffice(_ header: ZipHeader, type: String, startsWith: String? = nil) -> Bool {
+func matchMSOffice(_ header: ZipHeader, type: String, startsWith: String? = nil) -> Bool {
   guard header.filename.count > 4 else {
     return false
   }

@@ -1,12 +1,6 @@
 import Foundation
 
-extension Data {
-  var hexDescription: String {
-    return reduce("") {$0 + String(format: "%02x", $1)}
-  }
-}
-
-internal func matchAsfHeader(_ data: Data, _ match: [UInt8]) -> Bool {
+func matchAsfHeader(_ data: Data, _ match: [UInt8]) -> Bool {
   var position = 30
   
   while position + 24 < data.count {

@@ -1,6 +1,6 @@
 import Foundation
 
-internal func findAPNG(_ data: Data) -> Bool {
+func findAPNG(_ data: Data) -> Bool {
     // Offset calculated as follows:
   // - 8 bytes: PNG signature
   // - 4 (length) + 4 (chunk type) + 13 (chunk data) + 4 (CRC): IHDR chunk
