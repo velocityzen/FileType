@@ -34,7 +34,7 @@ public enum FileTypeExtension: CaseIterable {
   case f4b
   case f4p
   case f4v
-  case fla
+  case flac
   case flif
   case flv
   case gif

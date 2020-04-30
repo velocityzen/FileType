@@ -332,8 +332,8 @@ private extension FileType {
       mime: "application/x-lzip"
     ),
     
-    .fla: FileType(
-      type: .fla,
+    .flac: FileType(
+      type: .flac,
       ext: "flac",
       mime: "audio/x-flac"
     ),

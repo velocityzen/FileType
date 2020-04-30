@@ -36,7 +36,7 @@ enum FileTypeMatchType {
   case f4b
   case f4p
   case f4v
-  case fla
+  case flac
   case flif
   case flv
   case gif
@@ -597,7 +597,7 @@ struct FileTypeMatch {
     ),
     
     FileTypeMatch(
-      type: .fla,
+      type: .flac,
       matchString: ["fLaC"]
     ),
     
