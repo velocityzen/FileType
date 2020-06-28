@@ -14,7 +14,7 @@ final class FileTypeTests: XCTestCase {
     let absolutePath = "\(fixturesPath)/\(fixtureName)"
     let url = URL(fileURLWithPath: absolutePath, isDirectory: false)
     
-    guard let data = try? Data(contentsOf: url) else {
+    guard let data = try? Data(contentsOf: url, options: .mappedIfSafe) else {
       print("Fixture not found: \(fixtureName). Look for a specific test function.")
       return
     }
