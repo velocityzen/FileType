@@ -1,9 +1,9 @@
 import Foundation
 
 public struct FileType {
-  let type: FileTypeExtension
-  let ext: String
-  let mime: String
+  public let type: FileTypeExtension
+  public let ext: String
+  public let mime: String
 }
 
 private extension FileType {
