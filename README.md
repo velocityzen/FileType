@@ -12,7 +12,7 @@ import PackageDescription
 let package = Package(
   name: "MyApp",
   dependencies: [
-    .package(url: "https://github.com/velocityzen/FileType", from: "1.0.1")
+    .package(url: "https://github.com/velocityzen/FileType", from: "1.0.3")
   ]
 )
 ```
