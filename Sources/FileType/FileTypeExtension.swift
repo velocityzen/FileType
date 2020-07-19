@@ -85,6 +85,7 @@ public enum FileTypeExtension: CaseIterable {
   case orf
   case otf
   case pdf
+  case pgp
   case png
   case pptx
   case ps

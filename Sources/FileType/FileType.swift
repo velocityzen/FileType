@@ -771,6 +771,12 @@ private extension FileType {
       ext: "mp3",
       mime: "audio/mpeg"
     ),
+    
+    .pgp: FileType(
+      type: .pgp,
+      ext: "pgp",
+      mime: "application/pgp-encrypted"
+    ),
   ]
 }
 

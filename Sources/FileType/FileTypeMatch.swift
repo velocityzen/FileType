@@ -92,6 +92,7 @@ enum FileTypeMatchType {
   case orf
   case otf
   case pdf
+  case pgp
   case png
   case pptx
   case ps
@@ -1094,6 +1095,11 @@ struct FileTypeMatch {
     FileTypeMatch(
       type: .xm,
       matchString: ["Extended Module:"]
+    ),
+    
+    FileTypeMatch(
+      type: .pgp,
+      matchString: ["-----BEGIN PGP MESSAGE-----"]
     ),
     
     FileTypeMatch(
