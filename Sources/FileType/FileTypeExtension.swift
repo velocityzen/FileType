@@ -100,6 +100,7 @@ public enum FileTypeExtension: CaseIterable {
   case s3m
   case sevenz
   case shp
+  case skp
   case spx
   case sql
   case swf

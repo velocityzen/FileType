@@ -783,6 +783,12 @@ private extension FileType {
       ext: "lzh",
       mime: "application/x-lzh-compressed"
     ),
+    
+    .skp: FileType(
+      type: .skp,
+      ext: "skp",
+      mime: "application/vnd.sketchup.skp"
+    )
   ]
 }
 
