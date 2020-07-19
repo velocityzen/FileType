@@ -30,7 +30,19 @@ func matchZipHeader(_ data: Data, _ match: (ZipHeader) -> Bool) -> Bool {
       return true
     }
     
-    position += compressedSize
+    // Try to find next header manually when current one is corrupted
+    if compressedSize == 0 {
+      var hasNextHeader = false
+      while position + 30 < data.count && !hasNextHeader {
+        if data[position] == 0x50 && data[position+1] == 0x4B && data[position+2] == 0x03 && data[position+3] == 0x04 {
+          hasNextHeader = true
+        } else {
+          position += 1
+        }
+      }
+    } else {
+      position += compressedSize
+    }
   }
   
   return false

@@ -263,19 +263,23 @@ struct FileTypeMatch {
       matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
       match: { matchZipHeader($0) {
         matchMSOffice($0, type: "word")
-        }}
+      }}
     ),
 
     FileTypeMatch(
       type: .pptx,
       matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
-      match: { matchZipHeader($0) { matchMSOffice($0, type: "ppt") }}
+      match: { matchZipHeader($0) {
+        matchMSOffice($0, type: "ppt")
+      }}
     ),
 
     FileTypeMatch(
       type: .xlsx,
       matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
-      match: { matchZipHeader($0) { matchMSOffice($0, type: "xl", startsWith: "xl/") }}
+      match: { matchZipHeader($0) {
+        matchMSOffice($0, type: "xl", startsWith: "xl/")
+      }}
     ),
 
     FileTypeMatch(

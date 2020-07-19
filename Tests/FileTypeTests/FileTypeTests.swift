@@ -131,6 +131,10 @@ final class FileTypeTests: XCTestCase {
     testFileType("fixture-office365.docx", type: .docx)
     testFileType("fixture-office365.pptx", type: .pptx)
     testFileType("fixture-office365.xlsx", type: .xlsx)
+    
+    testFileType("fixture2.docx", type: .docx)
+    testFileType("fixture2.pptx", type: .pptx)
+    testFileType("fixture2.xlsx", type: .xlsx)
   }
   
   func testEPS() {
