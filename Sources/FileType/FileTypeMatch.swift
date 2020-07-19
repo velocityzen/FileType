@@ -48,6 +48,7 @@ enum FileTypeMatchType {
   case heicSequence
   case ico
   case ics
+  case icns
   case it
   case jp2
   case jpg
@@ -221,6 +222,11 @@ struct FileTypeMatch {
     FileTypeMatch(
       type: .swf,
       matchBytes: [[0x43, 0x57, 0x53], [0x46, 0x57, 0x53]]
+    ),
+    
+    FileTypeMatch(
+      type: .icns,
+      matchString: ["icns"]
     ),
     
     // Zip-based file formats

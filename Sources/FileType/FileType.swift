@@ -658,6 +658,12 @@ private extension FileType {
       mime: "image/x-icon"
     ),
     
+    .icns: FileType(
+      type: .icns,
+      ext: "icns",
+      mime: "image/icns"
+    ),
+    
     .cur: FileType(
       type: .cur,
       ext: "cur",
