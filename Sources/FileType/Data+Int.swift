@@ -55,21 +55,6 @@ internal extension Data {
     return Int( number )
   }
 
-  func getUTF8String(from range: Range<Int>) -> String? {
-    guard range.endIndex <= self.count else {
-      return nil
-    }
-    return String(data: self[range], encoding: .utf8)
-  }
-
-  func getIntByteString(from range: Range<Int>) -> Int? {
-    guard let octal = String(data: self[range], encoding: .utf8) else {
-      return nil
-    }
-
-    return Int(octal, radix: 0o10)
-  }
-
   /**
    ID3 UINT32 sync-safe tokenizer token.
    28 bits (representing up to 256MB) integer, the msb is 0 to avoid "false syncsignals".

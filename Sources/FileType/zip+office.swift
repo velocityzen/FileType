@@ -11,7 +11,7 @@ func matchZipHeader(_ data: Data, _ match: (ZipHeader) -> Bool) -> Bool {
     let compressedSize = data.getInt32LE(offset: position + 18)
     let uncompressedSize = data.getInt32LE(offset: position + 22)
     let filenameLength = data.getInt16LE(offset: position + 26)
-    guard let filename = data.getUTF8String(from: position + 30..<position + 30 + filenameLength) else {
+    guard let filename = data.getString(from: position + 30..<position + 30 + filenameLength) else {
       return false
     }
     
@@ -23,7 +23,7 @@ func matchZipHeader(_ data: Data, _ match: (ZipHeader) -> Bool) -> Bool {
     position += 30 + filenameLength + extraFieldLength
     
     if zipHeader.filename == "mimetype" && compressedSize == uncompressedSize {
-      zipHeader.mimeType = data.getUTF8String(from: position..<position + compressedSize)
+      zipHeader.mimeType = data.getString(from: position..<position + compressedSize)
     }
   
     if (match(zipHeader)) {
