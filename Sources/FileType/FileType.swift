@@ -777,6 +777,12 @@ private extension FileType {
       ext: "pgp",
       mime: "application/pgp-encrypted"
     ),
+    
+    .lzh: FileType(
+      type: .lzh,
+      ext: "lzh",
+      mime: "application/x-lzh-compressed"
+    ),
   ]
 }
 

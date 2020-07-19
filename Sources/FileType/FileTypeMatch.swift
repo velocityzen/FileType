@@ -58,6 +58,7 @@ enum FileTypeMatchType {
   case ktx
   case lnk
   case lz
+  case lzh
   case m4a
   case m4b
   case m4p
@@ -798,6 +799,27 @@ struct FileTypeMatch {
     FileTypeMatch(
       type: .it,
       matchString: ["IMPM"]
+    ),
+    
+    FileTypeMatch(
+      type: .lzh,
+      bytesCount: 7,
+      match: {
+        matchPatterns($0, match: [
+          [ .byte(0x2d), .byte(0x6c), .byte(0x68), .byte(0x30), .byte(0x2d) ],
+          [ .byte(0x2d), .byte(0x6c), .byte(0x68), .byte(0x31), .byte(0x2d) ],
+          [ .byte(0x2d), .byte(0x6c), .byte(0x68), .byte(0x32), .byte(0x2d) ],
+          [ .byte(0x2d), .byte(0x6c), .byte(0x68), .byte(0x33), .byte(0x2d) ],
+          [ .byte(0x2d), .byte(0x6c), .byte(0x68), .byte(0x34), .byte(0x2d) ],
+          [ .byte(0x2d), .byte(0x6c), .byte(0x68), .byte(0x35), .byte(0x2d) ],
+          [ .byte(0x2d), .byte(0x6c), .byte(0x68), .byte(0x36), .byte(0x2d) ],
+          [ .byte(0x2d), .byte(0x6c), .byte(0x68), .byte(0x37), .byte(0x2d) ],
+          [ .byte(0x2d), .byte(0x6c), .byte(0x68), .byte(0x64), .byte(0x2d) ],
+          [ .byte(0x2d), .byte(0x6c), .byte(0x7a), .byte(0x73), .byte(0x2d) ],
+          [ .byte(0x2d), .byte(0x6c), .byte(0x7a), .byte(0x34), .byte(0x2d) ],
+          [ .byte(0x2d), .byte(0x6c), .byte(0x7a), .byte(0x35), .byte(0x2d) ],
+        ], offset: 2)
+    }
     ),
     
     //  MPEG-PS, MPEG-1 Part 1

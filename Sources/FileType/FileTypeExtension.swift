@@ -53,6 +53,7 @@ public enum FileTypeExtension: CaseIterable {
   case ktx
   case lnk
   case lz
+  case lzh
   case m4a
   case m4b
   case m4p
