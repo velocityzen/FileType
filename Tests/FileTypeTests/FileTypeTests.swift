@@ -132,6 +132,10 @@ final class FileTypeTests: XCTestCase {
     testFileType("fixture-office365.pptx", type: .pptx)
     testFileType("fixture-office365.xlsx", type: .xlsx)
   }
+  
+  func testEPS() {
+    testFileType("fixture2.eps", type: .eps)
+  }
     
   func testBytesCountForType() {
     XCTAssertEqual(FileType.getBytesCountFor(type: .ac3), 2)
@@ -161,6 +165,7 @@ final class FileTypeTests: XCTestCase {
     ("testPNG", testPNG),
     ("testEOT", testEOT),
     ("testMPEGAudio", testMPEGAudio),
+    ("testEPS", testEPS),
     
     ("testBytesCountForType", testBytesCountForType),
     ("testBytesCountForTypes", testBytesCountForTypes),

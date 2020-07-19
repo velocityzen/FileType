@@ -794,6 +794,12 @@ private extension FileType {
       type: .avif,
       ext: "avif",
       mime: "image/avif"
+    ),
+    
+    .eps: FileType(
+      type: .eps,
+      ext: "eps",
+      mime: "application/eps"
     )
   ]
 }
