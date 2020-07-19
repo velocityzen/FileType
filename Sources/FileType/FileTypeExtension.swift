@@ -46,6 +46,7 @@ public enum FileTypeExtension: CaseIterable {
   case ico
   case ics
   case icns
+  case indd
   case it
   case jp2
   case jpg

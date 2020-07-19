@@ -800,6 +800,12 @@ private extension FileType {
       type: .eps,
       ext: "eps",
       mime: "application/eps"
+    ),
+    
+    .indd: FileType(
+      type: .indd,
+      ext: "indd",
+      mime: "application/x-indesign"
     )
   ]
 }

@@ -51,6 +51,7 @@ enum FileTypeMatchType {
   case ico
   case ics
   case icns
+  case indd
   case it
   case jp2
   case jpg
@@ -1135,7 +1136,7 @@ struct FileTypeMatch {
       type: .cur,
       matchBytes: [[0x00, 0x00, 0x02, 0x00]]
     ),
-
+    
     // Increase sample size from 12 to 256.
 
     // `raf` is here just to keep all the raw image detectors together.
@@ -1157,6 +1158,11 @@ struct FileTypeMatch {
     FileTypeMatch(
       type: .voc,
       matchString: ["Creative Voice File"]
+    ),
+    
+    FileTypeMatch(
+      type: .indd,
+      matchBytes: [[0x06, 0x06, 0xED, 0xF5, 0xD8, 0x1D, 0x46, 0xE5, 0xBD, 0x31, 0xEF, 0xE7, 0xFE, 0x74, 0xB7, 0x1D]]
     ),
 
     FileTypeMatch(
