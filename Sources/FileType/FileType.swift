@@ -788,6 +788,12 @@ private extension FileType {
       type: .skp,
       ext: "skp",
       mime: "application/vnd.sketchup.skp"
+    ),
+    
+    .avif: FileType(
+      type: .avif,
+      ext: "avif",
+      mime: "image/avif"
     )
   ]
 }

@@ -54,7 +54,7 @@ returns max bytes count needed to detect file types
 
 ## Supported file types
 
- 3gp, 3g2, 7z, aac, ac3, ai, aif, ali, amr, ape, apng, ar, arr, arw, asf, avi, ble, bmp, bpg, bz2, cab, cr2, cr3, crx, cur, dcm, deb, dmg, dng, docx, dsf, eot, epub, exe, f4a, f4b, f4p, f4v, flac, flif, flv, gif, glb, gz, heic, ico, icns, ics, it, jp2, jpg, jpm, jpx, jxr, ktx, lnk, lz, lzh, m4a, m4b, m4p, m4v, mid, mie, mj2, mobi, mov, mp1, mp2, mp3, mp4, mpc, mpg, msi, mts, mxf, nef, nes, odp, ods, odt, oga, ogg, ogm, ogv, ogx, opus, orf, otf, pdf, pgp, png, pptx, ps, psd, qcp, raf, rar, rpm, rtf, rw2, s3m, shp, skp, spx, sql, swf, tar, tif, ttf, voc, wasm, wav, wma, wmv, woff, woff2, wv, xlsx, xm, xml, xpi, xz, Z, zip
+ 3gp, 3g2, 7z, aac, ac3, ai, aif, ali, amr, ape, apng, ar, arr, arw, asf, avi, avif, ble, bmp, bpg, bz2, cab, cr2, cr3, crx, cur, dcm, deb, dmg, dng, docx, dsf, eot, epub, exe, f4a, f4b, f4p, f4v, flac, flif, flv, gif, glb, gz, heic, ico, icns, ics, it, jp2, jpg, jpm, jpx, jxr, ktx, lnk, lz, lzh, m4a, m4b, m4p, m4v, mid, mie, mj2, mobi, mov, mp1, mp2, mp3, mp4, mpc, mpg, msi, mts, mxf, nef, nes, odp, ods, odt, oga, ogg, ogm, ogv, ogx, opus, orf, otf, pdf, pgp, png, pptx, ps, psd, qcp, raf, rar, rpm, rtf, rw2, s3m, shp, skp, spx, sql, swf, tar, tif, ttf, voc, wasm, wav, wma, wmv, woff, woff2, wv, xlsx, xm, xml, xpi, xz, Z, zip
 
 
 

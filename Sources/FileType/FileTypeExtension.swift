@@ -12,6 +12,7 @@ public enum FileTypeExtension: CaseIterable {
   case arw
   case asf
   case avi
+  case avif
   case ble
   case bmp
   case bpg

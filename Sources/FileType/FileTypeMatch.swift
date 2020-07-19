@@ -14,6 +14,7 @@ enum FileTypeMatchType {
   case arw
   case asf
   case avi
+  case avif
   case ble
   case bmp
   case bpg
@@ -380,6 +381,17 @@ struct FileTypeMatch {
     ),
     
     //File Type Box Formats
+    FileTypeMatch(
+      type: .avif,
+      bytesCount: 12,
+      match: { matchPatterns($0, match: [
+        [
+          .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+          .byte(0x61), .byte(0x76), .byte(0x69), .byte(0x66)  // avif
+        ]
+      ], offset: 4) }
+    ),
+    
     FileTypeMatch(
       type: .heif,
       bytesCount: 12,
