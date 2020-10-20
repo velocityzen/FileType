@@ -12,6 +12,7 @@ enum FileTypeMatchType {
   case ar
   case arr
   case arw
+  case asar
   case asf
   case avi
   case avif
@@ -1142,6 +1143,12 @@ struct FileTypeMatch {
     ),
     
     // Increase sample size from 12 to 256.
+
+    FileTypeMatch(
+        type: .asar,
+        matchBytes: [[0x04, 0x00, 0x00, 0x00]],
+        match: matchAsarHeader
+    ),
 
     // `raf` is here just to keep all the raw image detectors together.
     FileTypeMatch(
