@@ -8,6 +8,12 @@ public struct FileType {
 
 private extension FileType {
   static let all: [FileTypeMatchType: FileType] = [
+    .asar: FileType(
+        type: .asar,
+        ext: "asar",
+        mime: "application/x-asar"
+    ),
+    
     .bmp: FileType(
       type: .bmp,
       ext: "bmp",

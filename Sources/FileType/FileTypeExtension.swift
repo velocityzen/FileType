@@ -10,6 +10,7 @@ public enum FileTypeExtension: CaseIterable {
   case ar
   case arr
   case arw
+  case asar
   case asf
   case avi
   case avif
