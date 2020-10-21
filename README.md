@@ -68,6 +68,7 @@ returns max bytes count needed to detect file types
 - [`ar`](https://en.wikipedia.org/wiki/Ar_(Unix))
 - [`arrow`](https://arrow.apache.org) - Columnar format for tables of data
 - [`arw`](https://en.wikipedia.org/wiki/Raw_image_format#ARW) - Sony Alpha Raw image file
+- [`asar`](https://github.com/electron/asar) - Simple extensive tar-like archive format with indexing
 - [`asf`](https://en.wikipedia.org/wiki/Advanced_Systems_Format) - Advanced Systems Format
 - [`avi`](https://en.wikipedia.org/wiki/Audio_Video_Interleave)
 - [`avif`](https://en.wikipedia.org/wiki/AV1#AV1_Image_File_Format_(AVIF)) - AV1 Image File Format
