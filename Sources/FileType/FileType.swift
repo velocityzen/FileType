@@ -652,6 +652,12 @@ private extension FileType {
       mime: "video/mpeg"
     ),
     
+    .chm: FileType(
+      type: .chm,
+      ext: "chm",
+      mime: "application/vnd.ms-htmlhelp"
+    ),
+    
     .ttf: FileType(
       type: .ttf,
       ext: "ttf",

@@ -5,7 +5,9 @@ The file type is detected by checking the magic number of the data.
 This is swift port of [file-type](https://github.com/sindresorhus/file-type)
 
 ## Installation
+
 ### Swift Package Manager
+
 ```swift
 import PackageDescription
 
@@ -42,7 +44,6 @@ returns all file types and mime information
 
 returns file type detected by checking the magic number
 
-
 ### .getBytesCountFor(type: FileTypeExtension) -> Int
 
 returns bytes count needed to detect file type
@@ -50,7 +51,6 @@ returns bytes count needed to detect file type
 ### .getBytesCountFor(types: [FileTypeExtension]) -> Int
 
 returns max bytes count needed to detect file types
-
 
 ## Supported file types
 
@@ -65,24 +65,25 @@ returns max bytes count needed to detect file types
 - [`amr`](https://en.wikipedia.org/wiki/Adaptive_Multi-Rate_audio_codec)
 - [`ape`](https://en.wikipedia.org/wiki/Monkey%27s_Audio) - Monkey's Audio
 - [`apng`](https://en.wikipedia.org/wiki/APNG) - Animated Portable Network Graphics
-- [`ar`](https://en.wikipedia.org/wiki/Ar_(Unix))
+- [`ar`](<https://en.wikipedia.org/wiki/Ar_(Unix)>)
 - [`arrow`](https://arrow.apache.org) - Columnar format for tables of data
 - [`arw`](https://en.wikipedia.org/wiki/Raw_image_format#ARW) - Sony Alpha Raw image file
 - [`asar`](https://github.com/electron/asar) - Simple extensive tar-like archive format with indexing
 - [`asf`](https://en.wikipedia.org/wiki/Advanced_Systems_Format) - Advanced Systems Format
 - [`avi`](https://en.wikipedia.org/wiki/Audio_Video_Interleave)
-- [`avif`](https://en.wikipedia.org/wiki/AV1#AV1_Image_File_Format_(AVIF)) - AV1 Image File Format
+- [`avif`](<https://en.wikipedia.org/wiki/AV1#AV1_Image_File_Format_(AVIF)>) - AV1 Image File Format
 - [`blend`](https://wiki.blender.org/index.php/Dev:Source/Architecture/File_Format)
 - [`bmp`](https://en.wikipedia.org/wiki/BMP_file_format)
 - [`bpg`](https://bellard.org/bpg/)
 - [`bz2`](https://en.wikipedia.org/wiki/Bzip2)
-- [`cab`](https://en.wikipedia.org/wiki/Cabinet_(file_format))
+- [`cab`](<https://en.wikipedia.org/wiki/Cabinet_(file_format)>)
+- [`chm`](https://en.wikipedia.org/wiki/Microsoft_Compiled_HTML_Help) - Microsoft Compiled HTML Help
 - [`cr2`](https://fileinfo.com/extension/cr2) - Canon Raw image file (v2)
 - [`cr3`](https://fileinfo.com/extension/cr3) - Canon Raw image file (v3)
 - [`crx`](https://developer.chrome.com/extensions/crx)
-- [`cur`](https://en.wikipedia.org/wiki/ICO_(file_format))
+- [`cur`](<https://en.wikipedia.org/wiki/ICO_(file_format)>)
 - [`dcm`](https://en.wikipedia.org/wiki/DICOM#Data_format) - DICOM Image File
-- [`deb`](https://en.wikipedia.org/wiki/Deb_(file_format))
+- [`deb`](<https://en.wikipedia.org/wiki/Deb_(file_format)>)
 - [`dmg`](https://en.wikipedia.org/wiki/Apple_Disk_Image)
 - [`dng`](https://en.wikipedia.org/wiki/Digital_Negative) - Adobe Digital Negative image file
 - [`docx`](https://en.wikipedia.org/wiki/Office_Open_XML)
@@ -103,7 +104,7 @@ returns max bytes count needed to detect file types
 - [`gz`](https://en.wikipedia.org/wiki/Gzip)
 - [`heic`](https://nokiatech.github.io/heif/technical.html)
 - [`icns`](https://en.wikipedia.org/wiki/Apple_Icon_Image_format)
-- [`ico`](https://en.wikipedia.org/wiki/ICO_(file_format))
+- [`ico`](<https://en.wikipedia.org/wiki/ICO_(file_format)>)
 - [`ics`](https://en.wikipedia.org/wiki/ICalendar#Data_format) - iCalendar
 - [`indd`](https://en.wikipedia.org/wiki/Adobe_InDesign#File_format)
 - [`it`](https://wiki.openmpt.org/Manual:_Module_formats#The_Impulse_Tracker_format_.28.it.29) - Audio module format: Impulse Tracker
@@ -115,11 +116,11 @@ returns max bytes count needed to detect file types
 - [`ktx`](https://www.khronos.org/opengles/sdk/tools/KTX/file_format_spec/)
 - [`lnk`](https://en.wikipedia.org/wiki/Shortcut_%28computing%29#Microsoft_Windows) - Microsoft Windows file shortcut
 - [`lz`](https://en.wikipedia.org/wiki/Lzip)
-- [`lzh`](https://en.wikipedia.org/wiki/LHA_(file_format)) - LZH archive
+- [`lzh`](<https://en.wikipedia.org/wiki/LHA_(file_format)>) - LZH archive
 - [`m4a`](https://en.wikipedia.org/wiki/M4A) - Audio-only MPEG-4 files
 - [`m4b`](https://en.wikipedia.org/wiki/M4B) - Audiobook and podcast MPEG-4 files, which also contain metadata including chapter markers, images, and hyperlinks
 - [`m4p`](https://en.wikipedia.org/wiki/MPEG-4_Part_14#Filename_extensions) - MPEG-4 files with audio streams encrypted by FairPlay Digital Rights Management as were sold through the iTunes Store
-- [`m4v`](https://en.wikipedia.org/wiki/M4V) -  MPEG-4 Visual bitstreams
+- [`m4v`](https://en.wikipedia.org/wiki/M4V) - MPEG-4 Visual bitstreams
 - [`mid`](https://en.wikipedia.org/wiki/MIDI)
 - [`mie`](https://en.wikipedia.org/wiki/Sidecar_file) - Dedicated meta information format which supports storage of binary as well as textual meta information
 - [`mj2`](https://en.wikipedia.org/wiki/Motion_JPEG_2000) - Motion JPEG 2000
@@ -145,7 +146,7 @@ returns max bytes count needed to detect file types
 - [`ogm`](https://en.wikipedia.org/wiki/Ogg)
 - [`ogv`](https://en.wikipedia.org/wiki/Ogg)
 - [`ogx`](https://en.wikipedia.org/wiki/Ogg)
-- [`opus`](https://en.wikipedia.org/wiki/Opus_(audio_format))
+- [`opus`](<https://en.wikipedia.org/wiki/Opus_(audio_format)>)
 - [`orf`](https://en.wikipedia.org/wiki/ORF_format) - Olympus Raw image file
 - [`otf`](https://en.wikipedia.org/wiki/OpenType)
 - [`pcap`](https://wiki.wireshark.org/Development/LibpcapFileFormat) - Libpcap File Format
@@ -157,7 +158,7 @@ returns max bytes count needed to detect file types
 - [`psd`](https://en.wikipedia.org/wiki/Adobe_Photoshop#File_format)
 - [`qcp`](https://en.wikipedia.org/wiki/QCP)
 - [`raf`](https://en.wikipedia.org/wiki/Raw_image_format) - Fujifilm RAW image file
-- [`rar`](https://en.wikipedia.org/wiki/RAR_(file_format))
+- [`rar`](<https://en.wikipedia.org/wiki/RAR_(file_format)>)
 - [`rpm`](https://fileinfo.com/extension/rpm)
 - [`rtf`](https://en.wikipedia.org/wiki/Rich_Text_Format)
 - [`rw2`](https://en.wikipedia.org/wiki/Raw_image_format) - Panasonic RAW image file
@@ -167,7 +168,7 @@ returns max bytes count needed to detect file types
 - [`spx`](https://en.wikipedia.org/wiki/Ogg)
 - [`sqlite`](https://www.sqlite.org/fileformat2.html)
 - [`swf`](https://en.wikipedia.org/wiki/SWF)
-- [`tar`](https://en.wikipedia.org/wiki/Tar_(computing)#File_format)
+- [`tar`](<https://en.wikipedia.org/wiki/Tar_(computing)#File_format>)
 - [`tif`](https://en.wikipedia.org/wiki/Tagged_Image_File_Format)
 - [`ttf`](https://en.wikipedia.org/wiki/TrueType)
 - [`voc`](https://wiki.multimedia.cx/index.php/Creative_Voice) - Creative Voice File
@@ -186,12 +187,12 @@ returns max bytes count needed to detect file types
 - [`xpi`](https://en.wikipedia.org/wiki/XPInstall)
 - [`xz`](https://en.wikipedia.org/wiki/Xz)
 - [`Z`](https://fileinfo.com/extension/z)
-- [`zip`](https://en.wikipedia.org/wiki/Zip_(file_format))
+- [`zip`](<https://en.wikipedia.org/wiki/Zip_(file_format)>)
 
-*Pull requests are welcome for additional commonly used file types.*
-
+_Pull requests are welcome for additional commonly used file types._
 
 ## Testing
+
 ```
 swift test
 ```

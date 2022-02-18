@@ -21,6 +21,7 @@ enum FileTypeMatchType {
   case bpg
   case bz2
   case cab
+  case chm
   case cr2
   case cr3
   case crx
@@ -875,7 +876,12 @@ struct FileTypeMatch {
       matchBytes: [[0x00, 0x00, 0x01, 0xBA]],
       match: {
         matchPatterns($0, match: [[.byte(0x44)]], offset: 4, mask: [0xC4])
-    }
+      }
+    ),
+    
+    FileTypeMatch(
+      type: .chm,
+      matchString: ["ITSF"]
     ),
 
     FileTypeMatch(

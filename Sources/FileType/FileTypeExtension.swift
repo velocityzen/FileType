@@ -19,6 +19,7 @@ public enum FileTypeExtension: CaseIterable {
   case bpg
   case bz2
   case cab
+  case chm
   case cr2
   case cr3
   case crx
