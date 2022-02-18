@@ -5,6 +5,10 @@ func tarHeaderChecksumMatches(_ data: Data) -> Bool {
     return false
   }
 
+  guard let readSum = data.getIntByteString(from: 148 ..< 154) else {
+    return false
+  }
+
   let MASK_8TH_BIT = 0x80
   var sum = 256 // Intitalize sum, with 256 as sum of 8 spaces in checksum field
   var signedBitSum = 0 // Initialize signed bit sum
@@ -13,10 +17,6 @@ func tarHeaderChecksumMatches(_ data: Data) -> Bool {
     let byte = Int(data[i])
     sum += byte
     signedBitSum += byte & MASK_8TH_BIT // Add signed bit to signed bit sum
-  }
-
-  guard let readSum = data.getIntByteString(from: 148 ..< 154) else {
-    return false
   }
 
   // Some implementations compute checksum incorrectly using signed bytes

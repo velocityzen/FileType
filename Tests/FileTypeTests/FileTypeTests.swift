@@ -38,6 +38,7 @@ final class FileTypeTests: XCTestCase {
 
   func testTAR() {
     testFileType("fixture-v7.tar", type: .tar)
+    testFileType("fixture-spaces.tar", type: .tar)
     testFileType("fixture.tar.Z", type: .Z)
     testFileType("fixture.tar.gz", type: .gz)
     testFileType("fixture.tar.lz", type: .lz)

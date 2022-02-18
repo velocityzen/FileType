@@ -1308,16 +1308,7 @@ struct FileTypeMatch {
     FileTypeMatch(
       type: .tar,
       bytesCount: 512,
-      match: { matchPatterns(
-        $0,
-        match: [[
-          .byte(0x30), .byte(0x30), .byte(0x30), .byte(0x30),
-          .byte(0x30), .byte(0x30),
-        ]],
-        offset: 148,
-        mask: [0xF8, 0xF8, 0xF8, 0xF8, 0xF8, 0xF8]
-      ) && tarHeaderChecksumMatches($0)
-      }
+      match: { tarHeaderChecksumMatches($0) }
     ),
 
     FileTypeMatch(

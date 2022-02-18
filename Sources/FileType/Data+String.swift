@@ -13,6 +13,6 @@ internal extension Data {
       return nil
     }
 
-    return Int(octal, radix: 0o10)
+    return Int(octal.trimmingCharacters(in: .whitespaces), radix: 0o10)
   }
 }
