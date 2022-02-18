@@ -679,7 +679,7 @@ struct FileTypeMatch {
     FileTypeMatch(
       type: .ai,
       matchString: ["%PDF"],
-      match: { findString($0, "Adobe Illustrator", ignore: 1350) }
+      match: { findString($0, "AIPrivateData", ignore: 1350) }
     ),
 
     FileTypeMatch(

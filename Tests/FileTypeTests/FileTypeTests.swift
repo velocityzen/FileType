@@ -176,6 +176,14 @@ final class FileTypeTests: XCTestCase {
     testFileType("fixture-2.doc.cfb", type: .cfb)
   }
 
+  func testPDF() {
+    testFileType("fixture-without-pdf-compatibility.ai", type: .ai)
+    testFileType("fixture-adobe-illustrator.pdf", type: .pdf)
+    testFileType("fixture-smallest.pdf", type: .pdf)
+    testFileType("fixture-fast-web.pdf", type: .pdf)
+    testFileType("fixture-printed.pdf", type: .pdf)
+  }
+
   func testBytesCountForType() {
     XCTAssertEqual(FileType.getBytesCountFor(type: .ac3), 2)
     XCTAssertEqual(FileType.getBytesCountFor(type: .zip), 4)
@@ -210,6 +218,7 @@ final class FileTypeTests: XCTestCase {
     ("testASF", testASF),
     ("testJXL", testJXL),
     ("testCFB", testCFB),
+    ("testPDF", testPDF),
 
     ("testBytesCountForType", testBytesCountForType),
     ("testBytesCountForTypes", testBytesCountForTypes),
