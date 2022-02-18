@@ -26,7 +26,6 @@ final class FileTypeTests: XCTestCase {
     } else {
       print("❌ fails: \(fixtureName)")
     }
-    
   }
 
   func testAll() {
@@ -154,6 +153,11 @@ final class FileTypeTests: XCTestCase {
     testFileType("fixture-utf16-le-bom.xml", type: .xml)
   }
 
+  func testMTS() {
+    testFileType("fixture-raw.mts", type: .mts)
+    testFileType("fixture-bdav.mts", type: .mts)
+  }
+
   func testBytesCountForType() {
     XCTAssertEqual(FileType.getBytesCountFor(type: .ac3), 2)
     XCTAssertEqual(FileType.getBytesCountFor(type: .zip), 4)
@@ -183,6 +187,8 @@ final class FileTypeTests: XCTestCase {
     ("testEOT", testEOT),
     ("testMPEGAudio", testMPEGAudio),
     ("testEPS", testEPS),
+    ("testXML", testXML),
+    ("testMTS", testMTS),
 
     ("testBytesCountForType", testBytesCountForType),
     ("testBytesCountForTypes", testBytesCountForTypes),

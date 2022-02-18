@@ -1225,11 +1225,13 @@ struct FileTypeMatch {
       type: .mts,
       bytesCount: 197,
       match: {
-        matchPatterns($0, match: [[.byte(0x47)]], offset: 4) &&
-          (
-            matchPatterns($0, match: [[.byte(0x47)]], offset: 192) ||
-              matchPatterns($0, match: [[.byte(0x47)]], offset: 196)
-          )
+        // Raw MPEG-2 transport stream (188-byte packets)
+        (matchPatterns($0, match: [[.byte(0x47)]]) &&
+          matchPatterns($0, match: [[.byte(0x47)]], offset: 188))
+          ||
+          // Blu-ray Disc Audio-Video (BDAV) MPEG-2 transport stream has 4-byte TP_extra_header before each 188-byte packet
+          (matchPatterns($0, match: [[.byte(0x47)]], offset: 4) &&
+            matchPatterns($0, match: [[.byte(0x47)]], offset: 196))
       }
     ),
 
