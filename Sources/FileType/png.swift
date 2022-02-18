@@ -10,6 +10,10 @@ func findAPNG(_ data: Data) -> Bool {
     let length = data.getInt32BE(offset: position)
     let type = data.getString(from: (position + 4) ..< (position + 8))!
 
+    if length < 0 {
+      return false
+    }
+
     switch type {
       case "acTL":
         return true
