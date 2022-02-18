@@ -132,6 +132,7 @@ enum FileTypeMatchType {
   case woff
   case woff2
   case wv
+  case xcf
   case xlsx
   case xm
   case xml
@@ -998,6 +999,11 @@ struct FileTypeMatch {
     FileTypeMatch(
       type: .orf,
       matchBytes: [[0x49, 0x49, 0x52, 0x4F, 0x08, 0x00, 0x00, 0x00, 0x18]]
+    ),
+
+    FileTypeMatch(
+      type: .xcf,
+      matchString: ["gimp xcf "]
     ),
 
     // -- 12-byte signatures --

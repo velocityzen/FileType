@@ -182,6 +182,7 @@ returns max bytes count needed to detect file types
 - [`woff2`](https://en.wikipedia.org/wiki/Web_Open_Font_Format)
 - [`woff`](https://en.wikipedia.org/wiki/Web_Open_Font_Format)
 - [`wv`](https://en.wikipedia.org/wiki/WavPack) - WavPack
+- [`xcf`](<https://en.wikipedia.org/wiki/XCF_(file_format)>) - eXperimental Computing Facility
 - [`xlsx`](https://en.wikipedia.org/wiki/Office_Open_XML)
 - [`xm`](https://wiki.openmpt.org/Manual:_Module_formats#The_FastTracker_2_format_.28.xm.29) - Audio module format: FastTracker 2
 - [`xml`](https://en.wikipedia.org/wiki/XML)

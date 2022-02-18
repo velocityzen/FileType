@@ -584,6 +584,12 @@ private extension FileType {
       mime: "image/x-olympus-orf"
     ),
 
+    .xcf: FileType(
+      type: .xcf,
+      ext: "xcf",
+      mime: "image/x-xcf"
+    ),
+
     .rw2: FileType(
       type: .rw2,
       ext: "rw2",

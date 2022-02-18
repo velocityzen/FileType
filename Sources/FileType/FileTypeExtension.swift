@@ -123,6 +123,7 @@ public enum FileTypeExtension: CaseIterable {
   case woff
   case woff2
   case wv
+  case xcf
   case xlsx
   case xm
   case xml
