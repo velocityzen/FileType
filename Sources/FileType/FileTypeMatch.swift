@@ -117,6 +117,7 @@ enum FileTypeMatchType {
   case skp
   case spx
   case sql
+  case stl
   case swf
   case tar
   case threeg2
@@ -939,6 +940,11 @@ struct FileTypeMatch {
         [0x52, 0x61, 0x72, 0x21, 0x1A, 0x7, 0x0],
         [0x52, 0x61, 0x72, 0x21, 0x1A, 0x7, 0x1],
       ]
+    ),
+
+    FileTypeMatch(
+      type: .stl,
+      matchString: ["solid "]
     ),
 
     // -- 7-byte signatures --

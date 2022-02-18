@@ -170,6 +170,7 @@ returns max bytes count needed to detect file types
 - [`skp`](https://en.wikipedia.org/wiki/SketchUp) - SketchUp
 - [`spx`](https://en.wikipedia.org/wiki/Ogg)
 - [`sqlite`](https://www.sqlite.org/fileformat2.html)
+- [`stl`](<https://en.wikipedia.org/wiki/STL_(file_format)>) - Standard Tesselated Geometry File Format (ASCII only)
 - [`swf`](https://en.wikipedia.org/wiki/SWF)
 - [`tar`](<https://en.wikipedia.org/wiki/Tar_(computing)#File_format>)
 - [`tif`](https://en.wikipedia.org/wiki/Tagged_Image_File_Format)

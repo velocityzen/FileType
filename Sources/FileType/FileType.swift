@@ -542,6 +542,12 @@ private extension FileType {
       mime: "application/x-rar-compressed"
     ),
 
+    .stl: FileType(
+      type: .stl,
+      ext: "stl",
+      mime: "model/stl"
+    ),
+
     .ble: FileType(
       type: .ble,
       ext: "blend",

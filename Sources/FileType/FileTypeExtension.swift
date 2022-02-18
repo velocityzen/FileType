@@ -110,6 +110,7 @@ public enum FileTypeExtension: CaseIterable {
   case skp
   case spx
   case sql
+  case stl
   case swf
   case tar
   case threeg2
