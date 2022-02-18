@@ -711,10 +711,10 @@ private extension FileType {
       mime: "audio/x-voc"
     ),
 
-    .msi: FileType(
-      type: .msi,
-      ext: "msi",
-      mime: "application/x-msi"
+    .cfb: FileType(
+      type: .cfb,
+      ext: "cfb",
+      mime: "application/x-cfb"
     ),
 
     .mxf: FileType(

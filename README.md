@@ -78,6 +78,7 @@ returns max bytes count needed to detect file types
 - [`bpg`](https://bellard.org/bpg/)
 - [`bz2`](https://en.wikipedia.org/wiki/Bzip2)
 - [`cab`](<https://en.wikipedia.org/wiki/Cabinet_(file_format)>)
+- [`cfb`](https://en.wikipedia.org/wiki/Compound_File_Binary_Format)
 - [`chm`](https://en.wikipedia.org/wiki/Microsoft_Compiled_HTML_Help) - Microsoft Compiled HTML Help
 - [`cr2`](https://fileinfo.com/extension/cr2) - Canon Raw image file (v2)
 - [`cr3`](https://fileinfo.com/extension/cr3) - Canon Raw image file (v3)
@@ -136,7 +137,6 @@ returns max bytes count needed to detect file types
 - [`mp4`](https://en.wikipedia.org/wiki/MPEG-4_Part_14#Filename_extensions)
 - [`mpc`](https://en.wikipedia.org/wiki/Musepack) - Musepack (SV7 & SV8)
 - [`mpg`](https://en.wikipedia.org/wiki/MPEG-1)
-- [`msi`](https://en.wikipedia.org/wiki/Windows_Installer)
 - [`mts`](https://en.wikipedia.org/wiki/.m2ts) - MPEG-2 Transport Stream, both raw and Blu-ray Disc Audio-Video (BDAV) versions
 - [`mxf`](https://en.wikipedia.org/wiki/Material_Exchange_Format)
 - [`nef`](https://www.nikonusa.com/en/learn-and-explore/a/products-and-innovation/nikon-electronic-format-nef.html) - Nikon Electronic Format image file

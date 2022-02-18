@@ -19,6 +19,7 @@ public enum FileTypeExtension: CaseIterable {
   case bpg
   case bz2
   case cab
+  case cfb
   case chm
   case cr2
   case cr3
@@ -76,7 +77,6 @@ public enum FileTypeExtension: CaseIterable {
   case mp4
   case mpc
   case mpg
-  case msi
   case mts
   case mxf
   case nef

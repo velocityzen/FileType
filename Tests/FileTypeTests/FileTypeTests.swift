@@ -162,9 +162,17 @@ final class FileTypeTests: XCTestCase {
     testFileType("fixture.wma.asf", type: .asf)
     testFileType("fixture.wmv.asf", type: .asf)
   }
-  
+
   func testJXL() {
     testFileType("fixture2.jxl", type: .jxl)
+  }
+
+  func testCFB() {
+    testFileType("fixture.msi.cfb", type: .cfb)
+    testFileType("fixture.xls.cfb", type: .cfb)
+    testFileType("fixture.doc.cfb", type: .cfb)
+    testFileType("fixture.ppt.cfb", type: .cfb)
+    testFileType("fixture-2.doc.cfb", type: .cfb)
   }
 
   func testBytesCountForType() {
@@ -199,6 +207,8 @@ final class FileTypeTests: XCTestCase {
     ("testXML", testXML),
     ("testMTS", testMTS),
     ("testASF", testASF),
+    ("testJXL", testJXL),
+    ("testCFB", testCFB),
 
     ("testBytesCountForType", testBytesCountForType),
     ("testBytesCountForTypes", testBytesCountForTypes),
