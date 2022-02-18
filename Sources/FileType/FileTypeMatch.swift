@@ -907,7 +907,12 @@ struct FileTypeMatch {
 
     FileTypeMatch(
       type: .xml,
-      matchString: ["<?xml "]
+      matchBytes: [
+        [0x3C, 0x3F, 0x78, 0x6D, 0x6C, 0x20], // <?xml
+        [0xEF, 0xBB, 0xBF, 0x3C, 0x3F, 0x78, 0x6D, 0x6C], // UTF-8-BOM
+        [0xFE, 0xFF, 0, 60, 0, 63, 0, 120, 0, 109, 0, 108], // UTF-16-BOM-LE
+        [0xFF, 0xFE, 60, 0, 63, 0, 120, 0, 109, 0, 108, 0], // UTF-16-BOM-LE
+      ]
     ),
 
     FileTypeMatch(

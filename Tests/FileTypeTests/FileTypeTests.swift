@@ -15,13 +15,18 @@ final class FileTypeTests: XCTestCase {
     let url = URL(fileURLWithPath: absolutePath, isDirectory: false)
 
     guard let data = try? Data(contentsOf: url, options: .mappedIfSafe) else {
-      print("Fixture not found: \(fixtureName). Look for a specific test function.")
+      print("⚠️ missing \(fixtureName). Look for a specific test function.")
       return
     }
 
-    let fileType = FileType.getFor(data: data)
-    XCTAssertEqual(fileType?.type, type)
-    print("Test passed: \(fileType?.ext ?? "NO")")
+    let fileType = FileType.getFor(data: data)?.type
+    XCTAssertEqual(fileType, type)
+    if fileType != nil {
+      print("✅ passes: \(fileType!)")
+    } else {
+      print("❌ fails: \(fixtureName)")
+    }
+    
   }
 
   func testAll() {
@@ -141,6 +146,12 @@ final class FileTypeTests: XCTestCase {
 
   func testEPS() {
     testFileType("fixture2.eps", type: .eps)
+  }
+
+  func testXML() {
+    testFileType("fixture-utf8-bom.xml", type: .xml)
+    testFileType("fixture-utf16-be-bom.xml", type: .xml)
+    testFileType("fixture-utf16-le-bom.xml", type: .xml)
   }
 
   func testBytesCountForType() {
