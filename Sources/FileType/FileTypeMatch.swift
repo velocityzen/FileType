@@ -33,6 +33,7 @@ enum FileTypeMatchType {
   case docx
   case dsf
   case eot
+  case elf
   case eps
   case epub
   case exe
@@ -247,6 +248,11 @@ struct FileTypeMatch {
     FileTypeMatch(
       type: .icns,
       matchString: ["icns"]
+    ),
+
+    FileTypeMatch(
+      type: .elf,
+      matchBytes: [[0x7F, 0x45, 0x4C, 0x46]]
     ),
 
     FileTypeMatch(

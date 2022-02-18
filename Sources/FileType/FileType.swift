@@ -824,6 +824,12 @@ private extension FileType {
       ext: "indd",
       mime: "application/x-indesign"
     ),
+
+    .elf: FileType(
+      type: .elf,
+      ext: "elf",
+      mime: "application/x-elf"
+    ),
   ]
 }
 

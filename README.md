@@ -89,6 +89,7 @@ returns max bytes count needed to detect file types
 - [`dng`](https://en.wikipedia.org/wiki/Digital_Negative) - Adobe Digital Negative image file
 - [`docx`](https://en.wikipedia.org/wiki/Office_Open_XML)
 - [`dsf`](https://dsd-guide.com/sites/default/files/white-papers/DSFFileFormatSpec_E.pdf) - Sony DSD Stream File (DSF)
+- [`elf`](https://en.wikipedia.org/wiki/Executable_and_Linkable_Format) - Unix Executable and Linkable Format
 - [`eot`](https://en.wikipedia.org/wiki/Embedded_OpenType)
 - [`eps`](https://en.wikipedia.org/wiki/Encapsulated_PostScript) - Encapsulated PostScript
 - [`epub`](https://en.wikipedia.org/wiki/EPUB)

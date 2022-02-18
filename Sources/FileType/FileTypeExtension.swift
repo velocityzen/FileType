@@ -30,6 +30,7 @@ public enum FileTypeExtension: CaseIterable {
   case dng
   case docx
   case dsf
+  case elf
   case eot
   case eps
   case epub
