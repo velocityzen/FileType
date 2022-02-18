@@ -134,6 +134,12 @@ private extension FileType {
       mime: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     ),
 
+    .threemf: FileType(
+      type: .threemf,
+      ext: "3mf",
+      mime: "model/3mf"
+    ),
+
     .epub: FileType(
       type: .epub,
       ext: "epub",

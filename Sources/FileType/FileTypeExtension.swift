@@ -112,6 +112,7 @@ public enum FileTypeExtension: CaseIterable {
   case tar
   case threeg2
   case threegp
+  case threemf
   case tif
   case ttf
   case voc

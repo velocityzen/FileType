@@ -119,6 +119,7 @@ enum FileTypeMatchType {
   case tar
   case threeg2
   case threegp
+  case threemf
   case tif
   case ttf
   case voc
@@ -306,6 +307,12 @@ struct FileTypeMatch {
       type: .odp,
       matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
       match: { matchZipHeader($0) { $0.mimeType == "application/vnd.oasis.opendocument.presentation" }}
+    ),
+
+    FileTypeMatch(
+      type: .threemf,
+      matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+      match: { matchZipHeader($0) { $0.filename.hasPrefix("3D/") && $0.filename.hasSuffix(".model") }}
     ),
 
     FileTypeMatch(

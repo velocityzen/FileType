@@ -21,6 +21,7 @@ final class FileTypeTests: XCTestCase {
 
     let fileType = FileType.getFor(data: data)
     XCTAssertEqual(fileType?.type, type)
+    print("Test passed: \(fileType?.ext ?? "NO")")
   }
 
   func testAll() {
