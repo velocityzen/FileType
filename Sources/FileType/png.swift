@@ -1,6 +1,12 @@
 import Foundation
 
-func findAPNG(_ data: Data) -> Bool {
+private enum PNG {
+  case Corrupt
+  case PNG
+  case APNG
+}
+
+private func checkPNG(_ data: Data) -> PNG {
   // Offset calculated as follows:
   // - 8 bytes: PNG signature
   // - 4 (length) + 4 (chunk type) + 13 (chunk data) + 4 (CRC): IHDR chunk
@@ -11,15 +17,15 @@ func findAPNG(_ data: Data) -> Bool {
     let type = data.getString(from: (position + 4) ..< (position + 8))!
 
     if length < 0 {
-      return false
+      return .Corrupt
     }
 
     switch type {
       case "acTL":
-        return true
+        return .APNG
 
       case "IDAT":
-        return false
+        return .PNG
 
       default:
         position += 8 + length + 4 // Ignore chunk-data + CRC
@@ -27,5 +33,15 @@ func findAPNG(_ data: Data) -> Bool {
 
   } while position < data.count
 
-  return false
+  return .PNG
+}
+
+func findAPNG(_ data: Data) -> Bool {
+  let png = checkPNG(data)
+  return png == .APNG
+}
+
+func findPNG(_ data: Data) -> Bool {
+  let png = checkPNG(data)
+  return png == .PNG
 }
