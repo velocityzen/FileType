@@ -141,10 +141,10 @@ enum FileTypeMatchType {
 struct FileTypeMatch {
   let type: FileTypeMatchType
 
-  var bytesCount: Int? = nil
-  var matchString: [String]? = nil
-  var matchBytes: [[UInt8]]? = nil
-  var match: ((Data) -> Bool)? = nil
+  var bytesCount: Int?
+  var matchString: [String]?
+  var matchBytes: [[UInt8]]?
+  var match: ((Data) -> Bool)?
 
   static let all: [FileTypeMatch] = [
     FileTypeMatch(
@@ -171,10 +171,10 @@ struct FileTypeMatch {
       type: .eps,
       bytesCount: 20,
       match: { matchPatterns($0, match: [[
-          .byte(0x25), .byte(0x21), .byte(0x50), .byte(0x53), .byte(0x2d), .byte(0x41), .byte(0x64), .byte(0x6f),
-          .byte(0x62), .byte(0x65), .byte(0x2d), .any, .any, .any,
-          .byte(0x20), .byte(0x45), .byte(0x50), .byte(0x53), .byte(0x46), .byte(0x2d)
-        ]])
+        .byte(0x25), .byte(0x21), .byte(0x50), .byte(0x53), .byte(0x2D), .byte(0x41), .byte(0x64), .byte(0x6F),
+        .byte(0x62), .byte(0x65), .byte(0x2D), .any, .any, .any,
+        .byte(0x20), .byte(0x45), .byte(0x50), .byte(0x53), .byte(0x46), .byte(0x2D),
+      ]])
       }
     ),
 
@@ -334,8 +334,8 @@ struct FileTypeMatch {
       match: { matchPatterns($0, match: [
         [
           .byte(0x4F), .byte(0x70), .byte(0x75), .byte(0x73),
-          .byte(0x48), .byte(0x65), .byte(0x61), .byte(0x64)
-        ]
+          .byte(0x48), .byte(0x65), .byte(0x61), .byte(0x64),
+        ],
       ], offset: 28) }
     ),
 
@@ -346,8 +346,8 @@ struct FileTypeMatch {
       match: { matchPatterns($0, match: [
         [
           .byte(0x80), .byte(0x74), .byte(0x68), .byte(0x65),
-          .byte(0x6F), .byte(0x72), .byte(0x61)
-        ]
+          .byte(0x6F), .byte(0x72), .byte(0x61),
+        ],
       ], offset: 28) }
     ),
 
@@ -358,8 +358,8 @@ struct FileTypeMatch {
       match: { matchPatterns($0, match: [
         [
           .byte(0x01), .byte(0x76), .byte(0x69), .byte(0x64),
-          .byte(0x65), .byte(0x6F), .byte(0x00)
-        ]
+          .byte(0x65), .byte(0x6F), .byte(0x00),
+        ],
       ], offset: 28) }
     ),
 
@@ -370,8 +370,8 @@ struct FileTypeMatch {
       match: { matchPatterns($0, match: [
         [
           .byte(0x7F), .byte(0x46), .byte(0x4C), .byte(0x41),
-          .byte(0x43)
-        ]
+          .byte(0x43),
+        ],
       ], offset: 28) }
     ),
 
@@ -382,8 +382,8 @@ struct FileTypeMatch {
       match: { matchPatterns($0, match: [
         [
           .byte(0x53), .byte(0x70), .byte(0x65), .byte(0x65),
-          .byte(0x78), .byte(0x20), .byte(0x20)
-        ]
+          .byte(0x78), .byte(0x20), .byte(0x20),
+        ],
       ], offset: 28) }
     ),
 
@@ -394,8 +394,8 @@ struct FileTypeMatch {
       match: { matchPatterns($0, match: [
         [
           .byte(0x01), .byte(0x76), .byte(0x6F), .byte(0x72),
-          .byte(0x62), .byte(0x69), .byte(0x73)
-        ]
+          .byte(0x62), .byte(0x69), .byte(0x73),
+        ],
       ], offset: 28) }
     ),
 
@@ -404,15 +404,15 @@ struct FileTypeMatch {
       matchString: ["OggS"]
     ),
 
-    //File Type Box Formats
+    // File Type Box Formats
     FileTypeMatch(
       type: .avif,
       bytesCount: 12,
       match: { matchPatterns($0, match: [
         [
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-          .byte(0x61), .byte(0x76), .byte(0x69), .byte(0x66)  // avif
-        ]
+          .byte(0x61), .byte(0x76), .byte(0x69), .byte(0x66), // avif
+        ],
       ], offset: 4) }
     ),
 
@@ -422,8 +422,8 @@ struct FileTypeMatch {
       match: { matchPatterns($0, match: [
         [
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-          .byte(0x6D), .byte(0x69), .byte(0x66), .byte(0x31)  // mif1
-        ]
+          .byte(0x6D), .byte(0x69), .byte(0x66), .byte(0x31), // mif1
+        ],
       ], offset: 4) }
     ),
 
@@ -433,8 +433,8 @@ struct FileTypeMatch {
       match: { matchPatterns($0, match: [
         [
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-          .byte(0x6D), .byte(0x73), .byte(0x66), .byte(0x31)  // msf1
-        ]
+          .byte(0x6D), .byte(0x73), .byte(0x66), .byte(0x31), // msf1
+        ],
       ], offset: 4) }
     ),
 
@@ -444,13 +444,13 @@ struct FileTypeMatch {
       match: { matchPatterns($0, match: [
         [
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-          .byte(0x68), .byte(0x65), .byte(0x69), .byte(0x63)  // heic
+          .byte(0x68), .byte(0x65), .byte(0x69), .byte(0x63), // heic
         ],
 
         [
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-          .byte(0x68), .byte(0x65), .byte(0x69), .byte(0x78)  // heix
-        ]
+          .byte(0x68), .byte(0x65), .byte(0x69), .byte(0x78), // heix
+        ],
       ], offset: 4) }
     ),
 
@@ -460,13 +460,13 @@ struct FileTypeMatch {
       match: { matchPatterns($0, match: [
         [
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-          .byte(0x68), .byte(0x65), .byte(0x76), .byte(0x63)  // hevc
+          .byte(0x68), .byte(0x65), .byte(0x76), .byte(0x63), // hevc
         ],
 
         [
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-          .byte(0x68), .byte(0x65), .byte(0x76), .byte(0x78)  // hevx
-        ]
+          .byte(0x68), .byte(0x65), .byte(0x76), .byte(0x78), // hevx
+        ],
       ], offset: 4) }
     ),
 
@@ -476,8 +476,8 @@ struct FileTypeMatch {
       match: { matchPatterns($0, match: [
         [
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-          .byte(0x71), .byte(0x74)                            // qt
-        ]
+          .byte(0x71), .byte(0x74), // qt
+        ],
       ], offset: 4) }
     ),
 
@@ -487,17 +487,17 @@ struct FileTypeMatch {
       match: { matchPatterns($0, match: [
         [
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-          .byte(0x4d), .byte(0x34), .byte(0x56)               // M4V
+          .byte(0x4D), .byte(0x34), .byte(0x56), // M4V
         ],
 
         [
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-          .byte(0x4d), .byte(0x34), .byte(0x56), .byte(0x48)  // M4VH
+          .byte(0x4D), .byte(0x34), .byte(0x56), .byte(0x48), // M4VH
         ],
 
         [
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-          .byte(0x4d), .byte(0x34), .byte(0x56), .byte(0x50)  // M4VP
+          .byte(0x4D), .byte(0x34), .byte(0x56), .byte(0x50), // M4VP
         ],
 
       ], offset: 4) }
@@ -508,8 +508,8 @@ struct FileTypeMatch {
       bytesCount: 11,
       match: { matchPatterns($0, match: [[
         .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-        .byte(0x4d), .byte(0x34), .byte(0x50)               // M4P
-        ]], offset: 4) }
+        .byte(0x4D), .byte(0x34), .byte(0x50), // M4P
+      ]], offset: 4) }
     ),
 
     FileTypeMatch(
@@ -517,8 +517,8 @@ struct FileTypeMatch {
       bytesCount: 11,
       match: { matchPatterns($0, match: [[
         .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-        .byte(0x4d), .byte(0x34), .byte(0x42)               // M4B
-        ]], offset: 4) }
+        .byte(0x4D), .byte(0x34), .byte(0x42), // M4B
+      ]], offset: 4) }
     ),
 
     FileTypeMatch(
@@ -526,8 +526,8 @@ struct FileTypeMatch {
       bytesCount: 11,
       match: { matchPatterns($0, match: [[
         .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-        .byte(0x4d), .byte(0x34), .byte(0x41)               // M4A
-        ]], offset: 4) }
+        .byte(0x4D), .byte(0x34), .byte(0x41), // M4A
+      ]], offset: 4) }
     ),
 
     FileTypeMatch(
@@ -535,8 +535,8 @@ struct FileTypeMatch {
       bytesCount: 11,
       match: { matchPatterns($0, match: [[
         .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-        .byte(0x46), .byte(0x34), .byte(0x56)               // F4V
-        ]], offset: 4) }
+        .byte(0x46), .byte(0x34), .byte(0x56), // F4V
+      ]], offset: 4) }
     ),
 
     FileTypeMatch(
@@ -544,8 +544,8 @@ struct FileTypeMatch {
       bytesCount: 11,
       match: { matchPatterns($0, match: [[
         .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-        .byte(0x46), .byte(0x34), .byte(0x50)               // F4P
-        ]], offset: 4) }
+        .byte(0x46), .byte(0x34), .byte(0x50), // F4P
+      ]], offset: 4) }
     ),
 
     FileTypeMatch(
@@ -553,8 +553,8 @@ struct FileTypeMatch {
       bytesCount: 11,
       match: { matchPatterns($0, match: [[
         .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-        .byte(0x46), .byte(0x34), .byte(0x41)               // F4A
-        ]], offset: 4) }
+        .byte(0x46), .byte(0x34), .byte(0x41), // F4A
+      ]], offset: 4) }
     ),
 
     FileTypeMatch(
@@ -562,8 +562,8 @@ struct FileTypeMatch {
       bytesCount: 11,
       match: { matchPatterns($0, match: [[
         .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-        .byte(0x46), .byte(0x34), .byte(0x42)               // F4B
-        ]], offset: 4) }
+        .byte(0x46), .byte(0x34), .byte(0x42), // F4B
+      ]], offset: 4) }
     ),
 
     FileTypeMatch(
@@ -571,8 +571,8 @@ struct FileTypeMatch {
       bytesCount: 11,
       match: { matchPatterns($0, match: [[
         .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-        .byte(0x63), .byte(0x72), .byte(0x78)               // crx
-        ]], offset: 4) }
+        .byte(0x63), .byte(0x72), .byte(0x78), // crx
+      ]], offset: 4) }
     ),
 
     FileTypeMatch(
@@ -580,8 +580,8 @@ struct FileTypeMatch {
       bytesCount: 11,
       match: { matchPatterns($0, match: [[
         .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-        .byte(0x33), .byte(0x67), .byte(0x32)               // 3g2
-        ]], offset: 4) }
+        .byte(0x33), .byte(0x67), .byte(0x32), // 3g2
+      ]], offset: 4) }
     ),
 
     FileTypeMatch(
@@ -589,8 +589,8 @@ struct FileTypeMatch {
       bytesCount: 10,
       match: { matchPatterns($0, match: [[
         .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-        .byte(0x33), .byte(0x67)                            // 3g
-        ]], offset: 4) }
+        .byte(0x33), .byte(0x67), // 3g
+      ]], offset: 4) }
     ),
 
     FileTypeMatch(
@@ -598,9 +598,8 @@ struct FileTypeMatch {
       bytesCount: 8,
       match: { matchPatterns($0, match: [[
         .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
-        ]], offset: 4) }
+      ]], offset: 4) }
     ),
-
 
     FileTypeMatch(
       type: .mid,
@@ -614,9 +613,9 @@ struct FileTypeMatch {
       match: {
         matchPatterns($0, match: [
           [.byte(0x0), .byte(0x01), .byte(0x0), .byte(0x0)],
-          [.byte(0x4F), .byte(0x54), .byte(0x54), .byte(0x4F)]
+          [.byte(0x4F), .byte(0x54), .byte(0x54), .byte(0x4F)],
         ], offset: 4)
-    }
+      }
     ),
 
     FileTypeMatch(
@@ -626,9 +625,9 @@ struct FileTypeMatch {
       match: {
         matchPatterns($0, match: [
           [.byte(0x00), .byte(0x01), .byte(0x0), .byte(0x00)],
-          [.byte(0x4F), .byte(0x54), .byte(0x54), .byte(0x4F)]
+          [.byte(0x4F), .byte(0x54), .byte(0x54), .byte(0x4F)],
         ], offset: 4)
-    }
+      }
     ),
 
     FileTypeMatch(
@@ -679,7 +678,7 @@ struct FileTypeMatch {
       matchBytes: [[0x49, 0x49, 0x2A, 0x0]],
       match: {
         matchPatterns($0, match: [[.byte(0x43), .byte(0x52)]], offset: 8)
-    }
+      }
     ),
 
     FileTypeMatch(
@@ -689,9 +688,9 @@ struct FileTypeMatch {
       match: {
         matchPatterns($0, match: [
           [.byte(0x1C), .byte(0x0), .byte(0xFE), .byte(0x0)],
-          [.byte(0x1F), .byte(0x0), .byte(0x0B), .byte(0x0)]
+          [.byte(0x1F), .byte(0x0), .byte(0x0B), .byte(0x0)],
         ], offset: 8)
-    }
+      }
     ),
 
     FileTypeMatch(
@@ -702,14 +701,14 @@ struct FileTypeMatch {
         matchPatterns($0, match: [
           [
             .byte(0x08), .byte(0x0), .byte(0x0), .byte(0x0),
-            .byte(0x2D), .byte(0x0), .byte(0xFE), .byte(0x0)
+            .byte(0x2D), .byte(0x0), .byte(0xFE), .byte(0x0),
           ],
           [
             .byte(0x08), .byte(0x0), .byte(0x0), .byte(0x0),
-            .byte(0x27), .byte(0x0), .byte(0xFE), .byte(0x0)
-          ]
+            .byte(0x27), .byte(0x0), .byte(0xFE), .byte(0x0),
+          ],
         ], offset: 4)
-    }
+      }
     ),
 
     FileTypeMatch(
@@ -724,7 +723,7 @@ struct FileTypeMatch {
             .byte(0x0), .byte(0xFE), .byte(0x00), .byte(0x04),
             .byte(0x0), .byte(0x01), .byte(0x00), .byte(0x00),
             .byte(0x0), .byte(0x01), .byte(0x00), .byte(0x00),
-            .byte(0x0), .byte(0x03), .byte(0x01)
+            .byte(0x0), .byte(0x03), .byte(0x01),
           ],
           [
             .byte(0x08), .byte(0x00), .byte(0x00), .byte(0x00),
@@ -732,17 +731,17 @@ struct FileTypeMatch {
             .byte(0x0), .byte(0xFE), .byte(0x00), .byte(0x04),
             .byte(0x0), .byte(0x01), .byte(0x00), .byte(0x00),
             .byte(0x0), .byte(0x01), .byte(0x00), .byte(0x00),
-            .byte(0x0), .byte(0x03), .byte(0x01)
+            .byte(0x0), .byte(0x03), .byte(0x01),
           ],
         ], offset: 4)
-    }
+      }
     ),
 
     FileTypeMatch(
       type: .tif,
       matchBytes: [
         [0x49, 0x49, 0x2A, 0x0],
-        [0x4D, 0x4D, 0x0, 0x2A]
+        [0x4D, 0x4D, 0x0, 0x2A],
       ]
     ),
 
@@ -751,7 +750,7 @@ struct FileTypeMatch {
       matchString: ["MAC "]
     ),
 
-    //matroska
+    // matroska
 
     FileTypeMatch(
       type: .avi,
@@ -759,9 +758,9 @@ struct FileTypeMatch {
       matchBytes: [[0x52, 0x49, 0x46, 0x46]],
       match: {
         matchPatterns($0, match: [
-          [.byte(0x41), .byte(0x56), .byte(0x49)]
+          [.byte(0x41), .byte(0x56), .byte(0x49)],
         ], offset: 8)
-    }
+      }
     ),
 
     FileTypeMatch(
@@ -770,9 +769,9 @@ struct FileTypeMatch {
       matchBytes: [[0x52, 0x49, 0x46, 0x46]],
       match: {
         matchPatterns($0, match: [
-          [.byte(0x57), .byte(0x41), .byte(0x56), .byte(0x45)]
+          [.byte(0x57), .byte(0x41), .byte(0x56), .byte(0x45)],
         ], offset: 8)
-    }
+      }
     ),
 
     FileTypeMatch(
@@ -781,9 +780,9 @@ struct FileTypeMatch {
       matchBytes: [[0x52, 0x49, 0x46, 0x46]],
       match: {
         matchPatterns($0, match: [
-          [.byte(0x51), .byte(0x4C), .byte(0x43), .byte(0x4D)]
+          [.byte(0x51), .byte(0x4C), .byte(0x43), .byte(0x4D)],
         ], offset: 8)
-    }
+      }
     ),
 
     FileTypeMatch(
@@ -843,20 +842,20 @@ struct FileTypeMatch {
       bytesCount: 7,
       match: {
         matchPatterns($0, match: [
-          [ .byte(0x2d), .byte(0x6c), .byte(0x68), .byte(0x30), .byte(0x2d) ],
-          [ .byte(0x2d), .byte(0x6c), .byte(0x68), .byte(0x31), .byte(0x2d) ],
-          [ .byte(0x2d), .byte(0x6c), .byte(0x68), .byte(0x32), .byte(0x2d) ],
-          [ .byte(0x2d), .byte(0x6c), .byte(0x68), .byte(0x33), .byte(0x2d) ],
-          [ .byte(0x2d), .byte(0x6c), .byte(0x68), .byte(0x34), .byte(0x2d) ],
-          [ .byte(0x2d), .byte(0x6c), .byte(0x68), .byte(0x35), .byte(0x2d) ],
-          [ .byte(0x2d), .byte(0x6c), .byte(0x68), .byte(0x36), .byte(0x2d) ],
-          [ .byte(0x2d), .byte(0x6c), .byte(0x68), .byte(0x37), .byte(0x2d) ],
-          [ .byte(0x2d), .byte(0x6c), .byte(0x68), .byte(0x64), .byte(0x2d) ],
-          [ .byte(0x2d), .byte(0x6c), .byte(0x7a), .byte(0x73), .byte(0x2d) ],
-          [ .byte(0x2d), .byte(0x6c), .byte(0x7a), .byte(0x34), .byte(0x2d) ],
-          [ .byte(0x2d), .byte(0x6c), .byte(0x7a), .byte(0x35), .byte(0x2d) ],
+          [.byte(0x2D), .byte(0x6C), .byte(0x68), .byte(0x30), .byte(0x2D)],
+          [.byte(0x2D), .byte(0x6C), .byte(0x68), .byte(0x31), .byte(0x2D)],
+          [.byte(0x2D), .byte(0x6C), .byte(0x68), .byte(0x32), .byte(0x2D)],
+          [.byte(0x2D), .byte(0x6C), .byte(0x68), .byte(0x33), .byte(0x2D)],
+          [.byte(0x2D), .byte(0x6C), .byte(0x68), .byte(0x34), .byte(0x2D)],
+          [.byte(0x2D), .byte(0x6C), .byte(0x68), .byte(0x35), .byte(0x2D)],
+          [.byte(0x2D), .byte(0x6C), .byte(0x68), .byte(0x36), .byte(0x2D)],
+          [.byte(0x2D), .byte(0x6C), .byte(0x68), .byte(0x37), .byte(0x2D)],
+          [.byte(0x2D), .byte(0x6C), .byte(0x68), .byte(0x64), .byte(0x2D)],
+          [.byte(0x2D), .byte(0x6C), .byte(0x7A), .byte(0x73), .byte(0x2D)],
+          [.byte(0x2D), .byte(0x6C), .byte(0x7A), .byte(0x34), .byte(0x2D)],
+          [.byte(0x2D), .byte(0x6C), .byte(0x7A), .byte(0x35), .byte(0x2D)],
         ], offset: 2)
-    }
+      }
     ),
 
     //  MPEG-PS, MPEG-1 Part 1
@@ -866,7 +865,7 @@ struct FileTypeMatch {
       matchBytes: [[0x00, 0x00, 0x01, 0xBA]],
       match: {
         matchPatterns($0, match: [[.byte(0x21)]], offset: 4, mask: [0xF1])
-    }
+      }
     ),
 
     // MPEG-PS, MPEG-2 Part 1
@@ -878,7 +877,7 @@ struct FileTypeMatch {
         matchPatterns($0, match: [[.byte(0x44)]], offset: 4, mask: [0xC4])
       }
     ),
-    
+
     FileTypeMatch(
       type: .chm,
       matchString: ["ITSF"]
@@ -908,7 +907,7 @@ struct FileTypeMatch {
       type: .rar,
       matchBytes: [
         [0x52, 0x61, 0x72, 0x21, 0x1A, 0x7, 0x0],
-        [0x52, 0x61, 0x72, 0x21, 0x1A, 0x7, 0x1]
+        [0x52, 0x61, 0x72, 0x21, 0x1A, 0x7, 0x1],
       ]
     ),
 
@@ -926,11 +925,11 @@ struct FileTypeMatch {
       match: { matchPatterns($0, match: [
         [
           .byte(0x64), .byte(0x65), .byte(0x62), .byte(0x69),
-          .byte(0x61), .byte(0x6e), .byte(0x2d), .byte(0x62),
-          .byte(0x69), .byte(0x6e), .byte(0x61), .byte(0x72),
-          .byte(0x79)
-        ]
-      ], offset: 8)}
+          .byte(0x61), .byte(0x6E), .byte(0x2D), .byte(0x62),
+          .byte(0x69), .byte(0x6E), .byte(0x61), .byte(0x72),
+          .byte(0x79),
+        ],
+      ], offset: 8) }
     ),
 
     FileTypeMatch(
@@ -968,9 +967,9 @@ struct FileTypeMatch {
           [.byte(0x66), .byte(0x72), .byte(0x65), .byte(0x65)], // `free`
           [.byte(0x6D), .byte(0x64), .byte(0x61), .byte(0x74)], // `mdat` MJPEG
           [.byte(0x6D), .byte(0x6F), .byte(0x6F), .byte(0x76)], // `moov`
-          [.byte(0x77), .byte(0x69), .byte(0x64), .byte(0x65)]  // `wide`
+          [.byte(0x77), .byte(0x69), .byte(0x64), .byte(0x65)], // `wide`
         ], offset: 4)
-    }
+      }
     ),
 
     FileTypeMatch(
@@ -991,13 +990,13 @@ struct FileTypeMatch {
       matchBytes: [[
         0x30, 0x26, 0xB2, 0x75,
         0x8E, 0x66, 0xCF, 0x11,
-        0xA6, 0xD9
-        ]],
+        0xA6, 0xD9,
+      ]],
       match: { matchAsfHeader($0, [
         0x40, 0x9E, 0x69, 0xF8,
         0x4D, 0x5B, 0xCF, 0x11,
         0xA8, 0xFD, 0x00, 0x80,
-        0x5F, 0x5C, 0x44, 0x2B
+        0x5F, 0x5C, 0x44, 0x2B,
       ]) }
     ),
 
@@ -1007,13 +1006,13 @@ struct FileTypeMatch {
       matchBytes: [[
         0x30, 0x26, 0xB2, 0x75,
         0x8E, 0x66, 0xCF, 0x11,
-        0xA6, 0xD9
-        ]],
+        0xA6, 0xD9,
+      ]],
       match: { matchAsfHeader($0, [
         0xC0, 0xEF, 0x19, 0xBC,
         0x4D, 0x5B, 0xCF, 0x11,
         0xA8, 0xFD, 0x00, 0x80,
-        0x5F, 0x5C, 0x44, 0x2B
+        0x5F, 0x5C, 0x44, 0x2B,
       ]) }
     ),
 
@@ -1022,8 +1021,8 @@ struct FileTypeMatch {
       matchBytes: [[
         0x30, 0x26, 0xB2, 0x75,
         0x8E, 0x66, 0xCF, 0x11,
-        0xA6, 0xD9
-        ]]
+        0xA6, 0xD9,
+      ]]
     ),
 
     FileTypeMatch(
@@ -1039,7 +1038,7 @@ struct FileTypeMatch {
           [.byte(0x7E), .byte(0x10), .byte(0x04), .any,
            .byte(0x30), .byte(0x4D), .byte(0x49), .byte(0x45)],
           [.byte(0x7E), .byte(0x18), .byte(0x04), .any,
-           .byte(0x30), .byte(0x4D), .byte(0x49), .byte(0x45)]
+           .byte(0x30), .byte(0x4D), .byte(0x49), .byte(0x45)],
         ])
       }
     ),
@@ -1052,7 +1051,7 @@ struct FileTypeMatch {
           [
             .byte(0x27), .byte(0x0A), .byte(0x00), .byte(0x00),
             .byte(0x00), .byte(0x00), .byte(0x00), .byte(0x00),
-            .byte(0x00), .byte(0x00), .byte(0x00), .byte(0x00)
+            .byte(0x00), .byte(0x00), .byte(0x00), .byte(0x00),
           ],
         ], offset: 2)
       }
@@ -1068,12 +1067,12 @@ struct FileTypeMatch {
             .byte(0x00), .byte(0x00), .byte(0x00), .byte(0x0C),
             .byte(0x6A), .byte(0x50), .byte(0x20), .byte(0x20),
             .byte(0x0D), .byte(0x0A), .byte(0x87), .byte(0x0A),
-            .any,        .any,        .any,        .any,
-            .any,        .any,        .any,        .any,
-            .byte(0x6A), .byte(0x70), .byte(0x32), .byte(0x20)
+            .any, .any, .any, .any,
+            .any, .any, .any, .any,
+            .byte(0x6A), .byte(0x70), .byte(0x32), .byte(0x20),
           ],
         ])
-    }
+      }
     ),
 
     FileTypeMatch(
@@ -1085,12 +1084,12 @@ struct FileTypeMatch {
             .byte(0x00), .byte(0x00), .byte(0x00), .byte(0x0C),
             .byte(0x6A), .byte(0x50), .byte(0x20), .byte(0x20),
             .byte(0x0D), .byte(0x0A), .byte(0x87), .byte(0x0A),
-            .any,        .any,        .any,        .any,
-            .any,        .any,        .any,        .any,
-            .byte(0x6A), .byte(0x70), .byte(0x78), .byte(0x20)
+            .any, .any, .any, .any,
+            .any, .any, .any, .any,
+            .byte(0x6A), .byte(0x70), .byte(0x78), .byte(0x20),
           ],
         ])
-    }
+      }
     ),
 
     FileTypeMatch(
@@ -1102,12 +1101,12 @@ struct FileTypeMatch {
             .byte(0x00), .byte(0x00), .byte(0x00), .byte(0x0C),
             .byte(0x6A), .byte(0x50), .byte(0x20), .byte(0x20),
             .byte(0x0D), .byte(0x0A), .byte(0x87), .byte(0x0A),
-            .any,        .any,        .any,        .any,
-            .any,        .any,        .any,        .any,
-            .byte(0x6A), .byte(0x70), .byte(0x6D), .byte(0x20)
+            .any, .any, .any, .any,
+            .any, .any, .any, .any,
+            .byte(0x6A), .byte(0x70), .byte(0x6D), .byte(0x20),
           ],
         ])
-    }
+      }
     ),
 
     FileTypeMatch(
@@ -1119,12 +1118,12 @@ struct FileTypeMatch {
             .byte(0x00), .byte(0x00), .byte(0x00), .byte(0x0C),
             .byte(0x6A), .byte(0x50), .byte(0x20), .byte(0x20),
             .byte(0x0D), .byte(0x0A), .byte(0x87), .byte(0x0A),
-            .any,        .any,        .any,        .any,
-            .any,        .any,        .any,        .any,
-            .byte(0x6D), .byte(0x6A), .byte(0x70), .byte(0x32)
+            .any, .any, .any, .any,
+            .any, .any, .any, .any,
+            .byte(0x6D), .byte(0x6A), .byte(0x70), .byte(0x32),
           ],
         ])
-    }
+      }
     ),
 
     // -- Unsafe signatures --
@@ -1147,13 +1146,13 @@ struct FileTypeMatch {
       type: .cur,
       matchBytes: [[0x00, 0x00, 0x02, 0x00]]
     ),
-    
+
     // Increase sample size from 12 to 256.
 
     FileTypeMatch(
-        type: .asar,
-        matchBytes: [[0x04, 0x00, 0x00, 0x00]],
-        match: matchAsarHeader
+      type: .asar,
+      matchBytes: [[0x04, 0x00, 0x00, 0x00]],
+      match: matchAsarHeader
     ),
 
     // `raf` is here just to keep all the raw image detectors together.
@@ -1176,7 +1175,7 @@ struct FileTypeMatch {
       type: .voc,
       matchString: ["Creative Voice File"]
     ),
-    
+
     FileTypeMatch(
       type: .indd,
       matchBytes: [[0x06, 0x06, 0xED, 0xF5, 0xD8, 0x1D, 0x46, 0xE5, 0xBD, 0x31, 0xEF, 0xE7, 0xFE, 0x74, 0xB7, 0x1D]]
@@ -1196,8 +1195,8 @@ struct FileTypeMatch {
       type: .s3m,
       bytesCount: 44 + 4,
       match: { matchPatterns($0, match: [
-        [.byte(0x53), .byte(0x43), .byte(0x52), .byte(0x4D)]
-      ], offset: 44)}
+        [.byte(0x53), .byte(0x43), .byte(0x52), .byte(0x4D)],
+      ], offset: 44) }
     ),
 
     FileTypeMatch(
@@ -1208,8 +1207,8 @@ struct FileTypeMatch {
           (
             matchPatterns($0, match: [[.byte(0x47)]], offset: 192) ||
               matchPatterns($0, match: [[.byte(0x47)]], offset: 196)
-        )
-    }
+          )
+      }
     ),
 
     FileTypeMatch(
@@ -1218,17 +1217,17 @@ struct FileTypeMatch {
       match: { matchPatterns($0, match: [
         [
           .byte(0x42), .byte(0x4F), .byte(0x4F), .byte(0x4B),
-          .byte(0x4D), .byte(0x4F), .byte(0x42), .byte(0x49)
-        ]
-      ], offset: 60)}
+          .byte(0x4D), .byte(0x4F), .byte(0x42), .byte(0x49),
+        ],
+      ], offset: 60) }
     ),
 
     FileTypeMatch(
       type: .dcm,
       bytesCount: 128 + 4,
       match: { matchPatterns($0, match: [
-        [.byte(0x44), .byte(0x49), .byte(0x43), .byte(0x4D)]
-      ], offset: 128)}
+        [.byte(0x44), .byte(0x49), .byte(0x43), .byte(0x4D)],
+      ], offset: 128) }
     ),
 
     FileTypeMatch(
@@ -1250,8 +1249,8 @@ struct FileTypeMatch {
             matchPatterns($0, match: [[.byte(0x00), .byte(0x00), .byte(0x01)]], offset: 8) ||
               matchPatterns($0, match: [[.byte(0x01), .byte(0x00), .byte(0x02)]], offset: 8) ||
               matchPatterns($0, match: [[.byte(0x02), .byte(0x00), .byte(0x02)]], offset: 8)
-        )
-    }
+          )
+      }
     ),
 
     // Sample size 512
@@ -1263,12 +1262,12 @@ struct FileTypeMatch {
         $0,
         match: [[
           .byte(0x30), .byte(0x30), .byte(0x30), .byte(0x30),
-          .byte(0x30), .byte(0x30)
-          ]],
+          .byte(0x30), .byte(0x30),
+        ]],
         offset: 148,
         mask: [0xF8, 0xF8, 0xF8, 0xF8, 0xF8, 0xF8]
-        ) && tarHeaderChecksumMatches($0)
-    }
+      ) && tarHeaderChecksumMatches($0)
+      }
     ),
 
     FileTypeMatch(
@@ -1277,7 +1276,7 @@ struct FileTypeMatch {
         0xFF, 0xFE, 0xFF, 0x0E, 0x53, 0x00, 0x6B, 0x00,
         0x65, 0x00, 0x74, 0x00, 0x63, 0x00, 0x68, 0x00,
         0x55, 0x00, 0x70, 0x00, 0x20, 0x00, 0x4D, 0x00,
-        0x6F, 0x00, 0x64, 0x00, 0x65, 0x00, 0x6C, 0x00
+        0x6F, 0x00, 0x64, 0x00, 0x65, 0x00, 0x6C, 0x00,
       ]]
     ),
 
@@ -1309,7 +1308,5 @@ struct FileTypeMatch {
       type: .mp3,
       matchString: ["ID3"]
     ),
-
   ]
-
 }

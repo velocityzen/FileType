@@ -1,4 +1,4 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.3
 import PackageDescription
 
 let package = Package(
@@ -6,15 +6,16 @@ let package = Package(
   products: [
     .library(
       name: "FileType",
-      targets: ["FileType"]),
+      targets: ["FileType"]
+    ),
   ],
   targets: [
     .target(
-      name: "FileType",
-      dependencies: []
+      name: "FileType"
     ),
     .testTarget(
       name: "FileTypeTests",
-      dependencies: ["FileType"]),
+      dependencies: ["FileType"]
+    ),
   ]
 )
