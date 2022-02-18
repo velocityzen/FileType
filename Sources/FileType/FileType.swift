@@ -590,18 +590,6 @@ private extension FileType {
       mime: "image/x-panasonic-rw2"
     ),
 
-    .wma: FileType(
-      type: .wma,
-      ext: "wma",
-      mime: "audio/x-ms-wma"
-    ),
-
-    .wmv: FileType(
-      type: .wmv,
-      ext: "wmv",
-      mime: "video/x-ms-asf"
-    ),
-
     .asf: FileType(
       type: .asf,
       ext: "asf",

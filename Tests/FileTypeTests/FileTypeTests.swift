@@ -158,6 +158,11 @@ final class FileTypeTests: XCTestCase {
     testFileType("fixture-bdav.mts", type: .mts)
   }
 
+  func testASF() {
+    testFileType("fixture.wma.asf", type: .asf)
+    testFileType("fixture.wmv.asf", type: .asf)
+  }
+
   func testBytesCountForType() {
     XCTAssertEqual(FileType.getBytesCountFor(type: .ac3), 2)
     XCTAssertEqual(FileType.getBytesCountFor(type: .zip), 4)
@@ -189,6 +194,7 @@ final class FileTypeTests: XCTestCase {
     ("testEPS", testEPS),
     ("testXML", testXML),
     ("testMTS", testMTS),
+    ("testASF", testASF),
 
     ("testBytesCountForType", testBytesCountForType),
     ("testBytesCountForTypes", testBytesCountForTypes),

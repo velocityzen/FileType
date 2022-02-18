@@ -178,8 +178,6 @@ returns max bytes count needed to detect file types
 - [`wav`](https://en.wikipedia.org/wiki/WAV)
 - [`webm`](https://en.wikipedia.org/wiki/WebM)
 - [`webp`](https://en.wikipedia.org/wiki/WebP)
-- [`wma`](https://en.wikipedia.org/wiki/Windows_Media_Audio) - Windows Media Audio
-- [`wmv`](https://en.wikipedia.org/wiki/Windows_Media_Video) - Windows Media Video
 - [`woff2`](https://en.wikipedia.org/wiki/Web_Open_Font_Format)
 - [`woff`](https://en.wikipedia.org/wiki/Web_Open_Font_Format)
 - [`wv`](https://en.wikipedia.org/wiki/WavPack) - WavPack

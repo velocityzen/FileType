@@ -1007,7 +1007,7 @@ struct FileTypeMatch {
     ),
 
     FileTypeMatch(
-      type: .wma,
+      type: .asf,
       bytesCount: 1024,
       matchBytes: [[
         0x30, 0x26, 0xB2, 0x75,
@@ -1023,7 +1023,7 @@ struct FileTypeMatch {
     ),
 
     FileTypeMatch(
-      type: .wmv,
+      type: .asf,
       bytesCount: 1024,
       matchBytes: [[
         0x30, 0x26, 0xB2, 0x75,

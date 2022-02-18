@@ -119,8 +119,6 @@ public enum FileTypeExtension: CaseIterable {
   case voc
   case wasm
   case wav
-  case wma
-  case wmv
   case woff
   case woff2
   case wv
