@@ -114,6 +114,7 @@ returns max bytes count needed to detect file types
 - [`jpg`](https://en.wikipedia.org/wiki/JPEG)
 - [`jpm`](https://en.wikipedia.org/wiki/JPEG_2000) - JPEG 2000
 - [`jpx`](https://en.wikipedia.org/wiki/JPEG_2000) - JPEG 2000
+- [`jxl`](https://en.wikipedia.org/wiki/JPEG_XL) - JPEG XL image format
 - [`jxr`](https://en.wikipedia.org/wiki/JPEG_XR)
 - [`ktx`](https://www.khronos.org/opengles/sdk/tools/KTX/file_format_spec/)
 - [`lnk`](https://en.wikipedia.org/wiki/Shortcut_%28computing%29#Microsoft_Windows) - Microsoft Windows file shortcut

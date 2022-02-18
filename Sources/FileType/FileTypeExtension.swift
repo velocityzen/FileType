@@ -55,6 +55,7 @@ public enum FileTypeExtension: CaseIterable {
   case jpg
   case jpm
   case jpx
+  case jxl
   case jxr
   case ktx
   case lnk

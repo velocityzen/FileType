@@ -162,6 +162,10 @@ final class FileTypeTests: XCTestCase {
     testFileType("fixture.wma.asf", type: .asf)
     testFileType("fixture.wmv.asf", type: .asf)
   }
+  
+  func testJXL() {
+    testFileType("fixture2.jxl", type: .jxl)
+  }
 
   func testBytesCountForType() {
     XCTAssertEqual(FileType.getBytesCountFor(type: .ac3), 2)

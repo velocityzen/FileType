@@ -639,6 +639,12 @@ private extension FileType {
       mime: "image/mj2"
     ),
 
+    .jxl: FileType(
+      type: .jxl,
+      ext: "jxl",
+      mime: "image/jxl"
+    ),
+
     .mpg: FileType(
       type: .mpg,
       ext: "mpg",
