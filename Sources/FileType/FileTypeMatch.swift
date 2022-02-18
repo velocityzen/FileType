@@ -420,6 +420,10 @@ struct FileTypeMatch {
           .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
           .byte(0x61), .byte(0x76), .byte(0x69), .byte(0x66), // avif
         ],
+        [
+          .byte(0x66), .byte(0x74), .byte(0x79), .byte(0x70), // ftyp
+          .byte(0x61), .byte(0x76), .byte(0x69), .byte(0x73), // avis
+        ],
       ], offset: 4) }
     ),
 

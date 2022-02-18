@@ -91,6 +91,7 @@ final class FileTypeTests: XCTestCase {
 
   func testFTYP() {
     testFileType("fixture-yuv420-8bit.avif", type: .avif)
+    testFileType("fixture-sequence.avif", type: .avif)
     testFileType("fixture-mif1.heic", type: .heic)
     testFileType("fixture-msf1.heic", type: .heic)
     testFileType("fixture-heic.heic", type: .heic)
