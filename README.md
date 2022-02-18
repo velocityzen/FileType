@@ -174,6 +174,7 @@ returns max bytes count needed to detect file types
 - [`tar`](<https://en.wikipedia.org/wiki/Tar_(computing)#File_format>)
 - [`tif`](https://en.wikipedia.org/wiki/Tagged_Image_File_Format)
 - [`ttf`](https://en.wikipedia.org/wiki/TrueType)
+- [`vcf`](https://en.wikipedia.org/wiki/VCard) - vCard
 - [`voc`](https://wiki.multimedia.cx/index.php/Creative_Voice) - Creative Voice File
 - [`wasm`](https://en.wikipedia.org/wiki/WebAssembly)
 - [`wav`](https://en.wikipedia.org/wiki/WAV)

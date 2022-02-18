@@ -124,6 +124,7 @@ enum FileTypeMatchType {
   case threemf
   case tif
   case ttf
+  case vcf
   case voc
   case wasm
   case wav
@@ -918,8 +919,13 @@ struct FileTypeMatch {
     ),
 
     FileTypeMatch(
+      type: .vcf,
+      matchString: ["BEGIN:VCARD"]
+    ),
+
+    FileTypeMatch(
       type: .ics,
-      matchString: ["BEGIN:"]
+      matchString: ["BEGIN:VCALENDAR"]
     ),
 
     FileTypeMatch(

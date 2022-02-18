@@ -117,6 +117,7 @@ public enum FileTypeExtension: CaseIterable {
   case threemf
   case tif
   case ttf
+  case vcf
   case voc
   case wasm
   case wav

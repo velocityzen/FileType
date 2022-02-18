@@ -524,6 +524,12 @@ private extension FileType {
       mime: "text/calendar"
     ),
 
+    .vcf: FileType(
+      type: .vcf,
+      ext: "vcf",
+      mime: "text/vcard"
+    ),
+
     .sevenz: FileType(
       type: .sevenz,
       ext: "7z",
