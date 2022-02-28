@@ -142,6 +142,7 @@ enum FileTypeMatchType {
   case xz
   case Z
   case zip
+  case zst
 }
 
 struct FileTypeMatch {
@@ -262,6 +263,11 @@ struct FileTypeMatch {
     FileTypeMatch(
       type: .eps,
       matchBytes: [[0xC5, 0xD0, 0xD3, 0xC6]]
+    ),
+
+    FileTypeMatch(
+      type: .zst,
+      matchBytes: [[0x28, 0xB5, 0x2F, 0xFD]]
     ),
 
     // Zip-based file formats

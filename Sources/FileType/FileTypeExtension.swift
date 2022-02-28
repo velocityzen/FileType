@@ -133,4 +133,5 @@ public enum FileTypeExtension: CaseIterable {
   case xz
   case Z
   case zip
+  case zst
 }

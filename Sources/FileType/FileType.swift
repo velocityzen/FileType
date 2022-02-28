@@ -831,6 +831,12 @@ private extension FileType {
       mime: "application/eps"
     ),
 
+    .zst: FileType(
+      type: .zst,
+      ext: "zst",
+      mime: "application/zstd"
+    ),
+
     .indd: FileType(
       type: .indd,
       ext: "indd",

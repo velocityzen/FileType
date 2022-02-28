@@ -192,6 +192,7 @@ returns max bytes count needed to detect file types
 - [`xz`](https://en.wikipedia.org/wiki/Xz)
 - [`Z`](https://fileinfo.com/extension/z)
 - [`zip`](<https://en.wikipedia.org/wiki/Zip_(file_format)>)
+- [`zst`](https://en.wikipedia.org/wiki/Zstandard) - Archive file
 
 _Pull requests are welcome for additional commonly used file types._
 
