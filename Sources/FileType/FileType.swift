@@ -848,6 +848,18 @@ private extension FileType {
       ext: "elf",
       mime: "application/x-elf"
     ),
+
+    .mkv: FileType(
+      type: .mkv,
+      ext: "mkv",
+      mime: "video/x-matroska"
+    ),
+
+    .webm: FileType(
+      type: .webm,
+      ext: "webm",
+      mime: "video/webm"
+    ),
   ]
 }
 

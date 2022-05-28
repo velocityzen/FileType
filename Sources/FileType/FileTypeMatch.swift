@@ -74,6 +74,7 @@ enum FileTypeMatchType {
   case mid
   case mie
   case mj2
+  case mkv
   case mobi
   case mov
   case mp1
@@ -129,6 +130,7 @@ enum FileTypeMatchType {
   case voc
   case wasm
   case wav
+  case webm
   case wma
   case wmv
   case woff
@@ -778,6 +780,21 @@ struct FileTypeMatch {
     ),
 
     // matroska
+    FileTypeMatch(
+      type: .webm,
+      matchBytes: [[0x1A, 0x45, 0xDF, 0xA3]],
+      match: {
+        matchMatroskaDocType($0, "webm")
+      }
+    ),
+
+    FileTypeMatch(
+      type: .mkv,
+      matchBytes: [[0x1A, 0x45, 0xDF, 0xA3]],
+      match: {
+        matchMatroskaDocType($0, "matr")
+      }
+    ),
 
     FileTypeMatch(
       type: .avi,

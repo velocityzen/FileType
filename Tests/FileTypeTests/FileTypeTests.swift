@@ -175,6 +175,11 @@ final class FileTypeTests: XCTestCase {
     testFileType("fixture.ppt.cfb", type: .cfb)
     testFileType("fixture-2.doc.cfb", type: .cfb)
   }
+  
+  func testMatroska() {
+    testFileType("fixture2.mkv", type: .mkv)
+    testFileType("fixture-null.webm", type: .webm)
+  }
 
   func testPDF() {
     testFileType("fixture-without-pdf-compatibility.ai", type: .ai)

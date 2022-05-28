@@ -47,9 +47,9 @@ public enum FileTypeExtension: CaseIterable {
   case glb
   case gz
   case heic
+  case icns
   case ico
   case ics
-  case icns
   case indd
   case it
   case jp2
@@ -69,6 +69,7 @@ public enum FileTypeExtension: CaseIterable {
   case mid
   case mie
   case mj2
+  case mkv
   case mobi
   case mov
   case mp1
@@ -122,6 +123,7 @@ public enum FileTypeExtension: CaseIterable {
   case voc
   case wasm
   case wav
+  case webm
   case woff
   case woff2
   case wv
