@@ -23,7 +23,7 @@ func matchZipHeader(_ data: Data, _ match: (ZipHeader) -> Bool) -> Bool {
     position += 30 + filenameLength + extraFieldLength
 
     if zipHeader.filename == "mimetype", compressedSize == uncompressedSize {
-      zipHeader.mimeType = data.getString(from: position ..< position + compressedSize)
+      zipHeader.mimeType = data.getString(from: position ..< position + compressedSize)?.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     if match(zipHeader) {

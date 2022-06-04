@@ -175,7 +175,7 @@ final class FileTypeTests: XCTestCase {
     testFileType("fixture.ppt.cfb", type: .cfb)
     testFileType("fixture-2.doc.cfb", type: .cfb)
   }
-  
+
   func testMatroska() {
     testFileType("fixture2.mkv", type: .mkv)
     testFileType("fixture-null.webm", type: .webm)
@@ -187,6 +187,10 @@ final class FileTypeTests: XCTestCase {
     testFileType("fixture-smallest.pdf", type: .pdf)
     testFileType("fixture-fast-web.pdf", type: .pdf)
     testFileType("fixture-printed.pdf", type: .pdf)
+  }
+
+  func testEPUB() {
+    testFileType("fixture-crlf.epub", type: .epub)
   }
 
   func testBytesCountForType() {
@@ -223,7 +227,9 @@ final class FileTypeTests: XCTestCase {
     ("testASF", testASF),
     ("testJXL", testJXL),
     ("testCFB", testCFB),
+    ("testMatroska", testMatroska),
     ("testPDF", testPDF),
+    ("testEPUB", testEPUB),
 
     ("testBytesCountForType", testBytesCountForType),
     ("testBytesCountForTypes", testBytesCountForTypes),
