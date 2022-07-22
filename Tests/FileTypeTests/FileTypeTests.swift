@@ -178,6 +178,7 @@ final class FileTypeTests: XCTestCase {
 
   func testMatroska() {
     testFileType("fixture2.mkv", type: .mkv)
+    testFileType("fixture-corrupt.mkv", type: .mkv)
     testFileType("fixture-null.webm", type: .webm)
   }
 
