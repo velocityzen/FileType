@@ -1,6 +1,10 @@
 import Foundation
 import Testing
 
+#if canImport(UniformTypeIdentifiers)
+import UniformTypeIdentifiers
+#endif
+
 @testable import FileType
 
 struct DetectionCase: Sendable, CustomStringConvertible {
@@ -398,6 +402,39 @@ struct FileTypeTests {
         let data = Data([0xDE, 0xAD, 0xBE, 0xEF, 0x00, 0x01, 0x02, 0x03])
         #expect(FileType.detect(in: data) == nil)
     }
+
+    #if canImport(UniformTypeIdentifiers)
+    @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, visionOS 1.0, *)
+    @Test("detects file types from UTI identifiers")
+    func detectsFromUTI() {
+        #expect(FileType.detect(uti: "public.jpeg")?.type == .jpg)
+        #expect(FileType.detect(uti: "com.adobe.pdf")?.type == .pdf)
+        #expect(FileType.detect(uti: "public.png")?.type == .png)
+        #expect(FileType.detect(uti: "public.mp3")?.type == .mp3)
+        #expect(FileType.detect(uti: "org.openxmlformats.wordprocessingml.document")?.type == .docx)
+        #expect(FileType.detect(uti: "public.mpeg-4")?.type == .mp4)
+        #expect(FileType.detect(uti: "com.compuserve.gif")?.type == .gif)
+        #expect(FileType.detect(uti: "public.zip-archive")?.type == .zip)
+        #expect(FileType.detect(uti: "org.webmproject.webp")?.type == .webp)
+    }
+
+    @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, visionOS 1.0, *)
+    @Test("detects file types from UTType values")
+    func detectsFromUTType() {
+        #expect(FileType.detect(utType: .jpeg)?.type == .jpg)
+        #expect(FileType.detect(utType: .pdf)?.type == .pdf)
+        #expect(FileType.detect(utType: .png)?.type == .png)
+        #expect(FileType.detect(utType: .gif)?.type == .gif)
+        #expect(FileType.detect(utType: .mp3)?.type == .mp3)
+        #expect(FileType.detect(utType: .mpeg4Movie)?.type == .mp4)
+    }
+
+    @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, visionOS 1.0, *)
+    @Test("returns nil for unknown UTI")
+    func returnsNilForUnknownUTI() {
+        #expect(FileType.detect(uti: "com.example.nonexistent-format-12345") == nil)
+    }
+    #endif
 
     @Test("returns nil for malformed named fixtures")
     func returnsNilForMalformedNamedFixtures() throws {

@@ -126,6 +126,35 @@ returns the canonical on-disk extension for a public file type case
 
 returns the first component of the detected MIME type
 
+### UTI Detection (Apple platforms)
+
+On Apple platforms with `UniformTypeIdentifiers` available (macOS 11+, iOS 14+, tvOS 14+, watchOS 7+, visionOS 1+), you can detect file types from UTI identifiers:
+
+```swift
+import FileType
+
+// From a UTI identifier string
+let fileType = FileType.detect(uti: "public.jpeg")
+fileType?.type == .jpg // true
+```
+
+```swift
+import FileType
+import UniformTypeIdentifiers
+
+// From a UTType value
+let fileType = FileType.detect(utType: .png)
+fileType?.type == .png // true
+```
+
+### `FileType.detect(uti: String) -> FileType?`
+
+resolves a UTI identifier string to a file type using the system's UTType mapping
+
+### `FileType.detect(utType: UTType) -> FileType?`
+
+resolves a `UTType` value to a file type using its MIME type and file extension
+
 ### Deprecated compatibility APIs
 
 `getFor(...)` and `getBytesCountFor(...)` remain as deprecated wrappers for older callers.
