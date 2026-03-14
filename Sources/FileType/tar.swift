@@ -1,27 +1,32 @@
 import Foundation
 
 func tarHeaderChecksumMatches(_ data: Data) -> Bool {
-  if data.count < 512 { // `tar` header size, cannot compute checksum without it
-    return false
-  }
+    guard
+        data.count >= 512,
+        let checksumField = String(data: data[148..<156], encoding: .ascii)
+    else {
+        return false
+    }
 
-  guard let readSum = data.getIntByteString(from: 148 ..< 154) else {
-    return false
-  }
+    let checksumString =
+        checksumField
+        .split(separator: "\0", maxSplits: 1, omittingEmptySubsequences: false)
+        .first?
+        .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
 
-  let MASK_8TH_BIT = 0x80
-  var sum = 256 // Intitalize sum, with 256 as sum of 8 spaces in checksum field
-  var signedBitSum = 0 // Initialize signed bit sum
+    guard let readSum = Int(checksumString, radix: 8) else {
+        return false
+    }
 
-  for i in [0 ..< 148, 156 ..< 512].joined() { // Skip checksum field
-    let byte = Int(data[i])
-    sum += byte
-    signedBitSum += byte & MASK_8TH_BIT // Add signed bit to signed bit sum
-  }
+    var sum = 8 * 0x20
 
-  // Some implementations compute checksum incorrectly using signed bytes
-  return (
-    readSum == sum || // Checksum in header equals the sum we calculated
-      readSum == (sum - (signedBitSum << 1)) // Checksum in header equals sum we calculated plus signed-to-unsigned delta
-  )
+    for index in 0..<148 {
+        sum += Int(data[index])
+    }
+
+    for index in 156..<512 {
+        sum += Int(data[index])
+    }
+
+    return readSum == sum
 }

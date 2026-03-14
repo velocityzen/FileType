@@ -1,19 +1,23 @@
 public enum FileTypeExtension: CaseIterable, Sendable {
     case aac
     case ac3
+    case ace
     case ai
     case aif
     case ali
     case amr
     case ape
+    case apk
     case apng
     case ar
+    case arj
     case arr
     case arw
     case asar
     case asf
     case avi
     case avif
+    case avro
     case ble
     case bmp
     case bpg
@@ -21,16 +25,23 @@ public enum FileTypeExtension: CaseIterable, Sendable {
     case cab
     case cfb
     case chm
+    case cpio
     case cr2
     case cr3
     case crx
     case cur
+    case dat
     case dcm
     case deb
     case dmg
     case dng
+    case docm
     case docx
+    case dotm
+    case dotx
+    case drc
     case dsf
+    case dwg
     case elf
     case eot
     case eps
@@ -40,6 +51,7 @@ public enum FileTypeExtension: CaseIterable, Sendable {
     case f4b
     case f4p
     case f4v
+    case fbx
     case flac
     case flif
     case flv
@@ -47,13 +59,18 @@ public enum FileTypeExtension: CaseIterable, Sendable {
     case glb
     case gz
     case heic
+    case icc
     case icns
     case ico
     case ics
     case indd
     case it
+    case j2c
+    case jar
     case jp2
     case jpg
+    case jls
+    case jmp
     case jpm
     case jpx
     case jxl
@@ -61,11 +78,13 @@ public enum FileTypeExtension: CaseIterable, Sendable {
     case ktx
     case lnk
     case lz
+    case lz4
     case lzh
     case m4a
     case m4b
     case m4p
     case m4v
+    case macho
     case mid
     case mie
     case mj2
@@ -82,6 +101,7 @@ public enum FileTypeExtension: CaseIterable, Sendable {
     case mxf
     case nef
     case nes
+    case odg
     case odp
     case ods
     case odt
@@ -90,22 +110,37 @@ public enum FileTypeExtension: CaseIterable, Sendable {
     case ogm
     case ogv
     case ogx
+    case otg
     case opus
     case orf
     case otf
+    case otp
+    case ots
+    case ott
+    case parquet
+    case pcap
     case pdf
     case pgp
     case png
+    case ppsm
+    case ppsx
+    case potm
+    case potx
+    case pst
+    case pptm
     case pptx
     case ps
     case psd
     case qcp
     case raf
     case rar
+    case reg
+    case rm
     case rpm
     case rtf
     case rw2
     case s3m
+    case sav
     case sevenz
     case shp
     case skp
@@ -118,20 +153,27 @@ public enum FileTypeExtension: CaseIterable, Sendable {
     case threegp
     case threemf
     case tif
+    case ttc
     case ttf
     case vcf
+    case vsdx
     case voc
+    case vtt
     case wasm
     case wav
     case webm
+    case webp
     case woff
     case woff2
     case wv
     case xcf
+    case xlsm
     case xlsx
     case xm
     case xml
     case xpi
+    case xltm
+    case xltx
     case xz
     case Z
     case zip

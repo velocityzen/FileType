@@ -29,6 +29,8 @@ private let specialDetectionCases: [DetectionCase] = [
     DetectionCase(fixtureName: "fixture-sv7.mpc", expectedType: .mpc),
     DetectionCase(fixtureName: "fixture-sv8.mpc", expectedType: .mpc),
     DetectionCase(fixtureName: "fixture-big-endian.tif", expectedType: .tif),
+    DetectionCase(fixtureName: "fixture-bali.tif", expectedType: .tif),
+    DetectionCase(fixtureName: "fixture-little-endian.tif", expectedType: .tif),
     DetectionCase(fixtureName: "fixture-monkeysaudio.ape", expectedType: .ape),
     DetectionCase(fixtureName: "fixture-big-endian.mie", expectedType: .mie),
     DetectionCase(fixtureName: "fixture-little-endian.mie", expectedType: .mie),
@@ -64,6 +66,8 @@ private let specialDetectionCases: [DetectionCase] = [
     DetectionCase(fixtureName: "fixture-adts-mpeg2.aac", expectedType: .aac),
     DetectionCase(fixtureName: "fixture-adts-mpeg4.aac", expectedType: .aac),
     DetectionCase(fixtureName: "fixture-adts-mpeg4-2.aac", expectedType: .aac),
+    DetectionCase(fixtureName: "fixture-id3v2.aac", expectedType: .aac),
+    DetectionCase(fixtureName: "fixture-id3v2.flac", expectedType: .flac),
     DetectionCase(fixtureName: "fixture-mp2l3.mp3", expectedType: .mp3),
     DetectionCase(fixtureName: "fixture-ffe3.mp3", expectedType: .mp3),
     DetectionCase(fixtureName: "fixture-mpa.mp2", expectedType: .mp2),
@@ -87,6 +91,11 @@ private let specialDetectionCases: [DetectionCase] = [
     DetectionCase(fixtureName: "fixture.doc.cfb", expectedType: .cfb),
     DetectionCase(fixtureName: "fixture.ppt.cfb", expectedType: .cfb),
     DetectionCase(fixtureName: "fixture-2.doc.cfb", expectedType: .cfb),
+    DetectionCase(fixtureName: "fixture.msi", expectedType: .cfb),
+    DetectionCase(fixtureName: "fixture-doc.msi", expectedType: .cfb),
+    DetectionCase(fixtureName: "fixture-ppt.msi", expectedType: .cfb),
+    DetectionCase(fixtureName: "fixture-xls.msi", expectedType: .cfb),
+    DetectionCase(fixtureName: "fixture-password-protected.xls", expectedType: .cfb),
     DetectionCase(fixtureName: "fixture2.mkv", expectedType: .mkv),
     DetectionCase(fixtureName: "fixture-corrupt.mkv", expectedType: .mkv),
     DetectionCase(fixtureName: "fixture-null.webm", expectedType: .webm),
@@ -96,6 +105,42 @@ private let specialDetectionCases: [DetectionCase] = [
     DetectionCase(fixtureName: "fixture-fast-web.pdf", expectedType: .pdf),
     DetectionCase(fixtureName: "fixture-printed.pdf", expectedType: .pdf),
     DetectionCase(fixtureName: "fixture-crlf.epub", expectedType: .epub),
+    DetectionCase(fixtureName: "fixture-Leica-M10.dng", expectedType: .dng),
+    DetectionCase(fixtureName: "fixture-sony-zv-e10.arw", expectedType: .arw),
+    DetectionCase(fixtureName: "fixture-2.m4v", expectedType: .m4v),
+    DetectionCase(fixtureName: "fixture-babys-songbook.m4b.m4a", expectedType: .m4a),
+    DetectionCase(fixtureName: "fixture-pax.tar", expectedType: .tar),
+    DetectionCase(fixtureName: "fixture.tar.zst", expectedType: .zst),
+    DetectionCase(fixtureName: "fixture-minimal.pdf", expectedType: .pdf),
+    DetectionCase(fixtureName: "fixture-big-endian.pcap", expectedType: .pcap),
+    DetectionCase(fixtureName: "fixture-little-endian.pcap", expectedType: .pcap),
+    DetectionCase(fixtureName: "fixture-normal.jls", expectedType: .jls),
+    DetectionCase(fixtureName: "fixture-hp1.jls", expectedType: .jls),
+    DetectionCase(fixtureName: "fixture-hp2.jls", expectedType: .jls),
+    DetectionCase(fixtureName: "fixture-hp3.jls", expectedType: .jls),
+    DetectionCase(fixtureName: "fixture-ascii.cpio", expectedType: .cpio),
+    DetectionCase(fixtureName: "fixture-bin.cpio", expectedType: .cpio),
+    DetectionCase(fixtureName: "fixture-vsdx.vsdx", expectedType: .vsdx),
+    DetectionCase(fixtureName: "fixture-vstx.vsdx", expectedType: .vsdx),
+    DetectionCase(fixtureName: "fixture-vtt-linebreak.vtt", expectedType: .vtt),
+    DetectionCase(fixtureName: "fixture-vtt-space.vtt", expectedType: .vtt),
+    DetectionCase(fixtureName: "fixture-vtt-tab.vtt", expectedType: .vtt),
+    DetectionCase(fixtureName: "fixture-vtt-eof.vtt", expectedType: .vtt),
+    DetectionCase(fixtureName: "fixture-realmedia-audio.rm", expectedType: .rm),
+    DetectionCase(fixtureName: "fixture-realmedia-video.rm", expectedType: .rm),
+    DetectionCase(fixtureName: "fixture-win2000.reg", expectedType: .reg),
+    DetectionCase(fixtureName: "fixture-win95.reg", expectedType: .reg),
+    DetectionCase(fixtureName: "fixture-unicode-tests.dat", expectedType: .dat),
+    DetectionCase(fixtureName: "fixture-sample.pst", expectedType: .pst),
+    DetectionCase(fixtureName: "fixture-cube_pc.drc", expectedType: .drc),
+    DetectionCase(fixtureName: "fixture-line-weights.dwg", expectedType: .dwg),
+    DetectionCase(fixtureName: "fixture-arm64.macho", expectedType: .macho),
+    DetectionCase(fixtureName: "fixture-x86_64.macho", expectedType: .macho),
+    DetectionCase(fixtureName: "fixture-i386.macho", expectedType: .macho),
+    DetectionCase(fixtureName: "fixture-ppc7400.macho", expectedType: .macho),
+    DetectionCase(fixtureName: "fixture-fat-binary.macho", expectedType: .macho),
+    DetectionCase(fixtureName: "fixture2.asar", expectedType: .asar),
+    DetectionCase(fixtureName: "fixture2.zip", expectedType: .zip),
 ]
 
 private let baselineDetectionCases: [DetectionCase] = FileTypeExtension.allCases.compactMap {
@@ -288,5 +333,15 @@ struct FileTypeTests {
     func returnsNilForUnknownData() {
         let data = Data([0xDE, 0xAD, 0xBE, 0xEF, 0x00, 0x01, 0x02, 0x03])
         #expect(FileType.detect(in: data) == nil)
+    }
+
+    @Test("returns nil for malformed named fixtures")
+    func returnsNilForMalformedNamedFixtures() throws {
+        #expect(try FileType.detect(contentsOf: fixtureURL(named: "fixture-corrupt.png")) == nil)
+        #expect(try FileType.detect(contentsOf: fixtureURL(named: "fixture-json.webp")) == nil)
+        #expect(try FileType.detect(contentsOf: fixtureURL(named: "fixture.unicorn")) == nil)
+        #expect(try FileType.detect(contentsOf: fixtureURL(named: "fixture-bad-offset.mp3")) == nil)
+        #expect(
+            try FileType.detect(contentsOf: fixtureURL(named: "fixture-bad-offset-10.mp3")) == nil)
     }
 }

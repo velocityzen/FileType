@@ -865,10 +865,294 @@ extension FileType {
             ext: "webm",
             mime: "video/webm"
         ),
+
+        .ace: FileType(
+            type: .ace,
+            ext: "ace",
+            mime: "application/x-ace-compressed"
+        ),
+
+        .apk: FileType(
+            type: .apk,
+            ext: "apk",
+            mime: "application/vnd.android.package-archive"
+        ),
+
+        .arj: FileType(
+            type: .arj,
+            ext: "arj",
+            mime: "application/x-arj"
+        ),
+
+        .avro: FileType(
+            type: .avro,
+            ext: "avro",
+            mime: "application/avro"
+        ),
+
+        .cpio: FileType(
+            type: .cpio,
+            ext: "cpio",
+            mime: "application/x-cpio"
+        ),
+
+        .dat: FileType(
+            type: .dat,
+            ext: "dat",
+            mime: "application/x-ft-windows-registry-hive"
+        ),
+
+        .docm: FileType(
+            type: .docm,
+            ext: "docm",
+            mime: "application/vnd.ms-word.document.macroenabled.12"
+        ),
+
+        .dotm: FileType(
+            type: .dotm,
+            ext: "dotm",
+            mime: "application/vnd.ms-word.template.macroenabled.12"
+        ),
+
+        .dotx: FileType(
+            type: .dotx,
+            ext: "dotx",
+            mime: "application/vnd.openxmlformats-officedocument.wordprocessingml.template"
+        ),
+
+        .drc: FileType(
+            type: .drc,
+            ext: "drc",
+            mime: "application/vnd.google.draco"
+        ),
+
+        .dwg: FileType(
+            type: .dwg,
+            ext: "dwg",
+            mime: "image/vnd.dwg"
+        ),
+
+        .fbx: FileType(
+            type: .fbx,
+            ext: "fbx",
+            mime: "application/x.autodesk.fbx"
+        ),
+
+        .icc: FileType(
+            type: .icc,
+            ext: "icc",
+            mime: "application/vnd.iccprofile"
+        ),
+
+        .j2c: FileType(
+            type: .j2c,
+            ext: "j2c",
+            mime: "image/j2c"
+        ),
+
+        .jar: FileType(
+            type: .jar,
+            ext: "jar",
+            mime: "application/java-archive"
+        ),
+
+        .jls: FileType(
+            type: .jls,
+            ext: "jls",
+            mime: "image/jls"
+        ),
+
+        .jmp: FileType(
+            type: .jmp,
+            ext: "jmp",
+            mime: "application/x-jmp-data"
+        ),
+
+        .lz4: FileType(
+            type: .lz4,
+            ext: "lz4",
+            mime: "application/x-lz4"
+        ),
+
+        .macho: FileType(
+            type: .macho,
+            ext: "macho",
+            mime: "application/x-mach-binary"
+        ),
+
+        .odg: FileType(
+            type: .odg,
+            ext: "odg",
+            mime: "application/vnd.oasis.opendocument.graphics"
+        ),
+
+        .otg: FileType(
+            type: .otg,
+            ext: "otg",
+            mime: "application/vnd.oasis.opendocument.graphics-template"
+        ),
+
+        .otp: FileType(
+            type: .otp,
+            ext: "otp",
+            mime: "application/vnd.oasis.opendocument.presentation-template"
+        ),
+
+        .ots: FileType(
+            type: .ots,
+            ext: "ots",
+            mime: "application/vnd.oasis.opendocument.spreadsheet-template"
+        ),
+
+        .ott: FileType(
+            type: .ott,
+            ext: "ott",
+            mime: "application/vnd.oasis.opendocument.text-template"
+        ),
+
+        .parquet: FileType(
+            type: .parquet,
+            ext: "parquet",
+            mime: "application/vnd.apache.parquet"
+        ),
+
+        .pcap: FileType(
+            type: .pcap,
+            ext: "pcap",
+            mime: "application/vnd.tcpdump.pcap"
+        ),
+
+        .ppsm: FileType(
+            type: .ppsm,
+            ext: "ppsm",
+            mime: "application/vnd.ms-powerpoint.slideshow.macroenabled.12"
+        ),
+
+        .ppsx: FileType(
+            type: .ppsx,
+            ext: "ppsx",
+            mime: "application/vnd.openxmlformats-officedocument.presentationml.slideshow"
+        ),
+
+        .potm: FileType(
+            type: .potm,
+            ext: "potm",
+            mime: "application/vnd.ms-powerpoint.template.macroenabled.12"
+        ),
+
+        .potx: FileType(
+            type: .potx,
+            ext: "potx",
+            mime: "application/vnd.openxmlformats-officedocument.presentationml.template"
+        ),
+
+        .pst: FileType(
+            type: .pst,
+            ext: "pst",
+            mime: "application/vnd.ms-outlook"
+        ),
+
+        .pptm: FileType(
+            type: .pptm,
+            ext: "pptm",
+            mime: "application/vnd.ms-powerpoint.presentation.macroenabled.12"
+        ),
+
+        .reg: FileType(
+            type: .reg,
+            ext: "reg",
+            mime: "application/x-ms-regedit"
+        ),
+
+        .rm: FileType(
+            type: .rm,
+            ext: "rm",
+            mime: "application/vnd.rn-realmedia"
+        ),
+
+        .sav: FileType(
+            type: .sav,
+            ext: "sav",
+            mime: "application/x-spss-sav"
+        ),
+
+        .ttc: FileType(
+            type: .ttc,
+            ext: "ttc",
+            mime: "font/collection"
+        ),
+
+        .vsdx: FileType(
+            type: .vsdx,
+            ext: "vsdx",
+            mime: "application/vnd.visio"
+        ),
+
+        .vtt: FileType(
+            type: .vtt,
+            ext: "vtt",
+            mime: "text/vtt"
+        ),
+
+        .webp: FileType(
+            type: .webp,
+            ext: "webp",
+            mime: "image/webp"
+        ),
+
+        .xlsm: FileType(
+            type: .xlsm,
+            ext: "xlsm",
+            mime: "application/vnd.ms-excel.sheet.macroenabled.12"
+        ),
+
+        .xltm: FileType(
+            type: .xltm,
+            ext: "xltm",
+            mime: "application/vnd.ms-excel.template.macroenabled.12"
+        ),
+
+        .xltx: FileType(
+            type: .xltx,
+            ext: "xltx",
+            mime: "application/vnd.openxmlformats-officedocument.spreadsheetml.template"
+        ),
     ]
 }
 
 extension FileType {
+    private static let zipLikeTypes: Set<FileTypeMatchType> = [
+        .apk,
+        .docm,
+        .docx,
+        .dotm,
+        .dotx,
+        .epub,
+        .jar,
+        .odg,
+        .odp,
+        .ods,
+        .odt,
+        .otg,
+        .otp,
+        .ots,
+        .ott,
+        .ppsm,
+        .ppsx,
+        .potm,
+        .potx,
+        .pptm,
+        .pptx,
+        .threemf,
+        .vsdx,
+        .xlsm,
+        .xlsx,
+        .xltm,
+        .xltx,
+        .xpi,
+        .zip,
+    ]
+
     private static let maximumPrefixBytes = FileTypeMatch.all.reduce(into: 0) {
         currentMaximum, fileTypeMatch in
         currentMaximum = max(currentMaximum, fileTypeMatch.minimumPrefixBytes)
@@ -1045,6 +1329,14 @@ extension FileType {
     private static func detect(in data: Data, matching fileTypeMatches: [FileTypeMatch])
         -> FileType?
     {
+        let requestedTypes = Set(fileTypeMatches.map(\.type))
+        if !requestedTypes.isDisjoint(with: zipLikeTypes),
+            let zipType = detectZipFileType(data),
+            requestedTypes.contains(zipType)
+        {
+            return FileType.all[zipType]
+        }
+
         for fileTypeMatch in fileTypeMatches {
             guard matchesPrefix(for: fileTypeMatch, in: data) else {
                 continue
@@ -1067,6 +1359,18 @@ extension FileType {
         let prefixData = fileHandle.readData(ofLength: maximumPrefixBytes)
 
         var fullData: Data?
+        let requestedTypes = Set(fileTypeMatches.map(\.type))
+
+        if !requestedTypes.isDisjoint(with: zipLikeTypes), isZipArchive(prefixData) {
+            let remainderData = fileHandle.readDataToEndOfFile()
+            var combinedData = prefixData
+            combinedData.append(remainderData)
+            fullData = combinedData
+
+            if let zipType = detectZipFileType(combinedData), requestedTypes.contains(zipType) {
+                return FileType.all[zipType]
+            }
+        }
 
         for fileTypeMatch in fileTypeMatches {
             guard matchesPrefix(for: fileTypeMatch, in: prefixData) else {
@@ -1161,6 +1465,20 @@ extension FileType {
     }
 
     fileprivate static func matchesPrefix(for fileTypeMatch: FileTypeMatch, in data: Data) -> Bool {
+        if matchesPrefixDirect(for: fileTypeMatch, in: data) {
+            return true
+        }
+
+        guard let strippedData = dataByStrippingID3Header(data), strippedData.count < data.count
+        else {
+            return false
+        }
+
+        return matchesPrefixDirect(for: fileTypeMatch, in: strippedData)
+    }
+
+    private static func matchesPrefixDirect(for fileTypeMatch: FileTypeMatch, in data: Data) -> Bool
+    {
         guard fileTypeMatch.minimumPrefixBytes <= data.count else {
             return false
         }
@@ -1182,7 +1500,22 @@ extension FileType {
 
     fileprivate static func matchesContents(for fileTypeMatch: FileTypeMatch, in data: Data) -> Bool
     {
-        guard matchesPrefix(for: fileTypeMatch, in: data) else {
+        if matchesContentsDirect(for: fileTypeMatch, in: data) {
+            return true
+        }
+
+        guard let strippedData = dataByStrippingID3Header(data), strippedData.count < data.count
+        else {
+            return false
+        }
+
+        return matchesContentsDirect(for: fileTypeMatch, in: strippedData)
+    }
+
+    private static func matchesContentsDirect(for fileTypeMatch: FileTypeMatch, in data: Data)
+        -> Bool
+    {
+        guard matchesPrefixDirect(for: fileTypeMatch, in: data) else {
             return false
         }
 

@@ -3,19 +3,23 @@ import Foundation
 enum FileTypeMatchType: Sendable {
     case aac
     case ac3
+    case ace
     case ai
     case aif
     case ali
     case amr
     case ape
+    case apk
     case apng
     case ar
+    case arj
     case arr
     case arw
     case asar
     case asf
     case avi
     case avif
+    case avro
     case ble
     case bmp
     case bpg
@@ -23,16 +27,23 @@ enum FileTypeMatchType: Sendable {
     case cab
     case cfb
     case chm
+    case cpio
     case cr2
     case cr3
     case crx
     case cur
+    case dat
     case dcm
     case deb
     case dmg
     case dng
+    case docm
     case docx
+    case dotm
+    case dotx
+    case drc
     case dsf
+    case dwg
     case eot
     case elf
     case eps
@@ -42,6 +53,7 @@ enum FileTypeMatchType: Sendable {
     case f4b
     case f4p
     case f4v
+    case fbx
     case flac
     case flif
     case flv
@@ -52,13 +64,18 @@ enum FileTypeMatchType: Sendable {
     case heifSequence
     case heic
     case heicSequence
+    case icc
     case ico
     case ics
     case icns
     case indd
     case it
+    case j2c
+    case jar
     case jp2
     case jpg
+    case jls
+    case jmp
     case jpm
     case jpx
     case jxl
@@ -66,11 +83,13 @@ enum FileTypeMatchType: Sendable {
     case ktx
     case lnk
     case lz
+    case lz4
     case lzh
     case m4a
     case m4b
     case m4p
     case m4v
+    case macho
     case mid
     case mie
     case mj2
@@ -89,6 +108,7 @@ enum FileTypeMatchType: Sendable {
     case mxf
     case nef
     case nes
+    case odg
     case odp
     case ods
     case odt
@@ -97,22 +117,37 @@ enum FileTypeMatchType: Sendable {
     case ogm
     case ogv
     case ogx
+    case otg
     case opus
     case orf
     case otf
+    case otp
+    case ots
+    case ott
+    case parquet
+    case pcap
     case pdf
     case pgp
     case png
+    case ppsm
+    case ppsx
+    case potm
+    case potx
+    case pst
+    case pptm
     case pptx
     case ps
     case psd
     case qcp
     case raf
     case rar
+    case reg
+    case rm
     case rpm
     case rtf
     case rw2
     case s3m
+    case sav
     case sevenz
     case shp
     case skp
@@ -125,20 +160,27 @@ enum FileTypeMatchType: Sendable {
     case threegp
     case threemf
     case tif
+    case ttc
     case ttf
     case vcf
+    case vsdx
     case voc
+    case vtt
     case wasm
     case wav
     case webm
+    case webp
     case woff
     case woff2
     case wv
     case xcf
+    case xlsm
     case xlsx
     case xm
     case xml
     case xpi
+    case xltm
+    case xltx
     case xz
     case Z
     case zip
@@ -230,8 +272,41 @@ struct FileTypeMatch: Sendable {
         ),
 
         FileTypeMatch(
+            type: .cpio,
+            bytesCount: 6,
+            match: {
+                $0.starts(with: [0xC7, 0x71]) || $0.starts(with: Data("070707".utf8))
+            }
+        ),
+
+        FileTypeMatch(
+            type: .arj,
+            matchBytes: [[0x60, 0xEA]]
+        ),
+
+        FileTypeMatch(
+            type: .jls,
+            matchBytes: [[0xFF, 0xD8, 0xFF, 0xF7]]
+        ),
+
+        FileTypeMatch(
             type: .jpg,
             matchBytes: [[0xFF, 0xD8, 0xFF]]
+        ),
+
+        FileTypeMatch(
+            type: .avro,
+            matchBytes: [[0x4F, 0x62, 0x6A, 0x01]]
+        ),
+
+        FileTypeMatch(
+            type: .rm,
+            matchString: [".RMF"]
+        ),
+
+        FileTypeMatch(
+            type: .drc,
+            matchString: ["DRACO"]
         ),
 
         FileTypeMatch(
@@ -304,93 +379,260 @@ struct FileTypeMatch: Sendable {
             matchBytes: [[0x28, 0xB5, 0x2F, 0xFD]]
         ),
 
+        FileTypeMatch(
+            type: .pst,
+            matchString: ["!BDN"]
+        ),
+
+        FileTypeMatch(
+            type: .parquet,
+            matchString: ["PAR1", "PARE"]
+        ),
+
+        FileTypeMatch(
+            type: .ttc,
+            matchString: ["ttcf"]
+        ),
+
+        FileTypeMatch(
+            type: .macho,
+            bytesCount: 8,
+            match: {
+                if matchPatterns(
+                    $0,
+                    match: [
+                        [.byte(0xFE), .byte(0xED), .byte(0xFA), .byte(0xCE)],
+                        [.byte(0xFE), .byte(0xED), .byte(0xFA), .byte(0xCF)],
+                        [.byte(0xCE), .byte(0xFA), .byte(0xED), .byte(0xFE)],
+                        [.byte(0xCF), .byte(0xFA), .byte(0xED), .byte(0xFE)],
+                    ])
+                {
+                    return true
+                }
+
+                guard
+                    matchPatterns(
+                        $0,
+                        match: [[.byte(0xCA), .byte(0xFE), .byte(0xBA), .byte(0xBE)]]
+                    ),
+                    let architectureCount = $0.getInt32BE(offset: 4)
+                else {
+                    return false
+                }
+
+                return architectureCount > 0 && architectureCount <= 30
+            }
+        ),
+
+        FileTypeMatch(
+            type: .lz4,
+            matchBytes: [[0x04, 0x22, 0x4D, 0x18]]
+        ),
+
+        FileTypeMatch(
+            type: .dat,
+            matchString: ["regf"]
+        ),
+
+        FileTypeMatch(
+            type: .sav,
+            matchString: ["$FL2", "$FL3"]
+        ),
+
         // Zip-based file formats
         FileTypeMatch(
             type: .xpi,
             matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
-            match: { matchZipHeader($0) { $0.filename == "META-INF/mozilla.rsa" } },
+            match: { detectZipFileType($0) == .xpi },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .jar,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .jar },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .apk,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .apk },
             requiresFullFile: true
         ),
 
         FileTypeMatch(
             type: .docx,
             matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
-            match: {
-                matchZipHeader($0) {
-                    matchMSOffice($0, type: "word")
-                }
-            },
+            match: { detectZipFileType($0) == .docx },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .docm,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .docm },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .dotx,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .dotx },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .dotm,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .dotm },
             requiresFullFile: true
         ),
 
         FileTypeMatch(
             type: .pptx,
             matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
-            match: {
-                matchZipHeader($0) {
-                    matchMSOffice($0, type: "ppt")
-                }
-            },
+            match: { detectZipFileType($0) == .pptx },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .pptm,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .pptm },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .ppsx,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .ppsx },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .ppsm,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .ppsm },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .potx,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .potx },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .potm,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .potm },
             requiresFullFile: true
         ),
 
         FileTypeMatch(
             type: .xlsx,
             matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
-            match: {
-                matchZipHeader($0) {
-                    matchMSOffice($0, type: "xl", startsWith: "xl/")
-                }
-            },
+            match: { detectZipFileType($0) == .xlsx },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .xlsm,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .xlsm },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .xltx,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .xltx },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .xltm,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .xltm },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .vsdx,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .vsdx },
             requiresFullFile: true
         ),
 
         FileTypeMatch(
             type: .epub,
             matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
-            match: { matchZipHeader($0) { $0.mimeType == "application/epub+zip" } },
+            match: { detectZipFileType($0) == .epub },
             requiresFullFile: true
         ),
 
         FileTypeMatch(
             type: .odt,
             matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
-            match: {
-                matchZipHeader($0) { $0.mimeType == "application/vnd.oasis.opendocument.text" }
-            },
+            match: { detectZipFileType($0) == .odt },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .ott,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .ott },
             requiresFullFile: true
         ),
 
         FileTypeMatch(
             type: .ods,
             matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
-            match: {
-                matchZipHeader($0) {
-                    $0.mimeType == "application/vnd.oasis.opendocument.spreadsheet"
-                }
-            },
+            match: { detectZipFileType($0) == .ods },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .ots,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .ots },
             requiresFullFile: true
         ),
 
         FileTypeMatch(
             type: .odp,
             matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
-            match: {
-                matchZipHeader($0) {
-                    $0.mimeType == "application/vnd.oasis.opendocument.presentation"
-                }
-            },
+            match: { detectZipFileType($0) == .odp },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .otp,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .otp },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .odg,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .odg },
+            requiresFullFile: true
+        ),
+
+        FileTypeMatch(
+            type: .otg,
+            matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
+            match: { detectZipFileType($0) == .otg },
             requiresFullFile: true
         ),
 
         FileTypeMatch(
             type: .threemf,
             matchBytes: [[0x50, 0x4B, 0x3, 0x4]],
-            match: {
-                matchZipHeader($0) {
-                    $0.filename.hasPrefix("3D/") && $0.filename.hasSuffix(".model")
-                }
-            },
+            match: { detectZipFileType($0) == .threemf },
             requiresFullFile: true
         ),
 
@@ -843,6 +1085,14 @@ struct FileTypeMatch: Sendable {
         ),
 
         FileTypeMatch(
+            type: .pcap,
+            matchBytes: [
+                [0xD4, 0xC3, 0xB2, 0xA1],
+                [0xA1, 0xB2, 0xC3, 0xD4],
+            ]
+        ),
+
+        FileTypeMatch(
             type: .dsf,
             matchString: ["DSD "]
         ),
@@ -924,7 +1174,7 @@ struct FileTypeMatch: Sendable {
                             .byte(0x08), .byte(0x0), .byte(0x0), .byte(0x0),
                             .byte(0x27), .byte(0x0), .byte(0xFE), .byte(0x0),
                         ],
-                    ], offset: 4)
+                    ], offset: 4) || detectTIFFFileType($0) == .dng
             }
         ),
 
@@ -952,7 +1202,7 @@ struct FileTypeMatch: Sendable {
                             .byte(0x0), .byte(0x01), .byte(0x00), .byte(0x00),
                             .byte(0x0), .byte(0x03), .byte(0x01),
                         ],
-                    ], offset: 4)
+                    ], offset: 4) || detectTIFFFileType($0) == .arw
             }
         ),
 
@@ -983,6 +1233,19 @@ struct FileTypeMatch: Sendable {
             matchBytes: [[0x1A, 0x45, 0xDF, 0xA3]],
             match: {
                 matchMatroskaDocType($0, "matr")
+            }
+        ),
+
+        FileTypeMatch(
+            type: .webp,
+            bytesCount: 12,
+            matchBytes: [[0x52, 0x49, 0x46, 0x46]],
+            match: {
+                matchPatterns(
+                    $0,
+                    match: [
+                        [.byte(0x57), .byte(0x45), .byte(0x42), .byte(0x50)]
+                    ], offset: 8)
             }
         ),
 
@@ -1128,6 +1391,23 @@ struct FileTypeMatch: Sendable {
         FileTypeMatch(
             type: .xz,
             matchBytes: [[0xFD, 0x37, 0x7A, 0x58, 0x5A, 0x00]]
+        ),
+
+        FileTypeMatch(
+            type: .dwg,
+            bytesCount: 6,
+            match: matchDWG
+        ),
+
+        FileTypeMatch(
+            type: .reg,
+            matchString: ["REGEDIT4\r\n"]
+        ),
+
+        FileTypeMatch(
+            type: .vtt,
+            bytesCount: 6,
+            match: matchVTT
         ),
 
         FileTypeMatch(
@@ -1348,6 +1628,11 @@ struct FileTypeMatch: Sendable {
             }
         ),
 
+        FileTypeMatch(
+            type: .j2c,
+            matchBytes: [[0xFF, 0x4F, 0xFF, 0x51]]
+        ),
+
         // JPEG-2000 family
         FileTypeMatch(
             type: .jp2,
@@ -1460,7 +1745,25 @@ struct FileTypeMatch: Sendable {
             matchBytes: [[0xD0, 0xCF, 0x11, 0xE0, 0xA1, 0xB1, 0x1A, 0xE1]]
         ),
 
+        FileTypeMatch(
+            type: .icc,
+            bytesCount: 40,
+            match: {
+                matchPatterns(
+                    $0,
+                    match: [[.byte(0x61), .byte(0x63), .byte(0x73), .byte(0x70)]],
+                    offset: 36
+                )
+            }
+        ),
+
         // Increase sample size from 12 to 256.
+
+        FileTypeMatch(
+            type: .ace,
+            bytesCount: 14,
+            match: matchACE
+        ),
 
         FileTypeMatch(
             type: .asar,
@@ -1574,6 +1877,11 @@ struct FileTypeMatch: Sendable {
         ),
 
         FileTypeMatch(
+            type: .fbx,
+            matchString: ["Kaydara FBX Binary  \u{0}"]
+        ),
+
+        FileTypeMatch(
             type: .ali,
             matchBytes: [
                 [
@@ -1618,6 +1926,27 @@ struct FileTypeMatch: Sendable {
         ),
 
         FileTypeMatch(
+            type: .reg,
+            bytesCount: 2 + registryEditorV5UTF16LEPrefix.count,
+            matchBytes: [[0xFF, 0xFE]],
+            match: matchRegistryEditorV5
+        ),
+
+        FileTypeMatch(
+            type: .jmp,
+            matchBytes: [
+                [
+                    0xFF, 0xFF, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00,
+                    0x04, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00,
+                ],
+                [
+                    0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x07,
+                    0x00, 0x00, 0x00, 0x04, 0x00, 0x01, 0x00, 0x01,
+                ],
+            ]
+        ),
+
+        FileTypeMatch(
             type: .aac,
             bytesCount: 18,
             match: { matchMPEGHeader($0, match: 0x10, mask: 0x16) }
@@ -1641,9 +1970,5 @@ struct FileTypeMatch: Sendable {
             match: { matchMPEGHeader($0, match: 0x06, mask: 0x06) }
         ),
 
-        FileTypeMatch(
-            type: .mp3,
-            matchString: ["ID3"]
-        ),
     ]
 }

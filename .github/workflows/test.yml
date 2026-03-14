@@ -1,0 +1,20 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-macos:
+    runs-on: macos-26-xlarge
+    steps:
+      - uses: actions/checkout@v6
+      - run: swift test
+
+  test-linux:
+    runs-on: ubuntu-latest
+    container:
+      image: swift:6.2
+    steps:
+      - uses: actions/checkout@v6
+      - run: swift test
