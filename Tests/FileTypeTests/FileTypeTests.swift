@@ -404,7 +404,6 @@ struct FileTypeTests {
     }
 
     #if canImport(UniformTypeIdentifiers)
-    @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, visionOS 1.0, *)
     @Test("detects file types from UTI identifiers")
     func detectsFromUTI() {
         #expect(FileType.detect(uti: "public.jpeg")?.type == .jpg)
@@ -418,7 +417,6 @@ struct FileTypeTests {
         #expect(FileType.detect(uti: "org.webmproject.webp")?.type == .webp)
     }
 
-    @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, visionOS 1.0, *)
     @Test("detects file types from UTType values")
     func detectsFromUTType() {
         #expect(FileType.detect(utType: .jpeg)?.type == .jpg)
@@ -429,7 +427,6 @@ struct FileTypeTests {
         #expect(FileType.detect(utType: .mpeg4Movie)?.type == .mp4)
     }
 
-    @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, visionOS 1.0, *)
     @Test("returns nil for unknown UTI")
     func returnsNilForUnknownUTI() {
         #expect(FileType.detect(uti: "com.example.nonexistent-format-12345") == nil)

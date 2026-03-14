@@ -3,6 +3,13 @@ import PackageDescription
 
 let package = Package(
     name: "FileType",
+    platforms: [
+        .macOS(.v11),
+        .iOS(.v14),
+        .tvOS(.v14),
+        .watchOS(.v7),
+        .visionOS(.v1),
+    ],
     products: [
         .library(
             name: "FileType",
@@ -25,5 +32,6 @@ let package = Package(
             name: "FileTypeTests",
             dependencies: ["FileType"]
         ),
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )
