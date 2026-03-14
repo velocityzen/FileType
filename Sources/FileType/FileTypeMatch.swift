@@ -1401,7 +1401,8 @@ struct FileTypeMatch: Sendable {
 
         FileTypeMatch(
             type: .reg,
-            matchString: ["REGEDIT4\r\n"]
+            bytesCount: regedit4CRLFPrefix.count,
+            match: matchRegistryEditorV4
         ),
 
         FileTypeMatch(
@@ -1927,7 +1928,7 @@ struct FileTypeMatch: Sendable {
 
         FileTypeMatch(
             type: .reg,
-            bytesCount: 2 + registryEditorV5UTF16LEPrefix.count,
+            bytesCount: 2 + registryEditorV5UTF16LECRLFPrefix.count,
             matchBytes: [[0xFF, 0xFE]],
             match: matchRegistryEditorV5
         ),

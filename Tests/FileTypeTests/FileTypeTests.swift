@@ -260,6 +260,20 @@ struct FileTypeTests {
         #expect(littleEndianBytes.getUInt64LE() == 0x0102_0304_0506_0708)
     }
 
+    @Test("detects Windows registry export variants")
+    func detectsWindowsRegistryExportVariants() {
+        let regedit4CRLF = Data("REGEDIT4\r\n\r\n[HKEY_CURRENT_USER\\Software\\Test]\r\n".utf8)
+        let regedit4LF = Data("REGEDIT4\n\n[HKEY_CURRENT_USER\\Software\\Test]\n".utf8)
+        let regedit5 =
+            Data([0xFF, 0xFE])
+            + ("Windows Registry Editor Version 5.00\r\n\r\n[HKEY_CURRENT_USER\\Software\\Test]\r\n"
+                .data(using: .utf16LittleEndian) ?? Data())
+
+        #expect(FileType.detect(in: regedit4CRLF)?.type == .reg)
+        #expect(FileType.detect(in: regedit4LF)?.type == .reg)
+        #expect(FileType.detect(in: regedit5)?.type == .reg)
+    }
+
     @Test("detects from file urls without caller-managed data loading")
     func detectsFromFileURLs() throws {
         #expect(try FileType.detect(contentsOf: fixtureURL(named: "fixture.jpg"))?.type == .jpg)
