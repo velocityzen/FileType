@@ -4,6 +4,8 @@ The file type is detected by checking signature bytes and, for some container fo
 
 This is swift port of [file-type](https://github.com/sindresorhus/file-type)
 
+Documentation: [Swift Package Index DocC](https://swiftpackageindex.com/velocityzen/FileType/documentation/filetype)
+
 ## Installation
 
 ## Requirements
