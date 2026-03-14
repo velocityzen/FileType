@@ -10,8 +10,16 @@ let package = Package(
         )
     ],
     targets: [
+        .systemLibrary(
+            name: "CZlib",
+            providers: [
+                .apt(["zlib1g-dev"]),
+                .brew(["zlib"]),
+            ]
+        ),
         .target(
-            name: "FileType"
+            name: "FileType",
+            dependencies: ["CZlib"]
         ),
         .testTarget(
             name: "FileTypeTests",

@@ -1,5 +1,5 @@
+import CZlib
 import Foundation
-import zlib
 
 struct ZipHeader {
     let filename: String

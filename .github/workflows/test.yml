@@ -17,4 +17,5 @@ jobs:
       image: swift:6.2
     steps:
       - uses: actions/checkout@v6
+      - run: apt-get update && apt-get install -y zlib1g-dev
       - run: swift test
