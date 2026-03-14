@@ -1,47 +1,55 @@
 import Foundation
 
 private enum PNG {
-  case Corrupt
-  case PNG
-  case APNG
+    case corrupt
+    case png
+    case apng
 }
 
 private func checkPNG(_ data: Data) -> PNG {
-  // Offset calculated as follows:
-  // - 8 bytes: PNG signature
-  // - 4 (length) + 4 (chunk type) + 13 (chunk data) + 4 (CRC): IHDR chunk
-  var position = 8 // ignore PNG signature
-
-  repeat {
-    let length = data.getInt32BE(offset: position)
-    let type = data.getString(from: (position + 4) ..< (position + 8))!
-
-    if length < 0 {
-      return .Corrupt
+    guard data.hasBytes(in: 0..<8) else {
+        return .corrupt
     }
 
-    switch type {
-      case "acTL":
-        return .APNG
+    // Offset calculated as follows:
+    // - 8 bytes: PNG signature
+    // - 4 (length) + 4 (chunk type) + 13 (chunk data) + 4 (CRC): IHDR chunk
+    var position = 8  // ignore PNG signature
 
-      case "IDAT":
-        return .PNG
+    while data.hasBytes(in: position..<position + 8) {
+        guard
+            let length = data.getUInt32BE(offset: position),
+            let type = data.getString(from: (position + 4)..<(position + 8), encoding: .ascii)
+        else {
+            return .corrupt
+        }
 
-      default:
-        position += 8 + length + 4 // Ignore chunk-data + CRC
+        switch type {
+        case "acTL":
+            return .apng
+
+        case "IDAT":
+            return .png
+
+        default:
+            let nextPosition = UInt64(position) + 8 + UInt64(length) + 4
+            guard nextPosition <= UInt64(data.count) else {
+                return .corrupt
+            }
+
+            position = Int(nextPosition)  // Ignore chunk-data + CRC
+        }
     }
 
-  } while position < data.count
-
-  return .PNG
+    return .corrupt
 }
 
 func findAPNG(_ data: Data) -> Bool {
-  let png = checkPNG(data)
-  return png == .APNG
+    let png = checkPNG(data)
+    return png == .apng
 }
 
 func findPNG(_ data: Data) -> Bool {
-  let png = checkPNG(data)
-  return png == .PNG
+    let png = checkPNG(data)
+    return png == .png
 }

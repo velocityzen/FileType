@@ -1,238 +1,237 @@
+import Foundation
+import Testing
+
 @testable import FileType
-import XCTest
 
-private let packageRootPath = URL(fileURLWithPath: #file)
-  .pathComponents
-  .prefix(while: { $0 != "Tests" })
-  .joined(separator: "/")
-  .dropFirst()
+struct DetectionCase: Sendable, CustomStringConvertible {
+    let fixtureName: String
+    let expectedType: FileTypeExtension
 
-private let fixturesPath = packageRootPath + "/Tests/Fixtures"
+    var description: String {
+        "\(fixtureName) -> \(expectedType)"
+    }
+}
 
-final class FileTypeTests: XCTestCase {
-  func testFileType(_ fixtureName: String, type: FileTypeExtension) {
-    let absolutePath = "\(fixturesPath)/\(fixtureName)"
-    let url = URL(fileURLWithPath: absolutePath, isDirectory: false)
+private let testFileURL = URL(fileURLWithPath: #filePath)
+private let fixturesDirectory =
+    testFileURL
+    .deletingLastPathComponent()
+    .deletingLastPathComponent()
+    .appending(path: "Fixtures", directoryHint: .isDirectory)
 
-    guard let data = try? Data(contentsOf: url, options: .mappedIfSafe) else {
-      print("⚠️ missing \(fixtureName). Look for a specific test function.")
-      return
+private let specialDetectionCases: [DetectionCase] = [
+    DetectionCase(fixtureName: "fixture-v7.tar", expectedType: .tar),
+    DetectionCase(fixtureName: "fixture-spaces.tar", expectedType: .tar),
+    DetectionCase(fixtureName: "fixture.tar.Z", expectedType: .Z),
+    DetectionCase(fixtureName: "fixture.tar.gz", expectedType: .gz),
+    DetectionCase(fixtureName: "fixture.tar.lz", expectedType: .lz),
+    DetectionCase(fixtureName: "fixture.tar.xz", expectedType: .xz),
+    DetectionCase(fixtureName: "fixture-sv7.mpc", expectedType: .mpc),
+    DetectionCase(fixtureName: "fixture-sv8.mpc", expectedType: .mpc),
+    DetectionCase(fixtureName: "fixture-big-endian.tif", expectedType: .tif),
+    DetectionCase(fixtureName: "fixture-monkeysaudio.ape", expectedType: .ape),
+    DetectionCase(fixtureName: "fixture-big-endian.mie", expectedType: .mie),
+    DetectionCase(fixtureName: "fixture-little-endian.mie", expectedType: .mie),
+    DetectionCase(fixtureName: "fixture2.nef", expectedType: .nef),
+    DetectionCase(fixtureName: "fixture3.nef", expectedType: .nef),
+    DetectionCase(fixtureName: "fixture4.nef", expectedType: .nef),
+    DetectionCase(fixtureName: "fixture2.dng", expectedType: .dng),
+    DetectionCase(fixtureName: "fixture2.arw", expectedType: .arw),
+    DetectionCase(fixtureName: "fixture3.arw", expectedType: .arw),
+    DetectionCase(fixtureName: "fixture4.arw", expectedType: .arw),
+    DetectionCase(fixtureName: "fixture5.arw", expectedType: .arw),
+    DetectionCase(fixtureName: "fixture-unknown-ogg.ogx", expectedType: .ogx),
+    DetectionCase(fixtureName: "fixture-otto.woff", expectedType: .woff),
+    DetectionCase(fixtureName: "fixture-otto.woff2", expectedType: .woff2),
+    DetectionCase(fixtureName: "fixture-mjpeg.mov", expectedType: .mov),
+    DetectionCase(fixtureName: "fixture-moov.mov", expectedType: .mov),
+    DetectionCase(fixtureName: "fixture-yuv420-8bit.avif", expectedType: .avif),
+    DetectionCase(fixtureName: "fixture-sequence.avif", expectedType: .avif),
+    DetectionCase(fixtureName: "fixture-mif1.heic", expectedType: .heic),
+    DetectionCase(fixtureName: "fixture-msf1.heic", expectedType: .heic),
+    DetectionCase(fixtureName: "fixture-heic.heic", expectedType: .heic),
+    DetectionCase(fixtureName: "fixture2.3gp", expectedType: .threegp),
+    DetectionCase(fixtureName: "fixture-imovie.mp4", expectedType: .mp4),
+    DetectionCase(fixtureName: "fixture-isom.mp4", expectedType: .mp4),
+    DetectionCase(fixtureName: "fixture-isomv2.mp4", expectedType: .mp4),
+    DetectionCase(fixtureName: "fixture-mp4v2.mp4", expectedType: .mp4),
+    DetectionCase(fixtureName: "fixture-dash.mp4", expectedType: .mp4),
+    DetectionCase(fixtureName: "fixture2.mpg", expectedType: .mpg),
+    DetectionCase(fixtureName: "fixture.ps.mpg", expectedType: .mpg),
+    DetectionCase(fixtureName: "fixture.sub.mpg", expectedType: .mpg),
+    DetectionCase(fixtureName: "fixture-itxt.png", expectedType: .png),
+    DetectionCase(fixtureName: "fixture-0x20001.eot", expectedType: .eot),
+    DetectionCase(fixtureName: "fixture-adts-mpeg2.aac", expectedType: .aac),
+    DetectionCase(fixtureName: "fixture-adts-mpeg4.aac", expectedType: .aac),
+    DetectionCase(fixtureName: "fixture-adts-mpeg4-2.aac", expectedType: .aac),
+    DetectionCase(fixtureName: "fixture-mp2l3.mp3", expectedType: .mp3),
+    DetectionCase(fixtureName: "fixture-ffe3.mp3", expectedType: .mp3),
+    DetectionCase(fixtureName: "fixture-mpa.mp2", expectedType: .mp2),
+    DetectionCase(fixtureName: "fixture-office365.docx", expectedType: .docx),
+    DetectionCase(fixtureName: "fixture-office365.pptx", expectedType: .pptx),
+    DetectionCase(fixtureName: "fixture-office365.xlsx", expectedType: .xlsx),
+    DetectionCase(fixtureName: "fixture2.docx", expectedType: .docx),
+    DetectionCase(fixtureName: "fixture2.pptx", expectedType: .pptx),
+    DetectionCase(fixtureName: "fixture2.xlsx", expectedType: .xlsx),
+    DetectionCase(fixtureName: "fixture2.eps", expectedType: .eps),
+    DetectionCase(fixtureName: "fixture-utf8-bom.xml", expectedType: .xml),
+    DetectionCase(fixtureName: "fixture-utf16-be-bom.xml", expectedType: .xml),
+    DetectionCase(fixtureName: "fixture-utf16-le-bom.xml", expectedType: .xml),
+    DetectionCase(fixtureName: "fixture-raw.mts", expectedType: .mts),
+    DetectionCase(fixtureName: "fixture-bdav.mts", expectedType: .mts),
+    DetectionCase(fixtureName: "fixture.wma.asf", expectedType: .asf),
+    DetectionCase(fixtureName: "fixture.wmv.asf", expectedType: .asf),
+    DetectionCase(fixtureName: "fixture2.jxl", expectedType: .jxl),
+    DetectionCase(fixtureName: "fixture.msi.cfb", expectedType: .cfb),
+    DetectionCase(fixtureName: "fixture.xls.cfb", expectedType: .cfb),
+    DetectionCase(fixtureName: "fixture.doc.cfb", expectedType: .cfb),
+    DetectionCase(fixtureName: "fixture.ppt.cfb", expectedType: .cfb),
+    DetectionCase(fixtureName: "fixture-2.doc.cfb", expectedType: .cfb),
+    DetectionCase(fixtureName: "fixture2.mkv", expectedType: .mkv),
+    DetectionCase(fixtureName: "fixture-corrupt.mkv", expectedType: .mkv),
+    DetectionCase(fixtureName: "fixture-null.webm", expectedType: .webm),
+    DetectionCase(fixtureName: "fixture-without-pdf-compatibility.ai", expectedType: .ai),
+    DetectionCase(fixtureName: "fixture-adobe-illustrator.pdf", expectedType: .pdf),
+    DetectionCase(fixtureName: "fixture-smallest.pdf", expectedType: .pdf),
+    DetectionCase(fixtureName: "fixture-fast-web.pdf", expectedType: .pdf),
+    DetectionCase(fixtureName: "fixture-printed.pdf", expectedType: .pdf),
+    DetectionCase(fixtureName: "fixture-crlf.epub", expectedType: .epub),
+]
+
+private let baselineDetectionCases: [DetectionCase] = FileTypeExtension.allCases.compactMap {
+    fileTypeExtension in
+    guard let fileType = FileType.all(for: fileTypeExtension).first else {
+        return nil
     }
 
-    let fileType = FileType.getFor(data: data)?.type
-    XCTAssertEqual(fileType, type)
-    if fileType != nil {
-      print("✅ passes: \(fileType!)")
-    } else {
-      print("❌ fails: \(fixtureName)")
+    let fixtureName = "fixture.\(fileType.ext)"
+    guard fixtureExists(named: fixtureName) else {
+        return nil
     }
-  }
 
-  func testAll() {
-    for fileTypeExtension in FileTypeExtension.allCases {
-      for fileType in FileType.getFor(type: fileTypeExtension) {
-        testFileType("fixture.\(fileType.ext)", type: fileType.type)
-      }
+    return DetectionCase(fixtureName: fixtureName, expectedType: fileTypeExtension)
+}
+
+private func fixtureURL(named fixtureName: String) -> URL {
+    fixturesDirectory.appending(path: fixtureName, directoryHint: .notDirectory)
+}
+
+private func fixtureExists(named fixtureName: String) -> Bool {
+    FileManager.default.fileExists(atPath: fixtureURL(named: fixtureName).path())
+}
+
+private func fixtureData(named fixtureName: String) throws -> Data {
+    try Data(contentsOf: fixtureURL(named: fixtureName), options: .mappedIfSafe)
+}
+
+@Suite("FileType")
+struct FileTypeTests {
+    @Test("detects baseline fixtures", arguments: baselineDetectionCases)
+    func detectsBaselineFixture(_ detectionCase: DetectionCase) throws {
+        let data = try fixtureData(named: detectionCase.fixtureName)
+        #expect(FileType.detect(in: data)?.type == detectionCase.expectedType)
     }
-  }
 
-  func testTAR() {
-    testFileType("fixture-v7.tar", type: .tar)
-    testFileType("fixture-spaces.tar", type: .tar)
-    testFileType("fixture.tar.Z", type: .Z)
-    testFileType("fixture.tar.gz", type: .gz)
-    testFileType("fixture.tar.lz", type: .lz)
-    testFileType("fixture.tar.xz", type: .xz)
-  }
+    @Test("detects special-case fixtures", arguments: specialDetectionCases)
+    func detectsSpecialFixture(_ detectionCase: DetectionCase) throws {
+        let data = try fixtureData(named: detectionCase.fixtureName)
+        #expect(FileType.detect(in: data)?.type == detectionCase.expectedType)
+    }
 
-  func testMPC() {
-    testFileType("fixture-sv7.mpc", type: .mpc)
-    testFileType("fixture-sv8.mpc", type: .mpc)
-  }
+    @Test("covers every public file type")
+    func coversEveryPublicFileType() {
+        let coveredTypes = Set((baselineDetectionCases + specialDetectionCases).map(\.expectedType))
+        #expect(coveredTypes == Set(FileTypeExtension.allCases))
+    }
 
-  func testTIFF() {
-    testFileType("fixture-big-endian.tif", type: .tif)
-  }
+    @Test("keeps detector metadata in sync")
+    func keepsDetectorMetadataInSync() {
+        #expect(Set(FileTypeMatch.all.map(\.type)) == Set(FileType.all.keys))
+    }
 
-  func testAPE() {
-    testFileType("fixture-monkeysaudio.ape", type: .ape)
-  }
+    @Test("returns deterministic metadata ordering")
+    func returnsDeterministicMetadataOrdering() {
+        let allHEICTypes = FileType.all(for: .heic)
+        #expect(
+            allHEICTypes.map(\.mime) == [
+                "image/heic",
+                "image/heic-sequence",
+                "image/heif",
+                "image/heif-sequence",
+            ])
+    }
 
-  func testMIE() {
-    testFileType("fixture-big-endian.mie", type: .mie)
-    testFileType("fixture-little-endian.mie", type: .mie)
-  }
+    @Test("exposes canonical extensions for public enum cases")
+    func exposesCanonicalExtensions() {
+        #expect(FileTypeExtension.threegp.canonicalFileExtension == "3gp")
+        #expect(FileTypeExtension.sevenz.canonicalFileExtension == "7z")
+        #expect(FileTypeExtension.ble.canonicalFileExtension == "blend")
+        #expect(FileTypeExtension.heic.canonicalFileExtension == "heic")
+    }
 
-  func testNEF() {
-    testFileType("fixture2.nef", type: .nef)
-    testFileType("fixture3.nef", type: .nef)
-    testFileType("fixture4.nef", type: .nef)
-  }
+    @Test("reports prefix requirements for simple signatures")
+    func reportsPrefixRequirementsForSimpleSignatures() {
+        #expect(FileType.minimumPrefixBytes(for: .ac3) == 2)
+        #expect(FileType.minimumPrefixBytes(for: .zip) == 4)
+        #expect(FileType.minimumPrefixBytes(for: [.ac3, .zip, .cab]) == 4)
+        #expect(FileType.dataRequirement(for: .zip) == .prefix(4))
+        #expect(FileType.dataRequirement(for: [.ac3, .zip, .cab]) == .prefix(4))
+    }
 
-  func testDNG() {
-    testFileType("fixture2.dng", type: .dng)
-  }
+    @Test("reports full-file requirements for container scans")
+    func reportsFullFileRequirementsForContainerScans() {
+        #expect(FileType.minimumPrefixBytes(for: .docx) == 4)
+        #expect(FileType.dataRequirement(for: .docx) == .fullFile)
+        #expect(FileType.dataRequirement(for: .asar) == .fullFile)
+        #expect(FileType.dataRequirement(for: [.ac3, .docx]) == .fullFile)
+    }
 
-  func testARW() {
-    testFileType("fixture2.arw", type: .arw)
-    testFileType("fixture3.arw", type: .arw)
-    testFileType("fixture4.arw", type: .arw)
-    testFileType("fixture5.arw", type: .arw)
-  }
+    @Test("reads 64-bit integers correctly")
+    func reads64BitIntegersCorrectly() {
+        let bigEndianBytes = Data([0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08])
+        let littleEndianBytes = Data([0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01])
 
-  func testOGX() {
-    testFileType("fixture-unknown-ogg.ogx", type: .ogx)
-  }
+        #expect(bigEndianBytes.getUInt64BE() == 0x0102_0304_0506_0708)
+        #expect(littleEndianBytes.getUInt64LE() == 0x0102_0304_0506_0708)
+    }
 
-  func testWOFFOTTO() {
-    testFileType("fixture-otto.woff", type: .woff)
-    testFileType("fixture-otto.woff2", type: .woff2)
-  }
+    @Test("detects from file urls without caller-managed data loading")
+    func detectsFromFileURLs() throws {
+        #expect(try FileType.detect(contentsOf: fixtureURL(named: "fixture.jpg"))?.type == .jpg)
+        #expect(try FileType.detect(contentsOf: fixtureURL(named: "fixture.docx"))?.type == .docx)
+    }
 
-  func testMOV() {
-    testFileType("fixture-mjpeg.mov", type: .mov)
-    testFileType("fixture-moov.mov", type: .mov)
-  }
+    @Test("detects from file handles")
+    func detectsFromFileHandles() throws {
+        let fileHandle = try FileHandle(forReadingFrom: fixtureURL(named: "fixture.epub"))
+        defer {
+            fileHandle.closeFile()
+        }
 
-  func testFTYP() {
-    testFileType("fixture-yuv420-8bit.avif", type: .avif)
-    testFileType("fixture-sequence.avif", type: .avif)
-    testFileType("fixture-mif1.heic", type: .heic)
-    testFileType("fixture-msf1.heic", type: .heic)
-    testFileType("fixture-heic.heic", type: .heic)
-    testFileType("fixture2.3gp", type: .threegp)
-    testFileType("fixture-imovie.mp4", type: .mp4)
-    testFileType("fixture-isom.mp4", type: .mp4)
-    testFileType("fixture-isomv2.mp4", type: .mp4)
-    testFileType("fixture-mp4v2.mp4", type: .mp4)
-    testFileType("fixture-dash.mp4", type: .mp4)
-  }
+        #expect(try FileType.detect(using: fileHandle)?.type == .epub)
+    }
 
-  func testMPEG() {
-    testFileType("fixture2.mpg", type: .mpg)
-    testFileType("fixture.ps.mpg", type: .mpg)
-    testFileType("fixture.sub.mpg", type: .mpg)
-  }
+    @Test("returns nil for truncated matroska header")
+    func returnsNilForTruncatedMatroskaHeader() {
+        let data = Data([0x1A, 0x45, 0xDF, 0xA3])
+        #expect(FileType.detect(in: data) == nil)
+    }
 
-  func testPNG() {
-    testFileType("fixture-itxt.png", type: .png)
-  }
+    @Test("returns nil for truncated asar header")
+    func returnsNilForTruncatedAsarHeader() {
+        let data = Data([0x04, 0x00, 0x00, 0x00])
+        #expect(FileType.detect(in: data) == nil)
+    }
 
-  func testEOT() {
-    testFileType("fixture-0x20001.eot", type: .eot)
-  }
+    @Test("returns nil for truncated png header")
+    func returnsNilForTruncatedPNGHeader() {
+        let data = Data([0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A])
+        #expect(FileType.detect(in: data) == nil)
+    }
 
-  func testMPEGAudio() {
-    testFileType("fixture-adts-mpeg2.aac", type: .aac)
-    testFileType("fixture-adts-mpeg4.aac", type: .aac)
-    testFileType("fixture-adts-mpeg4-2.aac", type: .aac)
-    // testFileType("fixture-id3v2.aac", type: .aac)
-
-    testFileType("fixture-mp2l3.mp3", type: .mp3)
-    testFileType("fixture-ffe3.mp3", type: .mp3)
-
-    testFileType("fixture-mpa.mp2", type: .mp2)
-  }
-
-  func testOffice() {
-    testFileType("fixture-office365.docx", type: .docx)
-    testFileType("fixture-office365.pptx", type: .pptx)
-    testFileType("fixture-office365.xlsx", type: .xlsx)
-
-    testFileType("fixture2.docx", type: .docx)
-    testFileType("fixture2.pptx", type: .pptx)
-    testFileType("fixture2.xlsx", type: .xlsx)
-  }
-
-  func testEPS() {
-    testFileType("fixture2.eps", type: .eps)
-  }
-
-  func testXML() {
-    testFileType("fixture-utf8-bom.xml", type: .xml)
-    testFileType("fixture-utf16-be-bom.xml", type: .xml)
-    testFileType("fixture-utf16-le-bom.xml", type: .xml)
-  }
-
-  func testMTS() {
-    testFileType("fixture-raw.mts", type: .mts)
-    testFileType("fixture-bdav.mts", type: .mts)
-  }
-
-  func testASF() {
-    testFileType("fixture.wma.asf", type: .asf)
-    testFileType("fixture.wmv.asf", type: .asf)
-  }
-
-  func testJXL() {
-    testFileType("fixture2.jxl", type: .jxl)
-  }
-
-  func testCFB() {
-    testFileType("fixture.msi.cfb", type: .cfb)
-    testFileType("fixture.xls.cfb", type: .cfb)
-    testFileType("fixture.doc.cfb", type: .cfb)
-    testFileType("fixture.ppt.cfb", type: .cfb)
-    testFileType("fixture-2.doc.cfb", type: .cfb)
-  }
-
-  func testMatroska() {
-    testFileType("fixture2.mkv", type: .mkv)
-    testFileType("fixture-corrupt.mkv", type: .mkv)
-    testFileType("fixture-null.webm", type: .webm)
-  }
-
-  func testPDF() {
-    testFileType("fixture-without-pdf-compatibility.ai", type: .ai)
-    testFileType("fixture-adobe-illustrator.pdf", type: .pdf)
-    testFileType("fixture-smallest.pdf", type: .pdf)
-    testFileType("fixture-fast-web.pdf", type: .pdf)
-    testFileType("fixture-printed.pdf", type: .pdf)
-  }
-
-  func testEPUB() {
-    testFileType("fixture-crlf.epub", type: .epub)
-  }
-
-  func testBytesCountForType() {
-    XCTAssertEqual(FileType.getBytesCountFor(type: .ac3), 2)
-    XCTAssertEqual(FileType.getBytesCountFor(type: .zip), 4)
-    XCTAssertEqual(FileType.getBytesCountFor(type: .cab), 4)
-  }
-
-  func testBytesCountForTypes() {
-    XCTAssertEqual(FileType.getBytesCountFor(types: [.ac3, .zip, .cab]), 4)
-  }
-
-  static var allTests = [
-    ("testAll", testAll),
-    ("testTAR", testTAR),
-    ("testMPC", testMPC),
-    ("testTIFF", testTIFF),
-    ("testAPE", testAPE),
-    ("testMIE", testMIE),
-    ("testNEF", testNEF),
-    ("testDNG", testDNG),
-    ("testARW", testARW),
-    ("testOGX", testOGX),
-    ("testWOFFOTTO", testWOFFOTTO),
-    ("testMOV", testMOV),
-    ("testFTYP", testFTYP),
-    ("testMPEG", testMPEG),
-    ("testPNG", testPNG),
-    ("testEOT", testEOT),
-    ("testMPEGAudio", testMPEGAudio),
-    ("testEPS", testEPS),
-    ("testXML", testXML),
-    ("testMTS", testMTS),
-    ("testASF", testASF),
-    ("testJXL", testJXL),
-    ("testCFB", testCFB),
-    ("testMatroska", testMatroska),
-    ("testPDF", testPDF),
-    ("testEPUB", testEPUB),
-
-    ("testBytesCountForType", testBytesCountForType),
-    ("testBytesCountForTypes", testBytesCountForTypes),
-  ]
+    @Test("returns nil for unknown data")
+    func returnsNilForUnknownData() {
+        let data = Data([0xDE, 0xAD, 0xBE, 0xEF, 0x00, 0x01, 0x02, 0x03])
+        #expect(FileType.detect(in: data) == nil)
+    }
 }

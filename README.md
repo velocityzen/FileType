@@ -1,10 +1,15 @@
 # FileType
 
-The file type is detected by checking the magic number of the data.
+The file type is detected by checking signature bytes and, for some container formats, scanning the full file contents when required.
 
 This is swift port of [file-type](https://github.com/sindresorhus/file-type)
 
 ## Installation
+
+## Requirements
+
+- Swift 6.2+
+- Xcode 26.3+ or another Swift 6.2-compatible toolchain
 
 ### Swift Package Manager
 
@@ -14,10 +19,12 @@ import PackageDescription
 let package = Package(
   name: "MyApp",
   dependencies: [
-    .package(url: "https://github.com/velocityzen/FileType", from: "1.0.3")
+    .package(url: "https://github.com/velocityzen/FileType", branch: "main")
   ]
 )
 ```
+
+If you are consuming a tagged release instead of `main`, use the latest Swift 6.2-compatible tag.
 
 ## Usage
 
@@ -28,29 +35,59 @@ import FileType
 
 let path = "/path/to/some-file.jpg"
 let url = URL(fileURLWithPath: path, isDirectory: false)
-let data = try! Data(contentsOf: url)
-let fileType = FileType.getFor(data: data)
+let fileType = try FileType.detect(contentsOf: url)
 
 fileType?.type == .jpg // true
-fileType! // FileType(type: .jpg, ext: "jpg", mime: "image/jpeg")
+fileType // FileType(type: .jpg, ext: "jpg", mime: "image/jpeg")
+```
+
+Inspect the detection requirement before sampling file contents:
+
+```swift
+import FileType
+
+switch FileType.dataRequirement(for: .docx) {
+case let .prefix(byteCount):
+  // Read only the prefix for simple signatures.
+  print(byteCount)
+case .fullFile:
+  // Container formats like DOCX require the full file.
+  print("Read the full file")
+}
 
 ```
 
-### .getFor(type: FileTypeExtension) -> [FileType]
+### `FileType.all(for: FileTypeExtension) -> [FileType]`
 
 returns all file types and mime information
 
-### .getFor(data: Data) -> FileType?
+### `FileType.detect(in: Data) -> FileType?`
 
 returns file type detected by checking the magic number
 
-### .getBytesCountFor(type: FileTypeExtension) -> Int
+### `FileType.detect(contentsOf: URL) throws -> FileType?`
 
-returns bytes count needed to detect file type
+detects the type from a file URL and only loads the full file when a detector requires it
 
-### .getBytesCountFor(types: [FileTypeExtension]) -> Int
+### `FileType.detect(using: FileHandle) throws -> FileType?`
 
-returns max bytes count needed to detect file types
+detects the type from a file handle positioned at the start of the file
+
+### `FileType.minimumPrefixBytes(for: FileTypeExtension) -> Int`
+
+returns the minimum prefix size used by the detector for that type
+
+### `FileType.dataRequirement(for: FileTypeExtension) -> FileTypeDataRequirement`
+
+returns whether the detector can work from a prefix or requires the full file
+
+### `FileTypeExtension.canonicalFileExtension -> String`
+
+returns the canonical on-disk extension for a public file type case
+
+### Deprecated compatibility APIs
+
+`getFor(...)` and `getBytesCountFor(...)` remain as deprecated wrappers for older callers.
 
 ## Supported file types
 
