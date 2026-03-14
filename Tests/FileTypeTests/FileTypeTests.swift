@@ -325,6 +325,56 @@ struct FileTypeTests {
         #expect(try FileType.detect(using: fileHandle, matching: .video)?.type == .mp4)
     }
 
+    @Test("detects streaming manifests without falling back to generic xml")
+    func detectsStreamingManifests() {
+        let dashManifest = Data(
+            """
+            <?xml version="1.0" encoding="UTF-8"?>
+            <MPD xmlns="urn:mpeg:dash:schema:mpd:2011" type="static"></MPD>
+            """.utf8
+        )
+        let smoothManifest = Data(
+            """
+            <?xml version="1.0" encoding="utf-8"?>
+            <SmoothStreamingMedia MajorVersion="2" MinorVersion="1"></SmoothStreamingMedia>
+            """.utf8
+        )
+        let hlsManifest = Data(
+            """
+            #EXTM3U
+            #EXT-X-VERSION:3
+            #EXT-X-TARGETDURATION:6
+            #EXTINF:6.000,
+            segment0.ts
+            #EXT-X-ENDLIST
+            """.utf8
+        )
+
+        #expect(FileType.detect(in: dashManifest)?.type == .mpd)
+        #expect(FileType.detect(in: smoothManifest)?.type == .ism)
+        #expect(FileType.detect(in: hlsManifest)?.type == .m3u)
+    }
+
+    @Test("does not treat generic xml or m3u as streaming manifests")
+    func avoidsStreamingManifestFalsePositives() {
+        let genericXML = Data(
+            """
+            <?xml version="1.0" encoding="UTF-8"?>
+            <root>Hello</root>
+            """.utf8
+        )
+        let genericM3U = Data(
+            """
+            #EXTM3U
+            #EXTINF:123,Example Artist - Example Song
+            example.mp3
+            """.utf8
+        )
+
+        #expect(FileType.detect(in: genericXML)?.type == .xml)
+        #expect(FileType.detect(in: genericM3U) == nil)
+    }
+
     @Test("returns nil for truncated matroska header")
     func returnsNilForTruncatedMatroskaHeader() {
         let data = Data([0x1A, 0x45, 0xDF, 0xA3])

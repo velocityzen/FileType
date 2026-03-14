@@ -68,6 +68,7 @@ enum FileTypeMatchType: Sendable {
     case ico
     case ics
     case icns
+    case ism
     case indd
     case it
     case j2c
@@ -85,6 +86,7 @@ enum FileTypeMatchType: Sendable {
     case lz
     case lz4
     case lzh
+    case m3u
     case m4a
     case m4b
     case m4p
@@ -100,6 +102,7 @@ enum FileTypeMatchType: Sendable {
     case mp2
     case mp3
     case mp4
+    case mpd
     case mpc
     case mpg
     case mp1s
@@ -1403,6 +1406,24 @@ struct FileTypeMatch: Sendable {
             type: .reg,
             bytesCount: regedit4CRLFPrefix.count,
             match: matchRegistryEditorV4
+        ),
+
+        FileTypeMatch(
+            type: .m3u,
+            bytesCount: 7,
+            match: matchM3U
+        ),
+
+        FileTypeMatch(
+            type: .mpd,
+            bytesCount: 4,
+            match: matchMPD
+        ),
+
+        FileTypeMatch(
+            type: .ism,
+            bytesCount: 4,
+            match: matchISM
         ),
 
         FileTypeMatch(

@@ -200,6 +200,7 @@ returns the first component of the detected MIME type
 - [`icns`](https://en.wikipedia.org/wiki/Apple_Icon_Image_format)
 - [`ico`](<https://en.wikipedia.org/wiki/ICO_(file_format)>)
 - [`ics`](https://en.wikipedia.org/wiki/ICalendar#Data_format) - iCalendar
+- [`ism`](https://learn.microsoft.com/en-us/previous-versions/iis/smooth-streaming-client/iis-smooth-streaming-client-manifest-smoothstreamingmedia-element) - Microsoft Smooth Streaming manifest
 - [`indd`](https://en.wikipedia.org/wiki/Adobe_InDesign#File_format)
 - [`it`](https://wiki.openmpt.org/Manual:_Module_formats#The_Impulse_Tracker_format_.28.it.29) - Audio module format: Impulse Tracker
 - [`j2c`](https://en.wikipedia.org/wiki/JPEG_2000) - JPEG 2000 codestream
@@ -217,6 +218,7 @@ returns the first component of the detected MIME type
 - [`lz`](https://en.wikipedia.org/wiki/Lzip)
 - [`lz4`](https://en.wikipedia.org/wiki/LZ4_(compression_algorithm))
 - [`lzh`](<https://en.wikipedia.org/wiki/LHA_(file_format)>) - LZH archive
+- [`m3u`](https://en.wikipedia.org/wiki/M3U) - HLS playlist when HLS-specific `#EXT-X-` tags are present
 - [`m4a`](https://en.wikipedia.org/wiki/M4A) - Audio-only MPEG-4 files
 - [`m4b`](https://en.wikipedia.org/wiki/M4B) - Audiobook and podcast MPEG-4 files, which also contain metadata including chapter markers, images, and hyperlinks
 - [`m4p`](https://en.wikipedia.org/wiki/MPEG-4_Part_14#Filename_extensions) - MPEG-4 files with audio streams encrypted by FairPlay Digital Rights Management as were sold through the iTunes Store
@@ -232,6 +234,7 @@ returns the first component of the detected MIME type
 - [`mp2`](https://en.wikipedia.org/wiki/MPEG-1_Audio_Layer_II)
 - [`mp3`](https://en.wikipedia.org/wiki/MP3)
 - [`mp4`](https://en.wikipedia.org/wiki/MPEG-4_Part_14#Filename_extensions)
+- [`mpd`](https://en.wikipedia.org/wiki/Dynamic_Adaptive_Streaming_over_HTTP) - MPEG-DASH manifest
 - [`mpc`](https://en.wikipedia.org/wiki/Musepack) - Musepack (SV7 & SV8)
 - [`mpg`](https://en.wikipedia.org/wiki/MPEG-1)
 - [`mts`](https://en.wikipedia.org/wiki/.m2ts) - MPEG-2 Transport Stream, both raw and Blu-ray Disc Audio-Video (BDAV) versions

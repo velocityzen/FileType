@@ -319,6 +319,12 @@ extension FileType {
             mime: "video/mp4"
         ),
 
+        .mpd: FileType(
+            type: .mpd,
+            ext: "mpd",
+            mime: "video/vnd.mpeg.dash.mpd"
+        ),
+
         .mid: FileType(
             type: .mid,
             ext: "mid",
@@ -527,6 +533,12 @@ extension FileType {
             type: .ics,
             ext: "ics",
             mime: "text/calendar"
+        ),
+
+        .ism: FileType(
+            type: .ism,
+            ext: "ism",
+            mime: "application/vnd.ms-sstr+xml"
         ),
 
         .vcf: FileType(
@@ -816,6 +828,12 @@ extension FileType {
             type: .lzh,
             ext: "lzh",
             mime: "application/x-lzh-compressed"
+        ),
+
+        .m3u: FileType(
+            type: .m3u,
+            ext: "m3u",
+            mime: "application/vnd.apple.mpegurl"
         ),
 
         .skp: FileType(

@@ -63,6 +63,7 @@ public enum FileTypeExtension: CaseIterable, Sendable {
     case icns
     case ico
     case ics
+    case ism
     case indd
     case it
     case j2c
@@ -80,6 +81,7 @@ public enum FileTypeExtension: CaseIterable, Sendable {
     case lz
     case lz4
     case lzh
+    case m3u
     case m4a
     case m4b
     case m4p
@@ -95,6 +97,7 @@ public enum FileTypeExtension: CaseIterable, Sendable {
     case mp2
     case mp3
     case mp4
+    case mpd
     case mpc
     case mpg
     case mts
