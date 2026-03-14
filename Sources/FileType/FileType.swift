@@ -878,6 +878,10 @@ extension FileType {
         Dictionary(grouping: FileType.all.values, by: \.type).mapValues(sortedFileTypes)
     }()
 
+    private static let fileTypesByMIMEGroup: [FileTypeMIMEGroup: [FileType]] = {
+        Dictionary(grouping: FileType.all.values, by: \.mimeGroup).mapValues(sortedFileTypes)
+    }()
+
     private static let matchesByExtension: [FileTypeExtension: [FileTypeMatch]] = {
         var matches: [FileTypeExtension: [FileTypeMatch]] = [:]
 
@@ -892,24 +896,41 @@ extension FileType {
         return matches
     }()
 
+    private static let matchesByMIMEGroup: [FileTypeMIMEGroup: [FileTypeMatch]] = {
+        var matches: [FileTypeMIMEGroup: [FileTypeMatch]] = [:]
+
+        for fileTypeMatch in FileTypeMatch.all {
+            guard let fileType = FileType.all[fileTypeMatch.type] else {
+                continue
+            }
+
+            matches[fileType.mimeGroup, default: []].append(fileTypeMatch)
+        }
+
+        return matches
+    }()
+
     private static let minimumPrefixBytesByExtension: [FileTypeExtension: Int] = {
         FileType.matchesByExtension.mapValues { matches in
-            matches.reduce(into: 0) { currentMaximum, fileTypeMatch in
-                currentMaximum = max(currentMaximum, fileTypeMatch.minimumPrefixBytes)
-            }
+            minimumPrefixBytes(for: matches)
         }
     }()
 
     private static let dataRequirementByExtension: [FileTypeExtension: FileTypeDataRequirement] = {
         FileType.matchesByExtension.mapValues { matches in
-            if matches.contains(where: \.requiresFullFile) {
-                return .fullFile
-            }
+            dataRequirement(for: matches)
+        }
+    }()
 
-            return .prefix(
-                matches.reduce(into: 0) { currentMaximum, fileTypeMatch in
-                    currentMaximum = max(currentMaximum, fileTypeMatch.minimumPrefixBytes)
-                })
+    private static let minimumPrefixBytesByMIMEGroup: [FileTypeMIMEGroup: Int] = {
+        FileType.matchesByMIMEGroup.mapValues { matches in
+            minimumPrefixBytes(for: matches)
+        }
+    }()
+
+    private static let dataRequirementByMIMEGroup: [FileTypeMIMEGroup: FileTypeDataRequirement] = {
+        FileType.matchesByMIMEGroup.mapValues { matches in
+            dataRequirement(for: matches)
         }
     }()
 
@@ -920,6 +941,16 @@ extension FileType {
     public static func minimumPrefixBytes(for types: [FileTypeExtension]) -> Int {
         types.reduce(into: 0) { currentMaximum, type in
             currentMaximum = max(currentMaximum, minimumPrefixBytesByExtension[type] ?? 0)
+        }
+    }
+
+    public static func minimumPrefixBytes(for group: FileTypeMIMEGroup) -> Int {
+        minimumPrefixBytes(for: [group])
+    }
+
+    public static func minimumPrefixBytes(for groups: [FileTypeMIMEGroup]) -> Int {
+        groups.reduce(into: 0) { currentMaximum, group in
+            currentMaximum = max(currentMaximum, minimumPrefixBytesByMIMEGroup[group] ?? 0)
         }
     }
 
@@ -935,12 +966,86 @@ extension FileType {
         return .prefix(minimumPrefixBytes(for: types))
     }
 
+    public static func dataRequirement(for group: FileTypeMIMEGroup) -> FileTypeDataRequirement {
+        dataRequirement(for: [group])
+    }
+
+    public static func dataRequirement(for groups: [FileTypeMIMEGroup]) -> FileTypeDataRequirement {
+        if groups.contains(where: { dataRequirementByMIMEGroup[$0] == .fullFile }) {
+            return .fullFile
+        }
+
+        return .prefix(minimumPrefixBytes(for: groups))
+    }
+
     public static func all(for type: FileTypeExtension) -> [FileType] {
         fileTypesByExtension[type] ?? []
     }
 
+    public static func all(for group: FileTypeMIMEGroup) -> [FileType] {
+        fileTypesByMIMEGroup[group] ?? []
+    }
+
     public static func detect(in data: Data) -> FileType? {
-        for fileTypeMatch in FileTypeMatch.all {
+        detect(in: data, matching: FileTypeMatch.all)
+    }
+
+    public static func detect(in data: Data, matching group: FileTypeMIMEGroup) -> FileType? {
+        detect(in: data, matching: [group])
+    }
+
+    public static func detect(in data: Data, matching groups: [FileTypeMIMEGroup]) -> FileType? {
+        detect(in: data, matching: fileTypeMatches(for: groups))
+    }
+
+    public static func detect(contentsOf url: URL) throws -> FileType? {
+        let fileHandle = try FileHandle(forReadingFrom: url)
+        defer {
+            fileHandle.closeFile()
+        }
+
+        return try detect(using: fileHandle)
+    }
+
+    public static func detect(contentsOf url: URL, matching group: FileTypeMIMEGroup) throws
+        -> FileType?
+    {
+        try detect(contentsOf: url, matching: [group])
+    }
+
+    public static func detect(contentsOf url: URL, matching groups: [FileTypeMIMEGroup]) throws
+        -> FileType?
+    {
+        let fileHandle = try FileHandle(forReadingFrom: url)
+        defer {
+            fileHandle.closeFile()
+        }
+
+        return try detect(using: fileHandle, matching: groups)
+    }
+
+    public static func detect(using fileHandle: FileHandle) throws -> FileType? {
+        try detect(using: fileHandle, matching: FileTypeMatch.all)
+    }
+
+    public static func detect(using fileHandle: FileHandle, matching group: FileTypeMIMEGroup)
+        throws -> FileType?
+    {
+        try detect(using: fileHandle, matching: [group])
+    }
+
+    public static func detect(using fileHandle: FileHandle, matching groups: [FileTypeMIMEGroup])
+        throws -> FileType?
+    {
+        try detect(using: fileHandle, matching: fileTypeMatches(for: groups))
+    }
+}
+
+extension FileType {
+    private static func detect(in data: Data, matching fileTypeMatches: [FileTypeMatch])
+        -> FileType?
+    {
+        for fileTypeMatch in fileTypeMatches {
             guard matchesPrefix(for: fileTypeMatch, in: data) else {
                 continue
             }
@@ -953,22 +1058,17 @@ extension FileType {
         return nil
     }
 
-    public static func detect(contentsOf url: URL) throws -> FileType? {
-        let fileHandle = try FileHandle(forReadingFrom: url)
-        defer {
-            fileHandle.closeFile()
-        }
-
-        return try detect(using: fileHandle)
-    }
-
-    public static func detect(using fileHandle: FileHandle) throws -> FileType? {
+    private static func detect(
+        using fileHandle: FileHandle, matching fileTypeMatches: [FileTypeMatch]
+    )
+        throws -> FileType?
+    {
         fileHandle.seek(toFileOffset: 0)
         let prefixData = fileHandle.readData(ofLength: maximumPrefixBytes)
 
         var fullData: Data?
 
-        for fileTypeMatch in FileTypeMatch.all {
+        for fileTypeMatch in fileTypeMatches {
             guard matchesPrefix(for: fileTypeMatch, in: prefixData) else {
                 continue
             }
@@ -1024,6 +1124,39 @@ extension FileType {
             }
 
             return lhs.mime.localizedStandardCompare(rhs.mime) == .orderedAscending
+        }
+    }
+
+    private static func minimumPrefixBytes(for matches: [FileTypeMatch]) -> Int {
+        matches.reduce(into: 0) { currentMaximum, fileTypeMatch in
+            currentMaximum = max(currentMaximum, fileTypeMatch.minimumPrefixBytes)
+        }
+    }
+
+    private static func dataRequirement(for matches: [FileTypeMatch]) -> FileTypeDataRequirement {
+        if matches.contains(where: \.requiresFullFile) {
+            return .fullFile
+        }
+
+        return .prefix(minimumPrefixBytes(for: matches))
+    }
+
+    private static func fileTypeMatches(for groups: [FileTypeMIMEGroup]) -> [FileTypeMatch] {
+        guard groups.count != 1 || groups.first != nil else {
+            return []
+        }
+
+        if let group = groups.first, groups.count == 1 {
+            return matchesByMIMEGroup[group] ?? []
+        }
+
+        let allowedGroups = Set(groups)
+        return FileTypeMatch.all.filter { fileTypeMatch in
+            guard let fileType = FileType.all[fileTypeMatch.type] else {
+                return false
+            }
+
+            return allowedGroups.contains(fileType.mimeGroup)
         }
     }
 

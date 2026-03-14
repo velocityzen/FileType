@@ -169,6 +169,26 @@ struct FileTypeTests {
         #expect(FileTypeExtension.heic.canonicalFileExtension == "heic")
     }
 
+    @Test("derives mime groups from the major mime type")
+    func derivesMIMEGroups() {
+        #expect(FileType.all(for: .jpg).first?.mimeGroup == .image)
+        #expect(FileType.all(for: .mp3).first?.mimeGroup == .audio)
+        #expect(FileType.all(for: .woff).first?.mimeGroup == .font)
+        #expect(FileType.all(for: .glb).first?.mimeGroup == .model)
+        #expect(FileType.all(for: .ics).first?.mimeGroup == .text)
+        #expect(FileType.all(for: .mp4).first?.mimeGroup == .video)
+    }
+
+    @Test("returns grouped metadata and requirements")
+    func returnsGroupedMetadataAndRequirements() {
+        let imageTypes = FileType.all(for: .image)
+        #expect(!imageTypes.isEmpty)
+        #expect(imageTypes.allSatisfy { $0.mimeGroup == .image })
+        #expect(FileType.all(for: .audio).allSatisfy { $0.mimeGroup == .audio })
+        #expect(FileType.dataRequirement(for: .application) == .fullFile)
+        #expect(FileType.minimumPrefixBytes(for: .image) > 0)
+    }
+
     @Test("reports prefix requirements for simple signatures")
     func reportsPrefixRequirementsForSimpleSignatures() {
         #expect(FileType.minimumPrefixBytes(for: .ac3) == 2)
@@ -201,6 +221,31 @@ struct FileTypeTests {
         #expect(try FileType.detect(contentsOf: fixtureURL(named: "fixture.docx"))?.type == .docx)
     }
 
+    @Test("detects within mime groups")
+    func detectsWithinMIMEGroups() throws {
+        let imageData = try fixtureData(named: "fixture.jpg")
+        let audioData = try fixtureData(named: "fixture.mp3")
+        let documentData = try fixtureData(named: "fixture.docx")
+
+        #expect(FileType.detect(in: imageData, matching: .image)?.type == .jpg)
+        #expect(FileType.detect(in: imageData, matching: .audio) == nil)
+        #expect(FileType.detect(in: audioData, matching: .audio)?.type == .mp3)
+        #expect(FileType.detect(in: documentData, matching: .application)?.type == .docx)
+    }
+
+    @Test("detects from file urls within mime groups")
+    func detectsFromFileURLsWithinMIMEGroups() throws {
+        #expect(
+            try FileType.detect(contentsOf: fixtureURL(named: "fixture.jpg"), matching: .image)?
+                .type
+                == .jpg
+        )
+        #expect(
+            try FileType.detect(contentsOf: fixtureURL(named: "fixture.docx"), matching: .image)
+                == nil
+        )
+    }
+
     @Test("detects from file handles")
     func detectsFromFileHandles() throws {
         let fileHandle = try FileHandle(forReadingFrom: fixtureURL(named: "fixture.epub"))
@@ -209,6 +254,16 @@ struct FileTypeTests {
         }
 
         #expect(try FileType.detect(using: fileHandle)?.type == .epub)
+    }
+
+    @Test("detects from file handles within mime groups")
+    func detectsFromFileHandlesWithinMIMEGroups() throws {
+        let fileHandle = try FileHandle(forReadingFrom: fixtureURL(named: "fixture.mp4"))
+        defer {
+            fileHandle.closeFile()
+        }
+
+        #expect(try FileType.detect(using: fileHandle, matching: .video)?.type == .mp4)
     }
 
     @Test("returns nil for truncated matroska header")

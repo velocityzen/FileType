@@ -41,6 +41,17 @@ fileType?.type == .jpg // true
 fileType // FileType(type: .jpg, ext: "jpg", mime: "image/jpeg")
 ```
 
+Limit detection to MIME major groups when you already know the broad file family:
+
+```swift
+import FileType
+
+let data = try Data(contentsOf: url)
+let imageType = FileType.detect(in: data, matching: .image)
+
+imageType?.mimeGroup == .image // true
+```
+
 Inspect the detection requirement before sampling file contents:
 
 ```swift
@@ -61,29 +72,57 @@ case .fullFile:
 
 returns all file types and mime information
 
+### `FileType.all(for: FileTypeMIMEGroup) -> [FileType]`
+
+returns all file types whose mime begins with that major type
+
 ### `FileType.detect(in: Data) -> FileType?`
 
 returns file type detected by checking the magic number
+
+### `FileType.detect(in: Data, matching: FileTypeMIMEGroup) -> FileType?`
+
+limits detection to a MIME major group such as `.image`, `.audio`, or `.video`
 
 ### `FileType.detect(contentsOf: URL) throws -> FileType?`
 
 detects the type from a file URL and only loads the full file when a detector requires it
 
+### `FileType.detect(contentsOf: URL, matching: FileTypeMIMEGroup) throws -> FileType?`
+
+limits URL-based detection to one MIME major group
+
 ### `FileType.detect(using: FileHandle) throws -> FileType?`
 
 detects the type from a file handle positioned at the start of the file
+
+### `FileType.detect(using: FileHandle, matching: FileTypeMIMEGroup) throws -> FileType?`
+
+limits file-handle detection to one MIME major group
 
 ### `FileType.minimumPrefixBytes(for: FileTypeExtension) -> Int`
 
 returns the minimum prefix size used by the detector for that type
 
+### `FileType.minimumPrefixBytes(for: FileTypeMIMEGroup) -> Int`
+
+returns the minimum prefix size needed for that MIME major group
+
 ### `FileType.dataRequirement(for: FileTypeExtension) -> FileTypeDataRequirement`
 
 returns whether the detector can work from a prefix or requires the full file
 
+### `FileType.dataRequirement(for: FileTypeMIMEGroup) -> FileTypeDataRequirement`
+
+returns whether that MIME major group can work from a prefix or requires the full file
+
 ### `FileTypeExtension.canonicalFileExtension -> String`
 
 returns the canonical on-disk extension for a public file type case
+
+### `FileType.mimeGroup -> FileTypeMIMEGroup`
+
+returns the first component of the detected MIME type
 
 ### Deprecated compatibility APIs
 
