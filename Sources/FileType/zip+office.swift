@@ -1,4 +1,4 @@
-import CZlib
+import FTZlib
 import Foundation
 
 struct ZipHeader {
