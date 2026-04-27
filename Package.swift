@@ -18,7 +18,7 @@ let package = Package(
     ],
     targets: [
         .systemLibrary(
-            name: "CZlib",
+            name: "FTZlib",
             providers: [
                 .apt(["zlib1g-dev"]),
                 .brew(["zlib"]),
@@ -26,7 +26,7 @@ let package = Package(
         ),
         .target(
             name: "FileType",
-            dependencies: ["CZlib"]
+            dependencies: ["FTZlib"]
         ),
         .testTarget(
             name: "FileTypeTests",
